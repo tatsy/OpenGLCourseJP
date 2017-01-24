@@ -4,17 +4,10 @@ compiler:
   - gcc
 
 before_install:
-  - git clone https://github.com/nigels-com/glew.git && cd glew
-  - cd build
-  - cmake ./cmake
-  - make
-  - sudo make install
-  - cd ../..
-  - git clone https://github.com/glfw/glfw.git && cd glfw
-  - mkdir build && cd build
-  - cmake ..
-  - make
-  - sudo make install
+  - sudo apt-get install -y libglew-dev libglfw-dev
+  - git clone https://github.com/g-trunc/glm.git
+  - cd glm && mkdir build && cd build
+  - cmake .. && make && sudo make install
   - cd ../..
 
 script:
