@@ -57,6 +57,11 @@ set(ALL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIRS}
                      ${GLEW_INCLUDE_DIR})
 
 set(ALL_LIBRARIES ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY} ${GLEW_LIBRARY})
+if (UNIX AND NOT APPLE)
+  find_package(PkgConfig REQUIRED)
+  pkg_search_module(GLFW3 REQUIRED glfw3)
+  set(ALL_LIBRARIES ${ALL_LIBRARIES} ${CMAKE_DL_LIBS} ${GLFW3_STATIC_LIBRARIES})
+endif()
 
 # ------------------------------------------------------------------------------
 # Add subdirectory

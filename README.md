@@ -1,10 +1,9 @@
-OpenGL Course
+OpenGLCourseJP
 ===
 
-#### [第0回 開発環境の設定](./src/000_environment_setup)
+[![Build Status](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
 
-OpenGLのプログラムを書くために開発環境の設定を行います。
+This is an OpenGL course in Japanese.
 
-#### [第1回 ウィンドウを開く](./src/001_open_window)
-
-実際にOpenGLを使って描画をするためのウィンドウを開きます。
+**Course Web page**  
+[https://tatsy.github.io/OpenGLCourseJP]([https://tatsy.github.io/OpenGLCourseJP)

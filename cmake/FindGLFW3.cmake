@@ -7,7 +7,7 @@ else()
             /usr/local/include)
 
   find_library(GLFW3_LIBRARY
-               NAMES libglfw.so
+               NAMES libglfw3.a
                PATHS 
                /usr/lib
                /usr/local/lib
