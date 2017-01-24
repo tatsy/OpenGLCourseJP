@@ -6,12 +6,14 @@ compiler:
 before_install:
   - git clone https://github.com/nigels-com/glew.git && cd glew
   - cd build
-  - cmake ./cmake && cmake --build .
+  - cmake ./cmake
+  - make
   - sudo make install
   - cd ../..
   - git clone https://github.com/glfw/glfw.git && cd glfw
   - mkdir build && cd build
-  - cmake .. && cmake --build .
+  - cmake ..
+  - make
   - sudo make install
   - cd ../..
 
@@ -33,6 +35,7 @@ after_success:
 branches:
   only:
     - master
+    - development
 
 notifications:
   email:
