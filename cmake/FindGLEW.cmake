@@ -8,7 +8,7 @@ else()
             /usr/local/include)
 
   find_library(GLEW_LIBRARY
-               NAMES libGLEW.so
+               NAMES libGLEW.so libGLEW.a
                PATHS
                /usr/lib
                /usr/local/lib
@@ -16,4 +16,3 @@ else()
 endif()
 
 find_package_handle_standard_args(GLEW DEFAULT_MSG GLEW_INCLUDE_DIR GLEW_LIBRARY)
-

@@ -13,5 +13,13 @@ OpenGL Course
 参考ページ
 -------------
 
-* `和歌山大学 床井研究室 OpenGL記事一覧 <http://marina.sys.wakayama-u.ac.jp/~tokoi/oglarticles.html>`_
-* `OpenGL de プログラミング <http://seesaawiki.jp/w/mikk_ni3_92/>`_
+* |tokoi_lab_opengl|
+* |opengl_de_programming|
+
+.. |tokoi_lab_opengl| raw:: html
+
+  <a href="http://marina.sys.wakayama-u.ac.jp/~tokoi/oglarticles.html" target="_blank">和歌山大学 床井研究室 OpenGL記事一覧</a>
+
+.. |opengl_de_programming| raw:: html
+
+  <a href="http://seesaawiki.jp/w/mikk_ni3_92/" target="_blank">OpenGL de プログラミング</a>
