@@ -6,7 +6,9 @@
 
 .. |source_code| raw:: html
 
-  <a href="https://github.com/tatsy/OpenGLCourseJP/blob/master/src/001_open_window/001_open_window.cpp" target="_blank">ソースコード</a>
+  <a href="https://github.com/tatsy/OpenGLCourseJP/blob/master/src/001_open_window/001_open_window.cpp" target="_blank">
+    <img src="../images/octcat.png"/>
+  </a>
 
 
 OpenGLの初期化
