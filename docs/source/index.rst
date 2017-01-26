@@ -9,6 +9,7 @@ OpenGL Course
 
   sections/000/index
   sections/001/index
+  sections/002/index
 
 参考ページ
 -------------

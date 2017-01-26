@@ -1,14 +1,10 @@
-***********************
-第1回 ウィンドウを開く
-***********************
+************************************
+第1回 ウィンドウを開く |source_code|
+************************************
 
-|source_code|
-
-.. |source_code| raw:: html
-
-  <a href="https://github.com/tatsy/OpenGLCourseJP/blob/master/src/001_open_window/001_open_window.cpp" target="_blank">
-    <img src="../images/octcat.png"/>
-  </a>
+.. |source_code| image:: ../../images/octcat.png
+  :width: 24px
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/001_open_window/001_open_window.cpp
 
 
 OpenGLの初期化
@@ -99,20 +95,48 @@ OpenGLでは描画の状態を保存するためにコンテキストと呼ば�
 描画ループの設定
 -------------------
 
-
-
 .. code-block:: cpp
   :linenos:
 
   // メインループ
   while (glfwWindowShouldClose(window) == GL_FALSE) {
-      // 背景色の描画
-      glClear(GL_COLOR_BUFFER_BIT);
+      // 描画
+      drawOpenGL();
 
       // 描画用バッファの切り替え
       glfwSwapBuffers(window);
       glfwPollEvents();
   }
+
+この部分ではウィンドウが表示されている限り続くwhileループが書かれています。
+まず、whileの終了判定に使われている ``glfwWindowShouldClose`` 関数は、
+現在ウィンドウが開かれているのか閉じられているのかを調べます。
+閉じられているときには ``GL_TRUE`` が返ってくるので、そうでない場合、
+すなわち ``GL_FALSE`` が返ってきている間は描画を継続します。
+
+描画部分は ``drawOpenGL`` 関数の中で処理を記述することにします。
+現在のこの関数の定義は、このようになっています。
+
+.. code-block:: cpp
+  :linenos:
+
+  // ユーザ定義のOpenGL描画
+  void drawOpenGL() {
+      // 背景色の描画
+      glClear(GL_COLOR_BUFFER_BIT);
+  }
+
+ここでは、先ほど ``glClearColor`` 関数で設定した色を使って画面を塗りつぶす処理を書いています。
+その役割を担うのが ``glClear`` 関数です。この関数の引数には現在 ``GL_COLOR_BUFFER_BIT`` という
+定数が渡されていますが、この定数が渡されているときには ``glClear`` 関数により画面の色が塗りつぶされます。
+
+
+描画結果
+------------
+
+全てのソースコードが上手くかけていれば、以下のような赤一色で塗りつぶされた画面が表示されるはずです。
+
+
 
 練習
 ------

@@ -1,17 +1,21 @@
-﻿/******************************************************************************
-実験
-(1) ウィンドウの幅や高さを変更したときの変化を調べる
-(2) ウィンドウのタイトルを変更したときの変化を調べる
-(3) glClearColorに渡されている色を別の色に変更して、変化を調べる
-(4) glClearをコメントアウトしたときに背景色がどうなるかを調べる
-******************************************************************************/
-
-#include <cstdio>
+﻿#include <cstdio>
 #include <GLFW/glfw3.h>
 
 static const int WIN_WIDTH   = 500;                 // ウィンドウの幅
 static const int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
+
+// ユーザ定義のOpenGLの初期化
+void initializeOpenGL() {
+    // 背景色の設定
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+}
+
+// ユーザ定義のOpenGL描画
+void drawOpenGL() {
+    // 背景色の描画
+    glClear(GL_COLOR_BUFFER_BIT);
+}
 
 int main(int argc, char **argv) {
     // OpenGLを初期化する
@@ -32,13 +36,13 @@ int main(int argc, char **argv) {
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
 
-    // 背景色の設定
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    // 初期化
+    initializeOpenGL();
 
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        // 背景色の描画
-        glClear(GL_COLOR_BUFFER_BIT);
+        // 描画
+        drawOpenGL();
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);
