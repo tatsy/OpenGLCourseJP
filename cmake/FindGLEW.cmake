@@ -1,5 +1,13 @@
 if (WIN32)
+  find_path(GLEW_INCLUDE_DIR
+            NAMES GL/glew.h
+            PATHS
+            ${GLEW_ROOT}/include)
 
+  find_library(GLEW_LIBRARY
+               NAMES glew32.lib
+               PATHS
+               ${GLEW_ROOT}/lib)
 else()
   find_path(GLEW_INCLUDE_DIR
             NAMES GL/glew.h
