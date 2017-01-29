@@ -1,6 +1,7 @@
 OpenGL Course
 ==========================================
 
+
 目次
 ----------
 
@@ -10,6 +11,7 @@ OpenGL Course
   sections/000/index
   sections/001/index
   sections/002/index
+  sections/003/index
 
 参考ページ
 -------------
