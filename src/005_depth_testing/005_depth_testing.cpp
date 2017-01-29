@@ -40,12 +40,15 @@ static const unsigned int indices[12][3] = {
 void initializeGL() {
     // 背景色の設定 (黒)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    // 深度テストの有効化
+    glEnable(GL_DEPTH_TEST);
 }
 
 // OpenGLの描画関数
 void paintGL() {
-    // 背景色の描画
-    glClear(GL_COLOR_BUFFER_BIT);
+    // 背景色と深度値のクリア
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // 座標の変換
     glMatrixMode(GL_PROJECTION);
