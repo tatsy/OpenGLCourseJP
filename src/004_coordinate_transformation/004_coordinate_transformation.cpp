@@ -7,6 +7,7 @@ static const int WIN_WIDTH   = 500;                 // ウィンドウの幅
 static const int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
+// 立方体の頂点位置
 static const float positions[8][3] = {
     { -1.0f, -1.0f, -1.0f },
     {  1.0f, -1.0f, -1.0f },
@@ -18,6 +19,7 @@ static const float positions[8][3] = {
     {  1.0f,  1.0f,  1.0f }
 };
 
+// 立方体の面の色
 static const float colors[6][3] = {
     { 1.0f, 0.0f, 0.0f },  // 赤
     { 0.0f, 1.0f, 0.0f },  // 緑
@@ -27,6 +29,7 @@ static const float colors[6][3] = {
     { 1.0f, 0.0f, 1.0f },  // マゼンタ
 };
 
+// 立方体の面となる三角形の定義
 static const unsigned int indices[12][3] = {
     { 1, 6, 7 }, { 1, 7, 4 },
     { 2, 5, 7 }, { 2, 7, 4 },
@@ -47,11 +50,15 @@ void paintGL() {
     // 背景色の描画
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // 座標の変換
+    // ビューポート変換の指定 (MacのLetinaディスプレイだと変になる)
+    glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
+
+    // 射影変換行列
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
+    // モデルビュー変換行列
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(3.0f, 4.0f, 5.0f,     // 視点の位置
@@ -61,7 +68,10 @@ void paintGL() {
     // 立方体の描画
     glBegin(GL_TRIANGLES);
     for (int face = 0; face < 6; face++) {
+        // 面の色
         glColor3fv(colors[face]);
+
+        // 1つの面(四角形)は2つの三角形から成る
         for (int i = 0; i < 3; i++) {
             glVertex3fv(positions[indices[face * 2 + 0][i]]);
         }
