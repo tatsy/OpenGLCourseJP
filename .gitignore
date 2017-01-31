@@ -1,3 +1,4 @@
 build/*
 docs/doctrees
+docs/source/materials/*
 .DS_Store
