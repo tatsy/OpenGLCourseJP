@@ -6,6 +6,7 @@
 #include <vector>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
+#define GLM_ENABLE_EXPERIMENTAL
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
