@@ -213,7 +213,6 @@ void paintGL() {
     glUniformMatrix4fv(mvpMatLocId, 1, GL_FALSE, glm::value_ptr(mvpMat));
 
     // 三角形の描画
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
     // VAOの無効化
