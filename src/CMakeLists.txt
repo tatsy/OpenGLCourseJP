@@ -1,6 +1,11 @@
 function(BUILD_EXAMPLE EXPNAME)
   set(TARGET_EXAMPLE_DIR "${CMAKE_CURRENT_LIST_DIR}/${EXPNAME}")
 
+  if (EXISTS "${TARGET_EXAMPLE_DIR}/common.h.in")
+    configure_file("${TARGET_EXAMPLE_DIR}/common.h.in"
+                   "${TARGET_EXAMPLE_DIR}/common.h" @ONLY)
+  endif()
+
   file(GLOB SOURCE_FILES "${EXPNAME}/*.cpp" "${EXPNAME}/*.h")
   file(GLOB SHADER_FILES "${EXPNAME}/shaders/*.vert" "${EXPNAME}/shaders/*.frag")
 
