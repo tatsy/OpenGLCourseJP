@@ -1,5 +1,9 @@
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <string>
+#include <deque>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #define GLM_ENABLE_EXPERIMENTAL
@@ -17,8 +21,8 @@
 
 #include "common.h"
 
-static int WIN_WIDTH   = 500;                       // ウィンドウの幅
-static int WIN_HEIGHT  = 500;                       // ウィンドウの高さ
+static int WIN_WIDTH   = 800;                       // ウィンドウの幅
+static int WIN_HEIGHT  = 600;                       // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
 static const std::string AIRCRAFT_OBJFILE = std::string(DATA_DIRECTORY) + "aircraft.obj";
@@ -27,9 +31,18 @@ static const std::string AIRCRAFT_TEXFILE = std::string(DATA_DIRECTORY) + "aircr
 static const std::string BALLOON_OBJFILE = std::string(DATA_DIRECTORY) + "balloon.obj";
 static const std::string BULLET_OBJFILE = std::string(DATA_DIRECTORY) + "bullet.obj";
 
+static const std::string SKY_OBJFILE = std::string(DATA_DIRECTORY) + "sky.obj";
+static const std::string SKY_TEXFILE = std::string(DATA_DIRECTORY) + "sky_diff.png";
+
 static const std::string RENDER_SHADER = std::string(SHADER_DIRECTORY) + "render";
 
-static const glm::vec3 lightPos = glm::vec3(-20.0f, 20.0f, 20.0f);
+static const glm::vec3 cameraPos = glm::vec3(0.0f, 100.0f, 0.0f);
+static const glm::vec3 eyeTo = glm::vec3(0.0f, 0.0f, 0.0f);
+static const glm::vec3 upVec = glm::vec3(0.0f, 0.0f, -1.0f);
+static const glm::vec3 lightPos = glm::vec3(0.0f, 50.0f, 0.0f);
+
+std::deque<glm::vec3> bulletPos;
+std::deque<glm::vec3> balloonPos;
 
 struct Vertex {
     Vertex()
@@ -292,7 +305,6 @@ struct RenderObject {
         location = glGetUniformLocation(programId, "u_shininess");
         glUniform1f(location, shininess);
 
-        modelMat = glm::mat4();
         glm::mat4 mvMat, mvpMat, normMat;
         mvMat = camera.viewMat * modelMat;
         mvpMat = camera.projMat * mvMat;
@@ -344,32 +356,128 @@ void initializeGL() {
     aircraft.loadOBJ(AIRCRAFT_OBJFILE);
     aircraft.buildShader(RENDER_SHADER);
     aircraft.loadTexture(AIRCRAFT_TEXFILE);
+    aircraft.modelMat = glm::translate(glm::vec3(0.0f, 0.0f, 30.0f));
     
+    balloon.initialize();
     balloon.loadOBJ(BALLOON_OBJFILE);
     balloon.buildShader(RENDER_SHADER);
-    
+    balloon.diffColor = glm::vec3(1.0f, 0.0f, 0.0f);
+
+    bullet.initialize();
     bullet.loadOBJ(BULLET_OBJFILE);
     bullet.buildShader(RENDER_SHADER);
+    bullet.diffColor = glm::vec3(0.5f, 0.5f, 0.0f);
+    bullet.specColor = glm::vec3(0.5f, 0.5f, 0.5f);
+
+    sky.initialize();
+    sky.loadOBJ(SKY_OBJFILE);
+    sky.buildShader(RENDER_SHADER);
+    sky.loadTexture(SKY_TEXFILE);
+    sky.modelMat = glm::scale(glm::vec3(200.0f, 200.0f, 200.0f));
     
-    camera.projMat = glm::perspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
-    camera.viewMat = glm::lookAt(glm::vec3(50.0f, 50.0f, 50.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    float aspect = WIN_WIDTH / (float)WIN_HEIGHT;
+    camera.projMat = glm::ortho(-50.0f * aspect, 50.0f * aspect, -50.0f, 50.0f, 0.1f, 1000.0f);
+    camera.viewMat = glm::lookAt(cameraPos, eyeTo, upVec);
+
+    // 風船の配置
+    srand((unsigned long)time(0));
+    for (int i = 0; i < 10; i++) {
+        float rx = (rand() / (float)RAND_MAX) * 60.0f - 30.0f;
+        float rz = (rand() / (float)RAND_MAX) * 30.0f - 50.0f;
+        balloonPos.push_back(glm::vec3(rx, 0.0f, rz));
+    }
 }
 
 void paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, WIN_WIDTH * 2, WIN_HEIGHT * 2);
+    glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
+
+    sky.draw(camera);
     
     aircraft.draw(camera);
+
+    std::deque<glm::vec3>::iterator it;
+    for (it = bulletPos.begin(); it != bulletPos.end(); ++it) {
+        bullet.modelMat = glm::translate(*it);
+        bullet.draw(camera);
+    }
+
+    for (it = balloonPos.begin(); it != balloonPos.end(); ++it) {
+        balloon.modelMat = glm::translate(*it);
+        balloon.draw(camera);
+    }
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
-    glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);    
+    glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
+
+    float aspect = WIN_WIDTH / (float)WIN_HEIGHT;
+    camera.projMat = glm::ortho(-50.0f * aspect, 50.0f * aspect, -50.0f, 50.0f, 0.1f, 1000.0f);
 }
 
 void update() {
+    std::deque<glm::vec3>::iterator it;
+    std::deque<glm::vec3>::iterator jt;
+
+    // 球の位置のアップデート
+    for (it = bulletPos.begin(); it != bulletPos.end(); ++it) {
+        it->z += -2.0f;
+    }
+
+    // 風船とのあたり判定
+    bool hit = true;
+    while(hit) {
+        hit = false;
+        for (it = bulletPos.begin(); it != bulletPos.end() && !hit; ++it) {
+            for (jt = balloonPos.begin(); jt != balloonPos.end() && !hit; ++jt) {
+                glm::vec3 diff = *it - *jt;
+                if (glm::length(*it - *jt) <= 1.0f) {
+                    bulletPos.erase(it);
+                    balloonPos.erase(jt);
+                    hit = true;
+                }
+            }
+        }
+    }
+
+    // 画面外の弾を削除
+    while (!bulletPos.empty()) {
+        if (bulletPos.begin()->z <= -50.0f) {
+            bulletPos.pop_front();
+            continue;
+        }
+        break;
+    }
+
+}
+
+void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    int state;
     
+    // 左
+    state = glfwGetKey(window, GLFW_KEY_LEFT);
+    if (state == GLFW_PRESS) {
+        aircraft.modelMat = glm::translate(aircraft.modelMat, glm::vec3(-0.5f, 0.0f, 0.0f));
+    }
+
+    // 右
+    state = glfwGetKey(window, GLFW_KEY_RIGHT);
+    if (state == GLFW_PRESS) {
+        aircraft.modelMat = glm::translate(aircraft.modelMat, glm::vec3(0.5f, 0.0f, 0.0f));
+    }
+
+    // Enter
+    state = glfwGetKey(window, GLFW_KEY_ENTER);
+    if (state == GLFW_PRESS) {
+        printf("Bullets: %zu\n", bulletPos.size());
+        if (bulletPos.size() < 5) {
+            glm::vec4 pos = aircraft.modelMat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            pos = pos / pos.w;
+            bulletPos.push_back(glm::vec3(pos.x, pos.y, pos.z));
+        }
+    }
 }
 
 int main(int argc, char **argv) {
@@ -380,10 +488,10 @@ int main(int argc, char **argv) {
     }
     
     // OpenGLのバージョン指定
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
     // Windowの作成
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
@@ -405,6 +513,9 @@ int main(int argc, char **argv) {
     
     // ウィンドウのリサイズを扱う関数の登録
     glfwSetWindowSizeCallback(window, resizeGL);
+
+    // キーボードコールバック関数の登録
+    glfwSetKeyCallback(window, keyboard);
     
     // OpenGLを初期化
     initializeGL();
