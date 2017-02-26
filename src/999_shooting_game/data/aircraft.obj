@@ -1,6 +1,5 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib plane.mtl
 v 0.905219 0.607097 -6.681522
 v 0.776245 0.860221 -6.681522
 v 0.575365 1.061102 -6.681522

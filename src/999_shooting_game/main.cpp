@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <deque>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
@@ -25,16 +26,28 @@ static int WIN_WIDTH   = 800;                       // ウィンドウの幅
 static int WIN_HEIGHT  = 600;                       // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
+// 飛行機用のファイル
 static const std::string AIRCRAFT_OBJFILE = std::string(DATA_DIRECTORY) + "aircraft.obj";
 static const std::string AIRCRAFT_TEXFILE = std::string(DATA_DIRECTORY) + "aircraft_diff.png";
 
-static const std::string BALLOON_OBJFILE = std::string(DATA_DIRECTORY) + "balloon.obj";
-static const std::string BULLET_OBJFILE = std::string(DATA_DIRECTORY) + "bullet.obj";
+// 風船用のファイル
+static const std::string BALLOON_OBJFILE  = std::string(DATA_DIRECTORY) + "balloon.obj";
+static const std::string BULLET_OBJFILE   = std::string(DATA_DIRECTORY) + "bullet.obj";
 
-static const std::string SKY_OBJFILE = std::string(DATA_DIRECTORY) + "sky.obj";
-static const std::string SKY_TEXFILE = std::string(DATA_DIRECTORY) + "sky_diff.png";
+// 空用のファイル
+static const std::string SKY_OBJFILE      = std::string(DATA_DIRECTORY) + "square.obj";
+static const std::string SKY_TEXFILE      = std::string(DATA_DIRECTORY) + "sky_diff.png";
 
-static const std::string RENDER_SHADER = std::string(SHADER_DIRECTORY) + "render";
+// スタート画面用のファイル
+static const std::string START_OBJFILE    = std::string(DATA_DIRECTORY) + "square.obj";
+static const std::string START_TEXFILE    = std::string(DATA_DIRECTORY) + "start.png";
+
+// クリア画面用のファイル
+static const std::string CLEAR_OBJFILE    = std::string(DATA_DIRECTORY) + "square.obj";
+static const std::string CLEAR_TEXFILE    = std::string(DATA_DIRECTORY) + "clear.png";
+
+static const std::string RENDER_SHADER    = std::string(SHADER_DIRECTORY) + "render";
+static const std::string TEXTURE_SHADER   = std::string(SHADER_DIRECTORY) + "texture";
 
 static const glm::vec3 cameraPos = glm::vec3(0.0f, 100.0f, 0.0f);
 static const glm::vec3 eyeTo = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -284,8 +297,8 @@ struct RenderObject {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight,
                      0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
         
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         
         glBindTexture(GL_TEXTURE_2D, 0);
         
@@ -345,6 +358,45 @@ RenderObject aircraft;
 RenderObject bullet;
 RenderObject balloon;
 RenderObject sky;
+RenderObject startDisp;
+RenderObject clearDisp;
+float aircraftVelo = 0.0f;
+float aircraftAcc = 0.05f;
+
+enum {
+    GAME_MODE_START,
+    GAME_MODE_PLAY,
+    GAME_MODE_CLEAR
+};
+
+int gameMode = GAME_MODE_START;
+
+float sign(float x) {
+    if (x < -1.0e-8f) return -1.0f;
+    if (x >  1.0e-8f) return  1.0f;
+    return 0.0f;
+}
+
+void gameInit() {
+    // 飛行機の位置の初期化
+    aircraft.modelMat = glm::translate(glm::vec3(0.0f, 0.0f, 30.0f));
+
+    // 弾の初期化
+    bulletPos.clear();
+
+    // 風船の配置
+    srand((unsigned long)time(0));
+
+    const int rows = 5;
+    const int cols = 10;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            float rx = j * 10.0f - 45.0f;
+            float rz = i * 10.0f - 40.0f;
+            balloonPos.push_back(glm::vec3(rx, 0.0f, rz));
+        }
+    }
+}
 
 void initializeGL() {
     glEnable(GL_DEPTH_TEST);
@@ -362,6 +414,8 @@ void initializeGL() {
     balloon.loadOBJ(BALLOON_OBJFILE);
     balloon.buildShader(RENDER_SHADER);
     balloon.diffColor = glm::vec3(1.0f, 0.0f, 0.0f);
+    balloon.specColor = glm::vec3(0.2f, 0.2f, 0.2f);
+    balloon.ambiColor = glm::vec3(0.1f, 0.0f, 0.0f);
 
     bullet.initialize();
     bullet.loadOBJ(BULLET_OBJFILE);
@@ -371,41 +425,79 @@ void initializeGL() {
 
     sky.initialize();
     sky.loadOBJ(SKY_OBJFILE);
-    sky.buildShader(RENDER_SHADER);
+    sky.buildShader(TEXTURE_SHADER);
     sky.loadTexture(SKY_TEXFILE);
-    sky.modelMat = glm::scale(glm::vec3(200.0f, 200.0f, 200.0f));
-    
-    float aspect = WIN_WIDTH / (float)WIN_HEIGHT;
-    camera.projMat = glm::ortho(-50.0f * aspect, 50.0f * aspect, -50.0f, 50.0f, 0.1f, 1000.0f);
-    camera.viewMat = glm::lookAt(cameraPos, eyeTo, upVec);
 
-    // 風船の配置
-    srand((unsigned long)time(0));
-    for (int i = 0; i < 10; i++) {
-        float rx = (rand() / (float)RAND_MAX) * 60.0f - 30.0f;
-        float rz = (rand() / (float)RAND_MAX) * 30.0f - 50.0f;
-        balloonPos.push_back(glm::vec3(rx, 0.0f, rz));
-    }
+    startDisp.initialize();
+    startDisp.loadOBJ(START_OBJFILE);
+    startDisp.buildShader(TEXTURE_SHADER);
+    startDisp.loadTexture(START_TEXFILE);
+
+    clearDisp.initialize();
+    clearDisp.loadOBJ(CLEAR_OBJFILE);
+    clearDisp.buildShader(TEXTURE_SHADER);
+    clearDisp.loadTexture(CLEAR_TEXFILE);
+
+    float aspect = WIN_WIDTH / (float)WIN_HEIGHT;
+    //camera.projMat = glm::ortho(-50.0f * aspect, 50.0f * aspect, -50.0f, 50.0f, 0.1f, 1000.0f);
+    //camera.viewMat = glm::lookAt(cameraPos, eyeTo, upVec);
+
+    camera.projMat = glm::perspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    camera.viewMat = glm::lookAt(glm::vec3(0.0f, 40.0f, 80.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+
+
+    gameInit();
 }
 
 void paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
+    glDisable(GL_DEPTH_TEST);
     sky.draw(camera);
-    
-    aircraft.draw(camera);
+    glEnable(GL_DEPTH_TEST);
 
-    std::deque<glm::vec3>::iterator it;
-    for (it = bulletPos.begin(); it != bulletPos.end(); ++it) {
-        bullet.modelMat = glm::translate(*it);
-        bullet.draw(camera);
-    }
+    switch (gameMode) {
+    case GAME_MODE_START:
+        {
+            glDisable(GL_DEPTH_TEST);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            startDisp.draw(camera);
+            glEnable(GL_DEPTH_TEST);
+            glDisable(GL_BLEND);
+        }
+        break;
 
-    for (it = balloonPos.begin(); it != balloonPos.end(); ++it) {
-        balloon.modelMat = glm::translate(*it);
-        balloon.draw(camera);
-    }
+    case GAME_MODE_PLAY:
+        {
+            aircraft.draw(camera);
+
+            std::deque<glm::vec3>::iterator it;
+            for (it = bulletPos.begin(); it != bulletPos.end(); ++it) {
+                bullet.modelMat = glm::translate(*it);
+                bullet.draw(camera);
+            }
+
+            for (it = balloonPos.begin(); it != balloonPos.end(); ++it) {
+                balloon.modelMat = glm::translate(*it);
+                balloon.draw(camera);
+            }
+        }
+        break;
+
+    case GAME_MODE_CLEAR:
+        {
+            glDisable(GL_DEPTH_TEST);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            clearDisp.draw(camera);
+            glEnable(GL_DEPTH_TEST);
+            glDisable(GL_BLEND);
+        }
+        break;
+    }    
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
@@ -418,64 +510,91 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 }
 
 void update() {
-    std::deque<glm::vec3>::iterator it;
-    std::deque<glm::vec3>::iterator jt;
+    if (gameMode == GAME_MODE_PLAY) {
+        std::deque<glm::vec3>::iterator it;
+        std::deque<glm::vec3>::iterator jt;
 
-    // 球の位置のアップデート
-    for (it = bulletPos.begin(); it != bulletPos.end(); ++it) {
-        it->z += -2.0f;
-    }
+        // 球の位置のアップデート
+        for (it = bulletPos.begin(); it != bulletPos.end(); ++it) {
+            it->z += -2.0f;
+        }
 
-    // 風船とのあたり判定
-    bool hit = true;
-    while(hit) {
-        hit = false;
-        for (it = bulletPos.begin(); it != bulletPos.end() && !hit; ++it) {
-            for (jt = balloonPos.begin(); jt != balloonPos.end() && !hit; ++jt) {
-                glm::vec3 diff = *it - *jt;
-                if (glm::length(*it - *jt) <= 1.0f) {
-                    bulletPos.erase(it);
-                    balloonPos.erase(jt);
-                    hit = true;
+        // 風船とのあたり判定
+        bool hit = true;
+        while(hit) {
+            hit = false;
+            for (it = bulletPos.begin(); it != bulletPos.end() && !hit; ++it) {
+                for (jt = balloonPos.begin(); jt != balloonPos.end() && !hit; ++jt) {
+                    glm::vec3 diff = *it - *jt;
+                    if (glm::length(*it - *jt) <= 2.0f) {
+                        bulletPos.erase(it);
+                        balloonPos.erase(jt);
+                        hit = true;
+                    }
                 }
             }
         }
-    }
 
-    // 画面外の弾を削除
-    while (!bulletPos.empty()) {
-        if (bulletPos.begin()->z <= -50.0f) {
-            bulletPos.pop_front();
-            continue;
+        // 画面外の弾を削除
+        while (!bulletPos.empty()) {
+            if (bulletPos.begin()->z <= -100.0f) {
+                bulletPos.pop_front();
+                continue;
+            }
+            break;
         }
-        break;
+
+        // 飛行機を原則させる
+        aircraftVelo -= sign(aircraftVelo) * aircraftAcc * 0.2f;
     }
 
+    if (gameMode == GAME_MODE_PLAY && balloonPos.empty()) {
+        gameMode = GAME_MODE_CLEAR;
+    }
 }
 
-void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
+void keyboard(GLFWwindow *window) {
     int state;
-    
-    // 左
-    state = glfwGetKey(window, GLFW_KEY_LEFT);
-    if (state == GLFW_PRESS) {
-        aircraft.modelMat = glm::translate(aircraft.modelMat, glm::vec3(-0.5f, 0.0f, 0.0f));
-    }
+   
+    if (gameMode == GAME_MODE_PLAY) {
+        // 左
+        state = glfwGetKey(window, GLFW_KEY_LEFT);
+        if (state == GLFW_PRESS || state == GLFW_REPEAT) {
+            aircraftVelo = std::min(aircraftVelo, 0.0f);
+            aircraftVelo -= aircraftAcc;
+            aircraftVelo = std::max(aircraftVelo, -0.5f);
+            aircraft.modelMat = glm::translate(aircraft.modelMat, glm::vec3(aircraftVelo, 0.0f, 0.0f));
+        }
 
-    // 右
-    state = glfwGetKey(window, GLFW_KEY_RIGHT);
-    if (state == GLFW_PRESS) {
-        aircraft.modelMat = glm::translate(aircraft.modelMat, glm::vec3(0.5f, 0.0f, 0.0f));
+        // 右
+        state = glfwGetKey(window, GLFW_KEY_RIGHT);
+        if (state == GLFW_PRESS || state == GLFW_REPEAT) {
+            aircraftVelo = std::max(aircraftVelo, 0.0f);
+            aircraftVelo += aircraftAcc;
+            aircraftVelo = std::min(aircraftVelo, 0.5f);
+            aircraft.modelMat = glm::translate(aircraft.modelMat, glm::vec3(aircraftVelo, 0.0f, 0.0f));
+        }
     }
+}
 
-    // Enter
-    state = glfwGetKey(window, GLFW_KEY_ENTER);
-    if (state == GLFW_PRESS) {
-        printf("Bullets: %zu\n", bulletPos.size());
-        if (bulletPos.size() < 5) {
-            glm::vec4 pos = aircraft.modelMat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-            pos = pos / pos.w;
-            bulletPos.push_back(glm::vec3(pos.x, pos.y, pos.z));
+void keyboardCallback(GLFWwindow *window, int key, int scanmode, int action, int mods) {
+    if (gameMode == GAME_MODE_PLAY) {
+        // Space
+        if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+            if (bulletPos.size() < 10) {
+                glm::vec4 pos = aircraft.modelMat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+                pos = pos / pos.w;
+                bulletPos.push_back(glm::vec3(pos.x, pos.y, pos.z));
+            }
+        }
+    } else {
+        if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+            if (gameMode == GAME_MODE_START) {
+                gameMode = GAME_MODE_PLAY;
+            } else if (gameMode == GAME_MODE_CLEAR) {
+                gameMode = GAME_MODE_START;
+                gameInit();
+            }
         }
     }
 }
@@ -515,7 +634,7 @@ int main(int argc, char **argv) {
     glfwSetWindowSizeCallback(window, resizeGL);
 
     // キーボードコールバック関数の登録
-    glfwSetKeyCallback(window, keyboard);
+    glfwSetKeyCallback(window, keyboardCallback);
     
     // OpenGLを初期化
     initializeGL();
@@ -527,7 +646,10 @@ int main(int argc, char **argv) {
         
         // アニメーション
         update();
-        
+
+        // キーボード処理
+        keyboard(window);
+
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);
         glfwPollEvents();
