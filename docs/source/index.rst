@@ -6,7 +6,7 @@ OpenGL Course
 ----------
 
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 1
 
   sections/000/index
   sections/001/index
@@ -15,6 +15,20 @@ OpenGL Course
   sections/004/index
   sections/005/index
   sections/006/index
+  sections/007/index
+  sections/008/index
+  sections/009/index
+  sections/010/index
+  sections/011/index
+  sections/012/index
+  sections/013/index
+  sections/014/index
+  sections/015/index
+  sections/016/index
+  sections/017/index
+  sections/018/index
+  sections/019/index
+  sections/020/index
 
 参考ページ
 -------------
