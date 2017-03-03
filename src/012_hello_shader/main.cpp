@@ -148,7 +148,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     reader.seekg(0, std::ios::end);             // ファイル読み取り位置を終端に移動 
     codeSize = reader.tellg();                  // 現在の箇所(=終端)の位置がファイルサイズ
     code.resize(codeSize);                      // コードを格納する変数の大きさを設定
-    reader.seekg(0);                            // ファイルの読み取り位置を戦闘に移動
+    reader.seekg(0);                            // ファイルの読み取り位置を先頭に移動
     reader.read(&code[0], codeSize);            // 先頭からファイルサイズ分を読んでコードの変数に格納
 
     // ファイルを閉じる
