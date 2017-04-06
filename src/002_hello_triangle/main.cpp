@@ -5,6 +5,28 @@ static const int WIN_WIDTH   = 500;                 // ウィンドウの幅
 static const int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
+// ユーザ定義のOpenGLの初期化
+void initializeGL() {
+    // 背景色の設定
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+// ユーザ定義のOpenGL描画
+void paintGL() {
+    // 背景色の描画
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // 三角形の描画
+    glBegin(GL_TRIANGLES);
+    glColor3f(1.0f, 0.0f, 0.0f);    // 赤
+    glVertex2f(-0.5f, -0.5f);
+    glColor3f(0.0f, 1.0f, 0.0f);    // 緑
+    glVertex2f(-0.5f,  0.5f);
+    glColor3f(0.0f, 0.0f, 1.0f);    // 青
+    glVertex2f( 0.5f, -0.5f);
+    glEnd();
+}
+
 int main(int argc, char **argv) {
     // OpenGLを初期化する
     if (glfwInit() == GL_FALSE) {
@@ -24,23 +46,13 @@ int main(int argc, char **argv) {
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
 
-    // 背景色の設定 (黒)
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    // 初期化
+    initializeGL();
 
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        // 背景色の描画
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        // 三角形の描画
-        glBegin(GL_TRIANGLES);
-        glColor3f(1.0f, 0.0f, 0.0f);    // 赤
-        glVertex2f(-0.5f, -0.5f);
-        glColor3f(0.0f, 1.0f, 0.0f);    // 緑
-        glVertex2f(-0.5f,  0.5f);
-        glColor3f(0.0f, 0.0f, 1.0f);    // 青
-        glVertex2f( 0.5f, -0.5f);
-        glEnd();
+        // 描画
+        paintGL();
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);

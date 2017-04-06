@@ -4,7 +4,7 @@
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/001_open_window/001_open_window.cpp
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/001_open_window/main.cpp
 
 
 OpenGLの初期化

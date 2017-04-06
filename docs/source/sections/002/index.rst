@@ -4,7 +4,7 @@
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/002_hello_triangle/002_hello_triangle.cpp
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/002_hello_triangle/main.cpp
 
 前回は、単に塗りつぶされた画面が表示されるだけのプログラムを紹介しました。
 今回は、これを少し発展させて、三角形を表示させるプログラムを作りたいと思います。

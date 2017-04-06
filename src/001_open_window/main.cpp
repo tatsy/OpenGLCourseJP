@@ -6,13 +6,13 @@ static const int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
 // ユーザ定義のOpenGLの初期化
-void initializeOpenGL() {
+void initializeGL() {
     // 背景色の設定
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 // ユーザ定義のOpenGL描画
-void drawOpenGL() {
+void paintGL() {
     // 背景色の描画
     glClear(GL_COLOR_BUFFER_BIT);
 }
@@ -37,12 +37,12 @@ int main(int argc, char **argv) {
     glfwMakeContextCurrent(window);
 
     // 初期化
-    initializeOpenGL();
+    initializeGL();
 
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         // 描画
-        drawOpenGL();
+        paintGL();
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);

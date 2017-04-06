@@ -4,7 +4,7 @@
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/003_use_of_methods/003_use_of_methods.cpp
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/003_use_of_methods/main.cpp
 
 
 前回までの内容で無事、三角形が表示できるようになりましたが、ここからプログラムを書き足していく上で
