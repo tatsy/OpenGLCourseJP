@@ -140,7 +140,7 @@ void initializeGL() {
     fragShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 
     // ファイルの読み込み
-    std::ifstream vertShaderFile(VERT_SHADER_FILE, std::ios::in);
+    std::ifstream vertShaderFile(VERT_SHADER_FILE.c_str(), std::ios::in);
     if (!vertShaderFile.is_open()) {
         fprintf(stderr, "Failed to load vertex shader: %s\n", VERT_SHADER_FILE.c_str());
         exit(1);
@@ -155,7 +155,7 @@ void initializeGL() {
     }
     const char *vertShaderCode = vertShaderBuffer.c_str();
     
-    std::ifstream fragShaderFile(FRAG_SHADER_FILE, std::ios::in);
+    std::ifstream fragShaderFile(FRAG_SHADER_FILE.c_str(), std::ios::in);
     if (!fragShaderFile.is_open()) {
         fprintf(stderr, "Failed to load fragment shader: %s\n", FRAG_SHADER_FILE.c_str());
         exit(1);
