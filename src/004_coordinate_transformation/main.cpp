@@ -1,4 +1,6 @@
 ﻿#include <cstdio>
+#include <cmath>
+static const float Pi = std::atan(1.0) * 4.0;
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>

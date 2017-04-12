@@ -118,7 +118,7 @@ struct RenderObject {
         GLuint fragShaderId = glCreateShader(GL_FRAGMENT_SHADER);
         
         // ファイルの読み込み (Vertex shader)
-        std::ifstream vertFileInput(vertShaderFile, std::ios::in);
+        std::ifstream vertFileInput(vertShaderFile.c_str(), std::ios::in);
         if (!vertFileInput.is_open()) {
             fprintf(stderr, "Failed to load vertex shader: %s\n", vertShaderFile.c_str());
             exit(1);
@@ -129,7 +129,7 @@ struct RenderObject {
         const char *vertShaderCode = vertFileData.c_str();
 
         // ファイルの読み込み (Fragment shader)
-        std::ifstream fragFileInput(fragShaderFile, std::ios::in);
+        std::ifstream fragFileInput(fragShaderFile.c_str(), std::ios::in);
         if (!fragFileInput.is_open()) {
             fprintf(stderr, "Failed to load fragment shader: %s\n", fragShaderFile.c_str());
             exit(1);
