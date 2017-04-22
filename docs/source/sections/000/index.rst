@@ -270,7 +270,7 @@ MacOSでGLFWを使うためには、いくつかのフレームワーク(ライ�
 すると、画面下部に「Linked Frameworks and Libraries」という項目があるので、こちらに使用する
 フレームワークを追加していきます。
 
-使用するフレームワークは3種類で「Cocoa」、「CoreVideo」、「IOKit」になります。
+使用するフレームワークは4種類で「OpenGL」、「Cocoa」、「CoreVideo」、「IOKit」になります。
 いずれも「Linked Frameworks and Libraries」項目の下側にある「＋」ボタンを押すと現れる、
 以下の画面で検索することにより追加できます。
 
