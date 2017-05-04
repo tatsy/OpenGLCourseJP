@@ -16,26 +16,26 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
-// ƒfƒBƒŒƒNƒgƒŠ‚Ìİ’èƒtƒ@ƒCƒ‹
+// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
 #include "common.h"
 
-static int WIN_WIDTH   = 500;                       // ƒEƒBƒ“ƒhƒE‚Ì•
-static int WIN_HEIGHT  = 500;                       // ƒEƒBƒ“ƒhƒE‚Ì‚‚³
-static const char *WIN_TITLE = "OpenGL Course";     // ƒEƒBƒ“ƒhƒE‚Ìƒ^ƒCƒgƒ‹
+static int WIN_WIDTH   = 500;                       // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹…
+static int WIN_HEIGHT  = 500;                       // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•
+static const char *WIN_TITLE = "OpenGL Course";     // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¿ã‚¤ãƒˆãƒ«
 
 static const double PI = 4.0 * std::atan(1.0);
 
-// ƒVƒF[ƒ_ƒtƒ@ƒCƒ‹
+// ã‚·ã‚§ãƒ¼ãƒ€ãƒ•ã‚¡ã‚¤ãƒ«
 static const std::string VERT_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.vert";
 static const std::string FRAG_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.frag";
 
-// ƒ‚ƒfƒ‹‚Ìƒtƒ@ƒCƒ‹
+// ãƒ¢ãƒ‡ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«
 static const std::string BUNNY_FILE = std::string(DATA_DIRECTORY) + "bunny.obj";
 
-// ’¸“_”Ô†”z—ñ‚Ì‘å‚«‚³
+// é ‚ç‚¹ç•ªå·é…åˆ—ã®å¤§ãã•
 static size_t indexBufferSize = 0;
 
-// ’¸“_ƒIƒuƒWƒFƒNƒg
+// é ‚ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 struct Vertex {
     Vertex(const glm::vec3 &position_, const glm::vec3 &normal_)
         : position(position_)
@@ -46,30 +46,30 @@ struct Vertex {
     glm::vec3 normal;
 };
 
-// ƒoƒbƒtƒ@‚ğQÆ‚·‚é”Ô†
+// ãƒãƒƒãƒ•ã‚¡ã‚’å‚ç…§ã™ã‚‹ç•ªå·
 GLuint vaoId;
 GLuint vertexBufferId;
 GLuint indexBufferId;
 
-// ƒVƒF[ƒ_‚ğQÆ‚·‚é”Ô†
+// ã‚·ã‚§ãƒ¼ãƒ€ã‚’å‚ç…§ã™ã‚‹ç•ªå·
 GLuint vertShaderId;
 GLuint fragShaderId;
 GLuint programId;
 
-// —§•û‘Ì‚Ì‰ñ“]Šp“x
+// ç«‹æ–¹ä½“ã®å›è»¢è§’åº¦
 static float theta = 0.0f;
 
-// ƒVƒF[ƒfƒBƒ“ƒO‚Ì‚½‚ß‚Ìî•ñ
-// Gold (QÆ: http://www.barradeau.com/nicoptere/dump/materials.html)
+// ã‚·ã‚§ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã®ãŸã‚ã®æƒ…å ±
+// Gold (å‚ç…§: http://www.barradeau.com/nicoptere/dump/materials.html)
 static const glm::vec3 lightPos = glm::vec3(5.0f, 5.0f, 5.0f);
 static const glm::vec3 diffColor = glm::vec3(0.75164f, 0.60648f, 0.22648f);
 static const glm::vec3 specColor = glm::vec3(0.628281f, 0.555802f, 0.366065f);
 static const glm::vec3 ambiColor = glm::vec3(0.24725f, 0.1995f, 0.0745f);
 static const float shininess = 51.2f;
 
-// VAO‚Ì‰Šú‰»
+// VAOã®åˆæœŸåŒ–
 void initVAO() {
-    // ƒ‚ƒfƒ‹‚Ìƒ[ƒh
+    // ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -84,14 +84,14 @@ void initVAO() {
         exit(1);
     }
 
-    // Vertex”z—ñ‚Ìì¬
+    // Vertexé…åˆ—ã®ä½œæˆ
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     for (int s = 0; s < shapes.size(); s++) {
         const tinyobj::mesh_t &mesh = shapes[s].mesh;
         for (int i = 0; i < mesh.indices.size(); i++) {
             const tinyobj::index_t &index = mesh.indices[i];
-            
+
             glm::vec3 position, normal;
 
             if (index.vertex_index >= 0) {
@@ -105,7 +105,7 @@ void initVAO() {
                                    attrib.normals[index.normal_index * 3 + 1],
                                    attrib.normals[index.normal_index * 3 + 2]);
             }
-            
+
             const unsigned int vertexIndex = vertices.size();
             vertices.push_back(Vertex(position, normal));
             indices.push_back(vertexIndex);
@@ -113,16 +113,16 @@ void initVAO() {
     }
     indexBufferSize = indices.size();
 
-    // VAO‚Ìì¬
+    // VAOã®ä½œæˆ
     glGenVertexArrays(1, &vaoId);
     glBindVertexArray(vaoId);
 
-    // ’¸“_ƒoƒbƒtƒ@‚Ìì¬
+    // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
     glGenBuffers(1, &vertexBufferId);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
-    // ’¸“_ƒoƒbƒtƒ@‚Ì—LŒø‰»
+    // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®æœ‰åŠ¹åŒ–
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
@@ -131,44 +131,44 @@ void initVAO() {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 
-    // ’¸“_”Ô†ƒoƒbƒtƒ@‚Ìì¬
+    // é ‚ç‚¹ç•ªå·ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
                  indices.data(), GL_STATIC_DRAW);
 
-    // VAO‚ğOFF‚É‚µ‚Ä‚¨‚­
+    // VAOã‚’OFFã«ã—ã¦ãŠã
     glBindVertexArray(0);
 }
 
 GLuint compileShader(const std::string &filename, GLuint type) {
-    // ƒVƒF[ƒ_‚Ìì¬
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ä½œæˆ
     GLuint shaderId = glCreateShader(type);
-    
-    // ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
     std::ifstream reader;
     size_t codeSize;
     std::string code;
 
-    // ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
     reader.open(filename.c_str(), std::ios::in);
     if (!reader.is_open()) {
-        // ƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚È‚©‚Á‚½‚çƒGƒ‰[‚ğo‚µ‚ÄI—¹
+        // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ãªã‹ã£ãŸã‚‰ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã—ã¦çµ‚äº†
         fprintf(stderr, "Failed to load vertex shader: %s\n", VERT_SHADER_FILE.c_str());
         exit(1);
     }
 
-    // ƒtƒ@ƒCƒ‹‚ğ‚·‚×‚Ä“Ç‚ñ‚Å•Ï”‚ÉŠi”[ (‚â‚â“ï)
-    reader.seekg(0, std::ios::end);             // ƒtƒ@ƒCƒ‹“Ç‚İæ‚èˆÊ’u‚ğI’[‚ÉˆÚ“® 
-    codeSize = reader.tellg();                  // Œ»İ‚Ì‰ÓŠ(=I’[)‚ÌˆÊ’u‚ªƒtƒ@ƒCƒ‹ƒTƒCƒY
-    code.resize(codeSize);                      // ƒR[ƒh‚ğŠi”[‚·‚é•Ï”‚Ì‘å‚«‚³‚ğİ’è
-    reader.seekg(0);                            // ƒtƒ@ƒCƒ‹‚Ì“Ç‚İæ‚èˆÊ’u‚ğí“¬‚ÉˆÚ“®
-    reader.read(&code[0], codeSize);            // æ“ª‚©‚çƒtƒ@ƒCƒ‹ƒTƒCƒY•ª‚ğ“Ç‚ñ‚ÅƒR[ƒh‚Ì•Ï”‚ÉŠi”[
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã™ã¹ã¦èª­ã‚“ã§å¤‰æ•°ã«æ ¼ç´ (ã‚„ã‚„é›£)
+    reader.seekg(0, std::ios::end);             // ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿å–ã‚Šä½ç½®ã‚’çµ‚ç«¯ã«ç§»å‹•
+    codeSize = reader.tellg();                  // ç¾åœ¨ã®ç®‡æ‰€(=çµ‚ç«¯)ã®ä½ç½®ãŒãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
+    code.resize(codeSize);                      // ã‚³ãƒ¼ãƒ‰ã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°ã®å¤§ãã•ã‚’è¨­å®š
+    reader.seekg(0);                            // ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿å–ã‚Šä½ç½®ã‚’æˆ¦é—˜ã«ç§»å‹•
+    reader.read(&code[0], codeSize);            // å…ˆé ­ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºåˆ†ã‚’èª­ã‚“ã§ã‚³ãƒ¼ãƒ‰ã®å¤‰æ•°ã«æ ¼ç´
 
-    // ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
     reader.close();
 
-    // ƒR[ƒh‚ÌƒRƒ“ƒpƒCƒ‹
+    // ã‚³ãƒ¼ãƒ‰ã®ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     GLint compileStatus;
     const char *codeChars = code.c_str();
     glShaderSource(shaderId, 1, &codeChars, NULL);
@@ -176,7 +176,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
 
     if (compileStatus == GL_FALSE) {
-        // ƒRƒ“ƒpƒCƒ‹‚ª¸”s‚µ‚½‚çƒGƒ‰[ƒƒbƒZ[ƒW‚Æƒ\[ƒXƒR[ƒh‚ğ•\¦‚µ‚ÄI—¹
+        // ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãŒå¤±æ•—ã—ãŸã‚‰ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’è¡¨ç¤ºã—ã¦çµ‚äº†
         fprintf(stderr, "Failed to compile vertex shader!\n");
 
         GLint logLength;
@@ -196,13 +196,13 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     return shaderId;
 }
 
-// ƒVƒF[ƒ_‚Ì‰Šú‰»
+// ã‚·ã‚§ãƒ¼ãƒ€ã®åˆæœŸåŒ–
 void initShaders() {
-    // ƒVƒF[ƒ_‚Ìì¬
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ä½œæˆ
     vertShaderId = compileShader(VERT_SHADER_FILE, GL_VERTEX_SHADER);
     fragShaderId = compileShader(FRAG_SHADER_FILE, GL_FRAGMENT_SHADER);
 
-    // ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚ÌƒŠƒ“ƒN
+    // ã‚·ã‚§ãƒ¼ãƒ€ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ãƒªãƒ³ã‚¯
     programId = glCreateProgram();
     glAttachShader(programId, vertShaderId);
     glAttachShader(programId, fragShaderId);
@@ -211,7 +211,7 @@ void initShaders() {
     glLinkProgram(programId);
     glGetProgramiv(programId, GL_LINK_STATUS, &linkState);
     if (linkState == GL_FALSE) {
-        // ƒŠƒ“ƒN‚É¸”s‚µ‚½‚çƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•\¦‚µ‚ÄI—¹
+        // ãƒªãƒ³ã‚¯ã«å¤±æ•—ã—ãŸã‚‰ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ã¦çµ‚äº†
         fprintf(stderr, "Failed to link shaders!\n");
 
         GLint logLength;
@@ -227,55 +227,55 @@ void initShaders() {
         exit(1);
     }
 
-    // ƒVƒF[ƒ_‚Ì–³Œø‰»‚µ‚Ä‚¨‚­
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ç„¡åŠ¹åŒ–ã—ã¦ãŠã
     glUseProgram(0);
 }
 
-// OpenGL‚Ì‰Šú‰»ŠÖ”
+// OpenGLã®åˆæœŸåŒ–é–¢æ•°
 void initializeGL() {
-    // [“xƒeƒXƒg‚Ì—LŒø‰»
+    // æ·±åº¦ãƒ†ã‚¹ãƒˆã®æœ‰åŠ¹åŒ–
     glEnable(GL_DEPTH_TEST);
 
-    // ”wŒiF‚Ìİ’è (•)
+    // èƒŒæ™¯è‰²ã®è¨­å®š (é»’)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-    // VAO‚Ì‰Šú‰»
+    // VAOã®åˆæœŸåŒ–
     initVAO();
 
-    // ƒVƒF[ƒ_‚Ì—pˆÓ
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ç”¨æ„
     initShaders();
 }
 
-// OpenGL‚Ì•`‰æŠÖ”
+// OpenGLã®æç”»é–¢æ•°
 void paintGL() {
-    // ”wŒiF‚Ì•`‰æ
+    // èƒŒæ™¯è‰²ã®æç”»
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // ƒrƒ…[ƒ|[ƒg•ÏŠ·‚Ìw’è
+    // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¤‰æ›ã®æŒ‡å®š
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
-    // À•W‚Ì•ÏŠ·
+    // åº§æ¨™ã®å¤‰æ›
     glm::mat4 projMat = glm::perspective(45.0f,
         (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
-    glm::mat4 viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // ‹“_‚ÌˆÊ’u
-                                    glm::vec3(0.0f, 0.0f, 0.0f),   // Œ©‚Ä‚¢‚éæ
-                                    glm::vec3(0.0f, 1.0f, 0.0f));  // ‹ŠE‚Ìã•ûŒü
+    glm::mat4 viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // è¦–ç‚¹ã®ä½ç½®
+                                    glm::vec3(0.0f, 0.0f, 0.0f),   // è¦‹ã¦ã„ã‚‹å…ˆ
+                                    glm::vec3(0.0f, 1.0f, 0.0f));  // è¦–ç•Œã®ä¸Šæ–¹å‘
 
-    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
+    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f));
 
     glm::mat4 mvMat = viewMat * modelMat;
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
     glm::mat4 normMat = glm::transpose(glm::inverse(mvMat));
     glm::mat4 lightMat = viewMat;
 
-    // VAO‚Ì—LŒø‰»
+    // VAOã®æœ‰åŠ¹åŒ–
     glBindVertexArray(vaoId);
 
-    // ƒVƒF[ƒ_‚Ì—LŒø‰»
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®æœ‰åŠ¹åŒ–
     glUseProgram(programId);
 
-    // Uniform•Ï”‚Ì“]‘—
+    // Uniformå¤‰æ•°ã®è»¢é€
     GLuint uid;
     uid = glGetUniformLocation(programId, "u_mvMat");
     glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvMat));
@@ -297,13 +297,13 @@ void paintGL() {
     uid = glGetUniformLocation(programId, "u_shininess");
     glUniform1f(uid, shininess);
 
-    // OŠpŒ`‚Ì•`‰æ
+    // ä¸‰è§’å½¢ã®æç”»
     glDrawElements(GL_TRIANGLES, indexBufferSize, GL_UNSIGNED_INT, 0);
 
-    // VAO‚Ì–³Œø‰»
+    // VAOã®ç„¡åŠ¹åŒ–
     glBindVertexArray(0);
 
-    // ƒVƒF[ƒ_‚Ì–³Œø‰»
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ç„¡åŠ¹åŒ–
     glUseProgram(0);
 }
 
@@ -313,51 +313,56 @@ void resizeGL(GLFWwindow *window, int width, int height) {
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
 }
 
-// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‚½‚ß‚ÌƒAƒbƒvƒf[ƒg
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãŸã‚ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 void animate() {
-    theta += 2.0f * PI / 360.0f;  // 10•ª‚Ì1‰ñ“]
+    theta += 2.0f * PI / 360.0f;  // 10åˆ†ã®1å›è»¢
 }
 
 int main(int argc, char **argv) {
-    // OpenGL‚ğ‰Šú‰»‚·‚é
+    // OpenGLã‚’åˆæœŸåŒ–ã™ã‚‹
     if (glfwInit() == GL_FALSE) {
         fprintf(stderr, "Initialization failed!\n");
         return 1;
     }
+    
+    // Macç”¨ã®ãŠã¾ã˜ãªã„
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // Window‚Ìì¬
+    // Windowã®ä½œæˆ
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
                                           NULL, NULL);
     if (window == NULL) {
-        fprintf(stderr, "Window creation failed!");
+        fprintf(stderr, "Window creation failed!\n");
         glfwTerminate();
         return 1;
     }
 
-    // OpenGL‚Ì•`‰æ‘ÎÛ‚ÉWindow‚ğ’Ç‰Á
+    // OpenGLã®æç”»å¯¾è±¡ã«Windowã‚’è¿½åŠ 
     glfwMakeContextCurrent(window);
 
-    // GLEW‚ğ‰Šú‰»‚·‚é (glfwMakeContextCurrent‚ÌŒã‚Å‚È‚¢‚Æ‚¢‚¯‚È‚¢)
+    // GLEWã‚’åˆæœŸåŒ–ã™ã‚‹ (glfwMakeContextCurrentã®å¾Œã§ãªã„ã¨ã„ã‘ãªã„)
     if (glewInit() != GLEW_OK) {
         fprintf(stderr, "GLEW initialization failed!\n");
         return 1;
     }
 
-    // ƒEƒBƒ“ƒhƒE‚ÌƒŠƒTƒCƒY‚ğˆµ‚¤ŠÖ”‚Ì“o˜^
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒªã‚µã‚¤ã‚ºã‚’æ‰±ã†é–¢æ•°ã®ç™»éŒ²
     glfwSetWindowSizeCallback(window, resizeGL);
 
-    // OpenGL‚ğ‰Šú‰»
+    // OpenGLã‚’åˆæœŸåŒ–
     initializeGL();
 
-    // ƒƒCƒ“ƒ‹[ƒv
+    // ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        // •`‰æ
+        // æç”»
         paintGL();
 
-        // ƒAƒjƒ[ƒVƒ‡ƒ“
+        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
         animate();
 
-        // •`‰æ—pƒoƒbƒtƒ@‚ÌØ‚è‘Ö‚¦
+        // æç”»ç”¨ãƒãƒƒãƒ•ã‚¡ã®åˆ‡ã‚Šæ›¿ãˆ
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
