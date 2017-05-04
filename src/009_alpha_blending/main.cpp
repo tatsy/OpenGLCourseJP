@@ -24,12 +24,12 @@ static const float positions[8][3] = {
 };
 
 static const float colors[6][4] = {
-    { 1.0f, 0.0f, 0.0f, 0.5f },  // 赤
-    { 0.0f, 1.0f, 0.0f, 0.5f },  // 緑
-    { 0.0f, 0.0f, 1.0f, 0.5f },  // 青
-    { 1.0f, 1.0f, 0.0f, 0.5f },  // イエロー
-    { 0.0f, 1.0f, 1.0f, 0.5f },  // シアン
-    { 1.0f, 0.0f, 1.0f, 0.5f },  // マゼンタ
+    { 1.0f, 0.0f, 0.0f, 0.9f },  // 赤
+    { 0.0f, 1.0f, 0.0f, 0.9f },  // 緑
+    { 0.0f, 0.0f, 1.0f, 0.9f },  // 青
+    { 1.0f, 1.0f, 0.0f, 0.9f },  // イエロー
+    { 0.0f, 1.0f, 1.0f, 0.9f },  // シアン
+    { 1.0f, 0.0f, 1.0f, 0.9f },  // マゼンタ
 };
 
 static const unsigned int indices[12][3] = {
@@ -74,7 +74,8 @@ void paintGL() {
     // アルファブレンドの有効化
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+    //glDisable(GL_DEPTH_TEST);
 
     // 立方体の描画
     glBegin(GL_TRIANGLES);
@@ -93,7 +94,8 @@ void paintGL() {
     // アルファブレンドの無効化
     glDisable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ZERO);
-    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 // アニメーションのためのアップデート
