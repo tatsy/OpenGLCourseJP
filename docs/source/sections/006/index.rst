@@ -1,10 +1,10 @@
-************************************
-第6回 アニメーション |source_code|
-************************************
+******************************************************
+第6回 ウィンドウサイズの変更 |source_code|
+******************************************************
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/006_animation/main.cpp
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/006_window_resizing/main.cpp
 
 .. raw:: html
 

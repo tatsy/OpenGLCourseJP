@@ -4,14 +4,9 @@
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 
-static int WIN_WIDTH   = 500;                       // ウィンドウの幅
-static int WIN_HEIGHT  = 500;                       // ウィンドウの高さ
+static int WIN_WIDTH   = 500;                 // ウィンドウの幅
+static int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
-static const double fps = 30.0;                     // FPS
-
-static const double PI = 4.0 * atan(1.0);           // 円周率の定義
-
-static float theta = 0.0f;
 
 static const float positions[8][3] = {
     { -1.0f, -1.0f, -1.0f },
@@ -51,22 +46,6 @@ void initializeGL() {
     glEnable(GL_DEPTH_TEST);
 }
 
-// キューブの描画
-void drawCube() {
-    glBegin(GL_TRIANGLES);
-    for (int face = 0; face < 6; face++) {
-        glColor3fv(colors[face]);
-        for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 0][i]]);
-        }
-
-        for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 1][i]]);
-        }
-    }
-    glEnd();
-}
-
 // OpenGLの描画関数
 void paintGL() {
     // 背景色と深度値のクリア
@@ -86,34 +65,25 @@ void paintGL() {
               0.0f, 0.0f, 0.0f,     // 見ている先
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
-    // 1つ目のキューブ
-    glPushMatrix();
-    glTranslatef(1.0f, 0.0f, 0.0f);
-    glRotatef(theta, 0.0f, 1.0f, 0.0f);
-    glScalef(0.5f, 0.5f, 0.5f);
+    // 立方体の描画
+    glBegin(GL_TRIANGLES);
+    for (int face = 0; face < 6; face++) {
+        glColor3fv(colors[face]);
+        for (int i = 0; i < 3; i++) {
+            glVertex3fv(positions[indices[face * 2 + 0][i]]);
+        }
 
-    drawCube();
-    glPopMatrix();
-
-    // 2つ目のキューブ
-    glPushMatrix();
-    glTranslatef(-1.0f, 0.0f, 0.0f);
-    glRotated(2.0f * theta, 0.0f, 1.0f, 0.0f);
-    glScalef(0.5f, 0.5f, 0.5f);
-
-    drawCube();
-    glPopMatrix();
+        for (int i = 0; i < 3; i++) {
+            glVertex3fv(positions[indices[face * 2 + 1][i]]);
+        }
+    }
+    glEnd();
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
-}
-
-// アニメーションのためのアップデート
-void animate() {
-    theta += 2.0f * PI / 10.0f;  // 10分の1回転
 }
 
 int main(int argc, char **argv) {
@@ -142,30 +112,12 @@ int main(int argc, char **argv) {
     initializeGL();
 
     // メインループ
-    double prevTime = glfwGetTime();;
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        double currentTime = glfwGetTime();
+        // 描画
+        paintGL();
 
-        // 経過時間が 1 / FPS 以上なら描画する
-        if (currentTime - prevTime >= 1.0 / fps) {
-            // タイトルにFPSを表示
-            double realFps = 1.0 / (currentTime - prevTime);
-            char winTitle[256];
-            sprintf(winTitle, "%s (%.3f)", WIN_TITLE, realFps);
-            glfwSetWindowTitle(window, winTitle);
-
-            // 描画
-            paintGL();
-
-            // アニメーション
-            animate();
-
-            // 描画用バッファの切り替え
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        
-            // 前回更新時間の更新
-            prevTime = currentTime;
-        }
+        // 描画用バッファの切り替え
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 }

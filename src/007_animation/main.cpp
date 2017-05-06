@@ -4,9 +4,10 @@
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 
-static int WIN_WIDTH   = 500;                 // ウィンドウの幅
-static int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
+static int WIN_WIDTH   = 500;                       // ウィンドウの幅
+static int WIN_HEIGHT  = 500;                       // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
+static const double fps = 30.0;                     // FPS
 
 static const double PI = 4.0 * atan(1.0);           // 円周率の定義
 
@@ -50,6 +51,22 @@ void initializeGL() {
     glEnable(GL_DEPTH_TEST);
 }
 
+// キューブの描画
+void drawCube() {
+    glBegin(GL_TRIANGLES);
+    for (int face = 0; face < 6; face++) {
+        glColor3fv(colors[face]);
+        for (int i = 0; i < 3; i++) {
+            glVertex3fv(positions[indices[face * 2 + 0][i]]);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            glVertex3fv(positions[indices[face * 2 + 1][i]]);
+        }
+    }
+    glEnd();
+}
+
 // OpenGLの描画関数
 void paintGL() {
     // 背景色と深度値のクリア
@@ -69,21 +86,10 @@ void paintGL() {
               0.0f, 0.0f, 0.0f,     // 見ている先
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
-    glRotatef(theta, 0.0f, 1.0f, 0.0f);  // y軸中心にthetaだけ回転
+    glRotatef(theta, 0.0f, 1.0f, 0.0f);
 
-    // 立方体の描画
-    glBegin(GL_TRIANGLES);
-    for (int face = 0; face < 6; face++) {
-        glColor3fv(colors[face]);
-        for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 0][i]]);
-        }
-
-        for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 1][i]]);
-        }
-    }
-    glEnd();
+    // キューブの描画
+    drawCube();
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
@@ -93,7 +99,7 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 }
 
 // アニメーションのためのアップデート
-void update() {
+void animate() {
     theta += 2.0f * PI / 10.0f;  // 10分の1回転
 }
 
@@ -128,10 +134,10 @@ int main(int argc, char **argv) {
         paintGL();
 
         // アニメーション
-        update();
+        animate();
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);
-        glfwPollEvents();
+        glfwPollEvents();        
     }
 }
