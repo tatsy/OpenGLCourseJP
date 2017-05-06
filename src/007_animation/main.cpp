@@ -86,10 +86,23 @@ void paintGL() {
               0.0f, 0.0f, 0.0f,     // 見ている先
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
+    // 1つ目のキューブ
+    glPushMatrix();
+    glTranslatef(1.0f, 0.0f, 0.0f);
     glRotatef(theta, 0.0f, 1.0f, 0.0f);
+    glScalef(0.5f, 0.5f, 0.5f);
 
-    // キューブの描画
     drawCube();
+    glPopMatrix();
+
+    // 2つ目のキューブ
+    glPushMatrix();
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    glRotated(2.0f * theta, 0.0f, 1.0f, 0.0f);
+    glScalef(0.5f, 0.5f, 0.5f);
+
+    drawCube();
+    glPopMatrix();
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
@@ -129,15 +142,30 @@ int main(int argc, char **argv) {
     initializeGL();
 
     // メインループ
+    double prevTime = glfwGetTime();;
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        // 描画
-        paintGL();
+        double currentTime = glfwGetTime();
 
-        // アニメーション
-        animate();
+        // 経過時間が 1 / FPS 以上なら描画する
+        if (currentTime - prevTime >= 1.0 / fps) {
+            // タイトルにFPSを表示
+            double realFps = 1.0 / (currentTime - prevTime);
+            char winTitle[256];
+            sprintf(winTitle, "%s (%.3f)", WIN_TITLE, realFps);
+            glfwSetWindowTitle(window, winTitle);
 
-        // 描画用バッファの切り替え
-        glfwSwapBuffers(window);
-        glfwPollEvents();        
+            // 描画
+            paintGL();
+
+            // アニメーション
+            animate();
+
+            // 描画用バッファの切り替え
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        
+            // 前回更新時間の更新
+            prevTime = currentTime;
+        }
     }
 }
