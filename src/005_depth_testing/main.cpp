@@ -65,18 +65,20 @@ void paintGL() {
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
     // 立方体の描画
-    glBegin(GL_TRIANGLES);
-    for (int face = 0; face < 6; face++) {
-        glColor3fv(colors[face]);
-        for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 0][i]]);
-        }
+    for (int i = 0; i < 1000; i++) {
+        glBegin(GL_TRIANGLES);
+        for (int face = 0; face < 6; face++) {
+            glColor3fv(colors[face]);
+            for (int i = 0; i < 3; i++) {
+                glVertex3fv(positions[indices[face * 2 + 0][i]]);
+            }
 
-        for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 1][i]]);
+            for (int i = 0; i < 3; i++) {
+                glVertex3fv(positions[indices[face * 2 + 1][i]]);
+            }
         }
+        glEnd();
     }
-    glEnd();
 }
 
 int main(int argc, char **argv) {
@@ -104,7 +106,9 @@ int main(int argc, char **argv) {
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         // 描画
+        double startTime = glfwGetTime();
         paintGL();
+        printf("%f\n", glfwGetTime() - startTime);
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);

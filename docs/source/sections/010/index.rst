@@ -1,10 +1,10 @@
 ******************************************
-第10回 頂点アトリビュート |source_code|
+第10回 頂点バッファ |source_code|
 ******************************************
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/010_vertex_attribute
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/010_vertex_buffer
 
 .. raw:: html
 

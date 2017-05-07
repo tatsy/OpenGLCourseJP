@@ -131,8 +131,9 @@ void paintGL() {
     glBindVertexArray(vaoId);
 
     // 三角形の描画
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+    for (int i = 0; i < 1000; i++) {
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+    }
 
     // VAOの無効化
     glBindVertexArray(0);
@@ -178,10 +179,13 @@ int main(int argc, char **argv) {
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         // 描画
+        double startTime = glfwGetTime();
         paintGL();
+        printf("%f\n", glfwGetTime() - startTime);
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);
         glfwPollEvents();
+
     }
 }
