@@ -51,9 +51,6 @@ void paintGL() {
     // 背景色と深度値のクリア
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // ビューポート変換の指定
-    glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
-
     // 座標の変換
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -81,9 +78,19 @@ void paintGL() {
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
+    // ユーザ管理のウィンドウサイズを変更
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
+    
+    // GLFW管理のウィンドウサイズを変更
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
+
+    // 実際のウィンドウサイズ (ピクセル数) を取得
+    int renderBufferWidth, renderBufferHeight;
+    glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
+
+    // ビューポート変換の更新
+    glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 }
 
 int main(int argc, char **argv) {

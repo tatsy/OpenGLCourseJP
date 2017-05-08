@@ -151,7 +151,7 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Initialization failed!\n");
         return 1;
     }
-
+    
     // Windowの作成
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
                                           NULL, NULL);

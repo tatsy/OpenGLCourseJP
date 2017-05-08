@@ -52,7 +52,7 @@ void paintGL() {
     // 背景色の描画
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // ビューポート変換の指定 (MacのLetinaディスプレイだと変になる)
+    // ビューポート変換の指定
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
     // 射影変換行列
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
 
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
-
+    
     // OpenGLを初期化
     initializeGL();
 
