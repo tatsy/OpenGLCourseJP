@@ -131,9 +131,7 @@ void paintGL() {
     glBindVertexArray(vaoId);
 
     // 三角形の描画
-    for (int i = 0; i < 1000; i++) {
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-    }
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
     // VAOの無効化
     glBindVertexArray(0);
@@ -155,17 +153,18 @@ void resizeGL(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 }
 
+void printGLInfo() {
+    printf(" Version: %s\n", glGetString(GL_VERSION));
+    printf("  Vendor: %s\n", glGetString(GL_VENDOR));
+    printf("Renderer: %s\n", glGetString(GL_RENDERER));
+}
+
 int main(int argc, char **argv) {
     // OpenGLを初期化する
     if (glfwInit() == GL_FALSE) {
         fprintf(stderr, "Initialization failed!\n");
         return 1;
     }
-
-    // OpenGLのバージョン設定 (Macの場合には必ず必要)
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Windowの作成
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
@@ -178,6 +177,8 @@ int main(int argc, char **argv) {
 
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
+    
+    printGLInfo();
 
     // GLEWを初期化する (glfwMakeContextCurrentの後でないといけない)
     if (glewInit() != GLEW_OK) {
@@ -194,9 +195,7 @@ int main(int argc, char **argv) {
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         // 描画
-        double startTime = glfwGetTime();
         paintGL();
-        printf("%f\n", glfwGetTime() - startTime);
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);

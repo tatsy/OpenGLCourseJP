@@ -452,7 +452,6 @@ void initializeGL() {
 
 void paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
     glDisable(GL_DEPTH_TEST);
     sky.draw(camera);
@@ -501,10 +500,21 @@ void paintGL() {
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
+    // ユーザ管理のウィンドウサイズを変更
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
+    
+    // GLFW管理のウィンドウサイズを変更
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
+    
+    // 実際のウィンドウサイズ (ピクセル数) を取得
+    int renderBufferWidth, renderBufferHeight;
+    glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
+    
+    // ビューポート変換の更新
+    glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 
+    // カメラ行列の更新
     float aspect = WIN_WIDTH / (float)WIN_HEIGHT;
     camera.projMat = glm::ortho(-50.0f * aspect, 50.0f * aspect, -50.0f, 50.0f, 0.1f, 1000.0f);
 }
@@ -607,10 +617,9 @@ int main(int argc, char **argv) {
     }
     
     // OpenGLのバージョン指定
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
     // Windowの作成
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
