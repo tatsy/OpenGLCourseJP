@@ -65,20 +65,18 @@ void paintGL() {
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
     // 立方体の描画
-    for (int i = 0; i < 1000; i++) {
-        glBegin(GL_TRIANGLES);
-        for (int face = 0; face < 6; face++) {
-            glColor3fv(colors[face]);
-            for (int i = 0; i < 3; i++) {
-                glVertex3fv(positions[indices[face * 2 + 0][i]]);
-            }
-
-            for (int i = 0; i < 3; i++) {
-                glVertex3fv(positions[indices[face * 2 + 1][i]]);
-            }
+    glBegin(GL_TRIANGLES);
+    for (int face = 0; face < 6; face++) {
+        glColor3fv(colors[face]);
+        for (int i = 0; i < 3; i++) {
+            glVertex3fv(positions[indices[face * 2 + 0][i]]);
         }
-        glEnd();
+
+        for (int i = 0; i < 3; i++) {
+            glVertex3fv(positions[indices[face * 2 + 1][i]]);
+        }
     }
+    glEnd();
 }
 
 int main(int argc, char **argv) {

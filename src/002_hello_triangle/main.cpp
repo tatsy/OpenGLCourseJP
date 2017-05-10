@@ -19,16 +19,16 @@ void paintGL() {
     // 見る範囲の指定
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glOrtho(10.0f, 20.0f, 10.0f, 20.0f, -1.0f, 1.0f);
+    glOrtho(-2.0f, 2.0f, -2.0f, 2.0f, -1.0f, 1.0f);
 
     // 三角形の描画
     glBegin(GL_TRIANGLES);
     glColor3f(1.0f, 0.0f, 0.0f);    // 赤
-    glVertex2f(12.0f, 12.0f);
+    glVertex2f(-1.0f, -1.0f);
     glColor3f(0.0f, 1.0f, 0.0f);    // 緑
-    glVertex2f(12.0f, 18.0f);
+    glVertex2f(-1.0f, 1.0f);
     glColor3f(0.0f, 0.0f, 1.0f);    // 青
-    glVertex2f(18.0f, 12.0f);
+    glVertex2f(1.0f, -1.0f);
     glEnd();
 }
 

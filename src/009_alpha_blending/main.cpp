@@ -4,9 +4,9 @@
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 
-static const int WIN_WIDTH   = 500;                 // ウィンドウの幅
-static const int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
-static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
+static int WIN_WIDTH   = 500;                 // ウィンドウの幅
+static int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
+static char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
 static const double PI = 4.0 * atan(1.0);           // 円周率の定義
 
@@ -98,6 +98,22 @@ void paintGL() {
     //glEnable(GL_DEPTH_TEST);
 }
 
+void resizeGL(GLFWwindow *window, int width, int height) {
+    // ユーザ管理のウィンドウサイズを変更
+    WIN_WIDTH = width;
+    WIN_HEIGHT = height;
+    
+    // GLFW管理のウィンドウサイズを変更
+    glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
+
+    // 実際のウィンドウサイズ (ピクセル数) を取得
+    int renderBufferWidth, renderBufferHeight;
+    glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
+
+    // ビューポート変換の更新
+    glViewport(0, 0, renderBufferWidth, renderBufferHeight);
+}
+
 // アニメーションのためのアップデート
 void animate() {
     theta += 2.0f * PI / 10.0f;  // 10分の1回転
@@ -121,6 +137,9 @@ int main(int argc, char **argv) {
 
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
+
+    // ウィンドウのリサイズを扱う関数の登録
+    glfwSetWindowSizeCallback(window, resizeGL);
 
     // OpenGLを初期化
     initializeGL();

@@ -2,6 +2,8 @@
 #include <cmath>
 #include <string>
 
+#include <GL/glew.h>
+
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 
@@ -18,22 +20,22 @@ static const double PI = 4.0 * atan(1.0);           // 円周率の定義
 
 static float theta = 0.0f;
 
-static const std::string TEX_FILE = std::string(DATA_DIRECTORY) + "checker.png";
+static const std::string TEX_FILE = std::string(DATA_DIRECTORY) + "lena.png";
 static GLuint textureId = 0u;
 static bool enableMipmap = true;
 
 static const float positions[4][3] = {
-    { -100.0f,  0.0f, -100.0f },
-    {  100.0f,  0.0f, -100.0f },
-    { -100.0f,  0.0f,  100.0f },
-    {  100.0f,  0.0f,  100.0f },
+    { -1.0f,  0.0f, -1.0f },
+    {  1.0f,  0.0f, -1.0f },
+    { -1.0f,  0.0f,  1.0f },
+    {  1.0f,  0.0f,  1.0f },
 };
 
 static const float texcoords[4][2] = {
-    { 0.0f, 0.0f },
-    { 50.0f, 0.0f },
-    { 0.0f, 50.0f },
-    { 50.0f, 50.0f }
+    {  0.0f,  0.0f },
+    {  1.0f,  0.0f },
+    {  0.0f,  1.0f },
+    {  1.0f,  1.0f }
 };
 
 static const unsigned int indices[2][3] = {
@@ -59,28 +61,26 @@ void initializeGL() {
         exit(1);
     }
 
+    // テクスチャの生成と有効化
     glGenTextures(1, &textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
     
-    if (enableMipmap) {
-        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, texWidth, texHeight,
-                          GL_RGBA, GL_UNSIGNED_BYTE, bytes);
-        
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    } else {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight,
-                     0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    // 単純なテクスチャの転送
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight,
+                    0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    }
+    // テクスチャの画素値参照方法の設定
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+    // テクスチャ境界の折り返し設定
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
+    // テクスチャの無効化
     glBindTexture(GL_TEXTURE_2D, 0);
 
+    // ロードした画素情報の破棄
     stbi_image_free(bytes);
 }
 
@@ -96,7 +96,7 @@ void paintGL() {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0f, 1.0f, 50.0f,     // 視点の位置
+    gluLookAt(3.0f, 4.0f, 5.0f,     // 視点の位置
               0.0f, 0.0f, 0.0f,     // 見ている先
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
@@ -119,14 +119,24 @@ void paintGL() {
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
+    // ユーザ管理のウィンドウサイズを変更
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
+    
+    // GLFW管理のウィンドウサイズを変更
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
+
+    // 実際のウィンドウサイズ (ピクセル数) を取得
+    int renderBufferWidth, renderBufferHeight;
+    glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
+
+    // ビューポート変換の更新
+    glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 }
 
 // アニメーションのためのアップデート
-void update() {
-    //theta += 2.0f * PI / 10.0f;  // 10分の1回転
+void animate() {
+    theta += 2.0f * PI / 10.0f;  // 10分の1回転
 }
 
 int main(int argc, char **argv) {
@@ -160,7 +170,7 @@ int main(int argc, char **argv) {
         paintGL();
 
         // アニメーション
-        update();
+        animate();
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);

@@ -126,9 +126,19 @@ void paintGL() {
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
+    // ユーザ管理のウィンドウサイズを変更
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
+    
+    // GLFW管理のウィンドウサイズを変更
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
+
+    // 実際のウィンドウサイズ (ピクセル数) を取得
+    int renderBufferWidth, renderBufferHeight;
+    glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
+
+    // ビューポート変換の更新
+    glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 }
 
 int main(int argc, char **argv) {
@@ -137,6 +147,11 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Initialization failed!\n");
         return 1;
     }
+
+    // OpenGLのバージョン設定 (Macの場合には必ず必要)
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Windowの作成
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
