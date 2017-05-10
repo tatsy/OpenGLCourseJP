@@ -350,6 +350,7 @@ int main(int argc, char **argv) {
     glfwMakeContextCurrent(window);
 
     // GLEWを初期化する (glfwMakeContextCurrentの後でないといけない)
+    glewExperimental = true;
     if (glewInit() != GLEW_OK) {
         fprintf(stderr, "GLEW initialization failed!\n");
         return 1;
