@@ -108,12 +108,12 @@ void paintGL() {
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
     // 頂点バッファの有効化
-    glEnableClientState(GL_VERTEX_ARRAY);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, position));
 
     glEnableClientState(GL_COLOR_ARRAY);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glColorPointer(3, GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, color));
 
     // 三角形の描画
