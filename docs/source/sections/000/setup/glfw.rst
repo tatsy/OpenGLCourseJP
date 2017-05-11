@@ -37,7 +37,7 @@ GLFWの公式ページからコンパイル済みのライブラリをダウン�
 現在のコンピュータであれば、おおよそ64bitのものをダウンロードすれば大丈夫だと思います。
 
 ダウンロードが完了したら、これを適当なディレクトリに配置します。標準的には、
-**C:\Libraries\opengl** のようなディレクトリを作成して、その中に置くのが良いかと思います。
+**C:\\Libraries\\opengl** のようなディレクトリを作成して、その中に置くのが良いかと思います。
 
 Visual Studioプロジェクトの作成
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -71,10 +71,10 @@ GLFWを使用するためには、プロジェクトの設定をする必要が�
 「インクルードディレクトリ」および「ライブラリディレクトリ」に以下の文字列を追加します。
 
 | **インクルードディレクトリ**
-| C:\Libraries\opengl\glfw-3.2.1.bin.WIN64\include
+| C:\\Libraries\\opengl\\glfw-3.2.1.bin.WIN64\\include
 |
 | **ライブラリディレクトリ**
-| C:\Libraries\opengl\glfw-3.2.1.bin.WIN64\lib-vc2015
+| C:\\Libraries\\opengl\\glfw-3.2.1.bin.WIN64\\lib-vc2015
 |
 
 .. image:: ../figures/project_property_002.jpg
