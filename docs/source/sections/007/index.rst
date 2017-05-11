@@ -11,7 +11,7 @@
 アニメーションその1
 -----------------------
 
-:doc:`code_0072`
+:doc:`code_0071`
 
 .. code-block:: cpp
   :linenos:
