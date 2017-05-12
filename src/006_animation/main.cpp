@@ -152,7 +152,7 @@ int main(int argc, char **argv) {
     initializeGL();
 
     // メインループ
-    double prevTime = glfwGetTime();;
+    double prevTime = glfwGetTime();
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         double currentTime = glfwGetTime();
 
