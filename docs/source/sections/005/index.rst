@@ -1,10 +1,10 @@
 ******************************************************
-第6回 ウィンドウサイズの変更 |source_code|
+第5回 ウィンドウサイズの変更 |source_code|
 ******************************************************
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/006_window_resizing/main.cpp
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/005_window_resizing/main.cpp
 
 単純な設定
 ------------------

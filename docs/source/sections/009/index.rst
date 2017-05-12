@@ -4,7 +4,7 @@
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/009_alpha_blending
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/009_vertex_buffer
 
 .. raw:: html
 
