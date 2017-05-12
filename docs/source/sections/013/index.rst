@@ -1,7 +1,7 @@
-***********************************************************************
-第13回 モデルファイルのロード |source_code|
-***********************************************************************
+************************************************
+第15回 非写実的シェーディング |source_code|
+************************************************
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/013_model_loading
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/015_npr_shading

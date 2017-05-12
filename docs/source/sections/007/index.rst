@@ -1,114 +1,86 @@
-
-************************************
-第7回 アニメーション |source_code|
-************************************
+********************************************
+第7回 テクスチャ・マッピング |source_code|
+********************************************
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/007_animation/main.cpp
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/008_texture_mapping
 
+境界の折り返し設定
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-アニメーションその1
------------------------
+UV座標が[0, 1]の範囲外にあるときの挙動を決定する
 
-:doc:`code_0071`
+GL_CLAMP
+------------------------------
 
-.. code-block:: cpp
-  :linenos:
-
-  // OpenGLの描画関数
-  void paintGL() {
-      // 背景色と深度値のクリア
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-      // ビューポート変換の指定
-      glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
-
-      // 座標の変換
-      glMatrixMode(GL_PROJECTION);
-      glLoadIdentity();
-      gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
-
-      glMatrixMode(GL_MODELVIEW);
-      glLoadIdentity();
-      gluLookAt(3.0f, 4.0f, 5.0f,     // 視点の位置
-                0.0f, 0.0f, 0.0f,     // 見ている先
-                0.0f, 1.0f, 0.0f);    // 視界の上方向
-
-      glRotatef(theta, 0.0f, 1.0f, 0.0f);
-
-      // キューブの描画
-      drawCube();
-  }
-
-
-.. raw:: html
-
-  <iframe src="https://player.vimeo.com/video/201603287" width="320" height="336" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></p>
-
-
-アニメーション その2
------------------------------
-
-:doc:`code_0072`
+テクスチャ境界上の最も近い画素の色とユーザ設定の境界色の平均を取る
 
 .. code-block:: cpp
   :linenos:
 
-  // キューブの描画
-  void drawCube() {
-      glBegin(GL_TRIANGLES);
-      for (int face = 0; face < 6; face++) {
-          glColor3fv(colors[face]);
-          for (int i = 0; i < 3; i++) {
-              glVertex3fv(positions[indices[face * 2 + 0][i]]);
-          }
+  float borderColor[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+  glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-          for (int i = 0; i < 3; i++) {
-              glVertex3fv(positions[indices[face * 2 + 1][i]]);
-          }
-      }
-      glEnd();
-  }
+.. image:: ./figures/clamp.png
 
+
+GL_CLAMP_TO_EDGE
+------------------------------
+
+テクスチャ境界上の最も近い画素の色を使う
 
 .. code-block:: cpp
   :linenos:
 
-  // OpenGLの描画関数
-  void paintGL() {
-      // 背景色と深度値のクリア
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-      // ビューポート変換の指定
-      glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
+.. image:: ./figures/clamp_to_edge.png
 
-      // 座標の変換
-      glMatrixMode(GL_PROJECTION);
-      glLoadIdentity();
-      gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
-      glMatrixMode(GL_MODELVIEW);
-      glLoadIdentity();
-      gluLookAt(3.0f, 4.0f, 5.0f,     // 視点の位置
-                0.0f, 0.0f, 0.0f,     // 見ている先
-                0.0f, 1.0f, 0.0f);    // 視界の上方向
+GL_CLAMP_TO_BORDER
+------------------------------
 
-      // 1つ目のキューブ
-      glPushMatrix();
-      glTranslatef(1.0f, 0.0f, 0.0f);
-      glRotatef(theta, 0.0f, 1.0f, 0.0f);
-      glScalef(0.5f, 0.5f, 0.5f);
+ユーザ設定の境界色を常に使う
 
-      drawCube();
-      glPopMatrix();
+.. code-block:: cpp
+  :linenos:
 
-      // 2つ目のキューブ
-      glPushMatrix();
-      glTranslatef(-1.0f, 0.0f, 0.0f);
-      glRotated(2.0f * theta, 0.0f, 1.0f, 0.0f);
-      glScalef(0.5f, 0.5f, 0.5f);
+  float borderColor[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+  glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
-      drawCube();
-      glPopMatrix();
-  }
+
+.. image:: ./figures/clamp_to_border.png
+
+
+GL_REPEAT
+------------------------------
+
+テクスチャを単純に繰り返す
+
+.. code-block:: cpp
+  :linenos:
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+.. image:: ./figures/repeat.png
+
+
+GL_MIRRORED_REPEAT
+------------------------------
+
+テクスチャを反転しながら繰り返す
+
+.. code-block:: cpp
+  :linenos:
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
+.. image:: ./figures/mirrored_repeat.png

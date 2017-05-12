@@ -27,8 +27,6 @@ OpenGL Course
   sections/016/index
   sections/017/index
   sections/018/index
-  sections/019/index
-  sections/020/index
 
 参考ページ
 -------------

@@ -1,11 +1,7 @@
-**************************************************
-第11回 頂点配列オブジェクト (VAO) |source_code|
-**************************************************
+***********************************************************************
+第13回 モデルファイルのロード |source_code|
+***********************************************************************
 
 .. |source_code| image:: ../../images/octcat.png
   :width: 24px
-  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/011_vertex_array_object
-
-.. raw:: html
-
-  <iframe src="https://player.vimeo.com/video/201603287" width="320" height="336" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></p>
+  :target: https://github.com/tatsy/OpenGLCourseJP/blob/master/src/013_model_loading
