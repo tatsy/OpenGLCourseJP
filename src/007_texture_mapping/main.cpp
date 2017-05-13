@@ -2,8 +2,6 @@
 #include <cmath>
 #include <string>
 
-#include <GL/glew.h>
-
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 

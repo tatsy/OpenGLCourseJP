@@ -24,6 +24,7 @@ static const float positions[8][3] = {
     {  1.0f,  1.0f,  1.0f }
 };
 
+
 static const float colors[6][3] = {
     { 1.0f, 0.0f, 0.0f },  // 赤
     { 0.0f, 1.0f, 0.0f },  // 緑
