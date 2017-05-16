@@ -134,7 +134,7 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 
 // アニメーションのためのアップデート
 void animate() {
-    theta += 2.0f * PI / 10.0f;  // 10分の1回転
+    theta += 1.0f;  // 1度だけ回転
 }
 
 int main(int argc, char **argv) {

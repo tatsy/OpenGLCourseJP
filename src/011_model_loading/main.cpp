@@ -188,24 +188,23 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     return shaderId;
 }
 
-// シェーダの初期化
-void initShaders() {
+GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fShaderFile) {
     // シェーダの作成
-    vertShaderId = compileShader(VERT_SHADER_FILE, GL_VERTEX_SHADER);
-    fragShaderId = compileShader(FRAG_SHADER_FILE, GL_FRAGMENT_SHADER);
-
+    GLuint vertShaderId = compileShader(vShaderFile, GL_VERTEX_SHADER);
+    GLuint fragShaderId = compileShader(fShaderFile, GL_FRAGMENT_SHADER);
+    
     // シェーダプログラムのリンク
-    programId = glCreateProgram();
+    GLuint programId = glCreateProgram();
     glAttachShader(programId, vertShaderId);
     glAttachShader(programId, fragShaderId);
-
+    
     GLint linkState;
     glLinkProgram(programId);
     glGetProgramiv(programId, GL_LINK_STATUS, &linkState);
     if (linkState == GL_FALSE) {
         // リンクに失敗したらエラーメッセージを表示して終了
         fprintf(stderr, "Failed to link shaders!\n");
-
+        
         GLint logLength;
         glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0) {
@@ -213,14 +212,20 @@ void initShaders() {
             std::string errMsg;
             errMsg.resize(logLength);
             glGetProgramInfoLog(programId, logLength, &length, &errMsg[0]);
-
+            
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
         }
         exit(1);
     }
-
-    // シェーダの無効化しておく
+    
+    // シェーダを無効化した後にIDを返す
     glUseProgram(0);
+    return programId;
+}
+
+// シェーダの初期化
+void initShaders() {
+    programId = buildShaderProgram(VERT_SHADER_FILE, FRAG_SHADER_FILE);
 }
 
 // OpenGLの初期化関数

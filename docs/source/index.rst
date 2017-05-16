@@ -7,26 +7,28 @@ OpenGL Course
 
 .. toctree::
   :maxdepth: 1
+  :numbered:
 
-  sections/000/index
-  sections/001/index
-  sections/002/index
-  sections/003/index
-  sections/004/index
-  sections/005/index
-  sections/006/index
-  sections/007/index
-  sections/008/index
-  sections/009/index
-  sections/010/index
-  sections/011/index
-  sections/012/index
-  sections/013/index
-  sections/014/index
-  sections/015/index
-  sections/016/index
-  sections/017/index
-  sections/018/index
+  sections/setup/index
+  sections/open_window/index
+  sections/hello_triangle/index
+  sections/coord_transform/index
+  sections/depth_test/index
+  sections/window_resize/index
+  sections/animation/index
+  sections/texture_mapping/index
+  sections/alpha_blending/index
+  sections/vertex_buffer/index
+  sections/hello_shader/index
+  sections/model_loading/index
+  sections/shading_models/index
+  sections/npr_shading/index
+  sections/framebuffer/index
+  sections/shadow_mapping/index
+  sections/keyboard_and_mouse/index
+  sections/arcball_control/index
+  sections/wave_equation/index
+  sections/shooting_game/index
 
 参考ページ
 -------------
