@@ -2,6 +2,10 @@
 アニメーション まとめコード その1
 *************************************************
 
+.. raw:: html
+
+  <iframe src="https://player.vimeo.com/video/201603287" width="320" height="336" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
 .. code-block:: cpp
   :linenos:
 

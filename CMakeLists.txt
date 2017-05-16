@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.0)
-project(OpenGLCourse)
+project(OpenGLCourseJP)
 
 if (WIN32)
   set(GLEW_ROOT "GLEW_ROOT" CACHE PATH "")
