@@ -61,3 +61,6 @@ endif()
 # Add subdirectory
 # ------------------------------------------------------------------------------
 add_subdirectory(src)
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/practice/CMakeLists.txt")
+  add_subdirectory(practice)
+endif()
