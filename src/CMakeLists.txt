@@ -13,6 +13,8 @@ function(BUILD_EXAMPLE EXPNAME)
   add_executable(${EXPNAME} ${SOURCE_FILES} ${SHADER_FILES})
   target_link_libraries(${EXPNAME} ${ALL_LIBRARIES})
 
+  set_target_properties(${EXPNAME} PROPERTIES FOLDER "Contents")
+
   source_group("Source Files" FILES ${SOURCE_FILES})
   source_group("Shader Files" FILES ${SHADER_FILES})
 endfunction(BUILD_EXAMPLE)

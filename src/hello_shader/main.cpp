@@ -251,16 +251,16 @@ void paintGL() {
     glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
 
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
-
-    // VAOの有効化
-    glBindVertexArray(vaoId);
-
+    
     // シェーダの有効化
     glUseProgram(programId);
-
+    
     // Uniform変数の転送
     GLuint mvpMatLocId = glGetUniformLocation(programId, "u_mvpMat");
     glUniformMatrix4fv(mvpMatLocId, 1, GL_FALSE, glm::value_ptr(mvpMat));
+    
+    // VAOの有効化
+    glBindVertexArray(vaoId);
 
     // 三角形の描画
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
