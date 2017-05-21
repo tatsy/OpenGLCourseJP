@@ -157,21 +157,25 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     const char *codeChars = code.c_str();
     glShaderSource(shaderId, 1, &codeChars, NULL);
     glCompileShader(shaderId);
-    glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
 
+    // コンパイルの成否を判定する
+    glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
     if (compileStatus == GL_FALSE) {
         // コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
         fprintf(stderr, "Failed to compile vertex shader!\n");
 
+        // エラーメッセージの長さを取得する
         GLint logLength;
         glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0) {
+            // エラーメッセージを取得する
             GLsizei length;
             std::string errMsg;
             errMsg.resize(logLength);
             glGetShaderInfoLog(shaderId, logLength, &length, &errMsg[0]);
 
-            fprintf(stderr, "[ ERROR] %s\n", errMsg.c_str());
+            // エラーコードの出力
+            fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
             fprintf(stderr, "%s\n", code.c_str());
         }
         exit(1);
@@ -189,22 +193,26 @@ GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fSh
     GLuint programId = glCreateProgram();
     glAttachShader(programId, vertShaderId);
     glAttachShader(programId, fragShaderId);
-    
-    GLint linkState;
     glLinkProgram(programId);
+    
+    // リンクの成否を判定する
+    GLuint linkState;
     glGetProgramiv(programId, GL_LINK_STATUS, &linkState);
     if (linkState == GL_FALSE) {
         // リンクに失敗したらエラーメッセージを表示して終了
         fprintf(stderr, "Failed to link shaders!\n");
-        
+
+        // エラーメッセージの長さを取得する
         GLint logLength;
         glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0) {
+            // エラーメッセージを取得する
             GLsizei length;
             std::string errMsg;
             errMsg.resize(logLength);
             glGetProgramInfoLog(programId, logLength, &length, &errMsg[0]);
-            
+
+            // エラーメッセージを出力する
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
         }
         exit(1);
