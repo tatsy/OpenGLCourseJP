@@ -196,7 +196,7 @@ GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fSh
     glLinkProgram(programId);
     
     // リンクの成否を判定する
-    GLuint linkState;
+    GLint linkState;
     glGetProgramiv(programId, GL_LINK_STATUS, &linkState);
     if (linkState == GL_FALSE) {
         // リンクに失敗したらエラーメッセージを表示して終了

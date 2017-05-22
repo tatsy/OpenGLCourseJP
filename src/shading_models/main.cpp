@@ -259,7 +259,7 @@ void paintGL() {
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                     glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
-    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 modelMat = glm::rotate(glm::radians(theta), glm::vec3(0.0f, 1.0f, 0.0f));
 
     glm::mat4 mvMat = viewMat * modelMat;
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
@@ -322,7 +322,7 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 
 // アニメーションのためのアップデート
 void animate() {
-    theta += 2.0f * PI / 360.0f;  // 10分の1回転
+    theta += 1.0f;  // 1度だけ回転
 }
 
 int main(int argc, char **argv) {
