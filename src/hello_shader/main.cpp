@@ -153,12 +153,12 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     reader.close();
 
     // コードのコンパイル
-    GLint compileStatus;
     const char *codeChars = code.c_str();
     glShaderSource(shaderId, 1, &codeChars, NULL);
     glCompileShader(shaderId);
 
     // コンパイルの成否を判定する
+    GLint compileStatus;
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
     if (compileStatus == GL_FALSE) {
         // コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
@@ -174,7 +174,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
             errMsg.resize(logLength);
             glGetShaderInfoLog(shaderId, logLength, &length, &errMsg[0]);
 
-            // エラーコードの出力
+            // エラーメッセージとソースコードの出力
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
             fprintf(stderr, "%s\n", code.c_str());
         }
