@@ -162,7 +162,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
     if (compileStatus == GL_FALSE) {
         // コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
-        fprintf(stderr, "Failed to compile vertex shader!\n");
+        fprintf(stderr, "Failed to compile a shader!\n");
 
         // エラーメッセージの長さを取得する
         GLint logLength;
