@@ -103,7 +103,6 @@ void initVAO() {
             indices.push_back(vertexIndex);
         }
     }
-    indexBufferSize = indices.size();
 
     // VAOの作成
     glGenVertexArrays(1, &vaoId);
@@ -128,6 +127,9 @@ void initVAO() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
                  indices.data(), GL_STATIC_DRAW);
+    
+    // 頂点番号バッファのサイズを変数に入れておく
+    indexBufferSize = indices.size();
 
     // VAOをOFFにしておく
     glBindVertexArray(0);
