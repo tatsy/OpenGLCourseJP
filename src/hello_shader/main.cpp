@@ -108,11 +108,9 @@ void initVAO() {
 
     // 頂点バッファの有効化
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 
     // 頂点番号バッファの作成
@@ -153,16 +151,16 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     reader.close();
 
     // コードのコンパイル
-    GLint compileStatus;
     const char *codeChars = code.c_str();
     glShaderSource(shaderId, 1, &codeChars, NULL);
     glCompileShader(shaderId);
 
     // コンパイルの成否を判定する
+    GLint compileStatus;
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
     if (compileStatus == GL_FALSE) {
         // コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
-        fprintf(stderr, "Failed to compile vertex shader!\n");
+        fprintf(stderr, "Failed to compile a shader!\n");
 
         // エラーメッセージの長さを取得する
         GLint logLength;
@@ -174,7 +172,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
             errMsg.resize(logLength);
             glGetShaderInfoLog(shaderId, logLength, &length, &errMsg[0]);
 
-            // エラーコードの出力
+            // エラーメッセージとソースコードの出力
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
             fprintf(stderr, "%s\n", code.c_str());
         }
