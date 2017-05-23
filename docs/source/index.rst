@@ -7,7 +7,7 @@ OpenGL Course
 
 .. toctree::
   :maxdepth: 1
-  :numbered:
+  :numbered: 2
 
   sections/setup/index
   sections/open_window/index
