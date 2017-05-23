@@ -35,9 +35,6 @@ static const std::string FRAG_SHADER_FILE = std::string(SHADER_DIRECTORY) + "ren
 // モデルのファイル
 static const std::string BUNNY_FILE = std::string(DATA_DIRECTORY) + "bunny.obj";
 
-// 頂点番号配列の大きさ
-static size_t indexBufferSize = 0;
-
 // 頂点オブジェクト
 struct Vertex {
     Vertex(const glm::vec3 &position_, const glm::vec3 &normal_)
@@ -54,9 +51,10 @@ GLuint vaoId;
 GLuint vertexBufferId;
 GLuint indexBufferId;
 
+// 頂点番号配列の大きさ
+static size_t indexBufferSize = 0;
+
 // シェーダを参照する番号
-GLuint vertShaderId;
-GLuint fragShaderId;
 GLuint programId;
 
 // 立方体の回転角度
@@ -154,7 +152,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     reader.open(filename.c_str(), std::ios::in);
     if (!reader.is_open()) {
         // ファイルを開けなかったらエラーを出して終了
-        fprintf(stderr, "Failed to load vertex shader: %s\n", VERT_SHADER_FILE.c_str());
+        fprintf(stderr, "Failed to load a shader: %s\n", VERT_SHADER_FILE.c_str());
         exit(1);
     }
 
@@ -162,32 +160,36 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     reader.seekg(0, std::ios::end);             // ファイル読み取り位置を終端に移動 
     codeSize = reader.tellg();                  // 現在の箇所(=終端)の位置がファイルサイズ
     code.resize(codeSize);                      // コードを格納する変数の大きさを設定
-    reader.seekg(0);                            // ファイルの読み取り位置を戦闘に移動
+    reader.seekg(0);                            // ファイルの読み取り位置を先頭に移動
     reader.read(&code[0], codeSize);            // 先頭からファイルサイズ分を読んでコードの変数に格納
 
     // ファイルを閉じる
     reader.close();
 
     // コードのコンパイル
-    GLint compileStatus;
     const char *codeChars = code.c_str();
     glShaderSource(shaderId, 1, &codeChars, NULL);
     glCompileShader(shaderId);
-    glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
 
+    // コンパイルの成否を判定する
+    GLint compileStatus;
+    glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
     if (compileStatus == GL_FALSE) {
         // コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
-        fprintf(stderr, "Failed to compile vertex shader!\n");
+        fprintf(stderr, "Failed to compile a shader!\n");
 
+        // エラーメッセージの長さを取得する
         GLint logLength;
         glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0) {
+            // エラーメッセージを取得する
             GLsizei length;
             std::string errMsg;
             errMsg.resize(logLength);
             glGetShaderInfoLog(shaderId, logLength, &length, &errMsg[0]);
 
-            fprintf(stderr, "[ ERROR] %s\n", errMsg.c_str());
+            // エラーメッセージとソースコードの出力
+            fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
             fprintf(stderr, "%s\n", code.c_str());
         }
         exit(1);
@@ -196,39 +198,48 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     return shaderId;
 }
 
-// シェーダの初期化
-void initShaders() {
+GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fShaderFile) {
     // シェーダの作成
-    vertShaderId = compileShader(VERT_SHADER_FILE, GL_VERTEX_SHADER);
-    fragShaderId = compileShader(FRAG_SHADER_FILE, GL_FRAGMENT_SHADER);
-
+    GLuint vertShaderId = compileShader(vShaderFile, GL_VERTEX_SHADER);
+    GLuint fragShaderId = compileShader(fShaderFile, GL_FRAGMENT_SHADER);
+    
     // シェーダプログラムのリンク
-    programId = glCreateProgram();
+    GLuint programId = glCreateProgram();
     glAttachShader(programId, vertShaderId);
     glAttachShader(programId, fragShaderId);
-
-    GLint linkState;
     glLinkProgram(programId);
+    
+    // リンクの成否を判定する
+    GLint linkState;
     glGetProgramiv(programId, GL_LINK_STATUS, &linkState);
     if (linkState == GL_FALSE) {
         // リンクに失敗したらエラーメッセージを表示して終了
         fprintf(stderr, "Failed to link shaders!\n");
 
+        // エラーメッセージの長さを取得する
         GLint logLength;
         glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0) {
+            // エラーメッセージを取得する
             GLsizei length;
             std::string errMsg;
             errMsg.resize(logLength);
             glGetProgramInfoLog(programId, logLength, &length, &errMsg[0]);
 
+            // エラーメッセージを出力する
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
         }
         exit(1);
     }
-
-    // シェーダの無効化しておく
+    
+    // シェーダを無効化した後にIDを返す
     glUseProgram(0);
+    return programId;
+}
+
+// シェーダの初期化
+void initShaders() {
+    programId = buildShaderProgram(VERT_SHADER_FILE, FRAG_SHADER_FILE);
 }
 
 void initTexture() {
@@ -245,8 +256,11 @@ void initTexture() {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight,
                  0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -284,7 +298,7 @@ void paintGL() {
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                     glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
-    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
+    glm::mat4 modelMat = glm::rotate(glm::radians(theta), glm::vec3(0.0f, 1.0f, 0.0f)); 
 
     glm::mat4 mvMat = viewMat * modelMat;
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
@@ -348,7 +362,7 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 
 // アニメーションのためのアップデート
 void animate() {
-    theta += 2.0f * PI / 360.0f;  // 10分の1回転
+    theta += 1.0f;  // 1度だけ回転
 }
 
 int main(int argc, char **argv) {

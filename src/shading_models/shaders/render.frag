@@ -6,6 +6,7 @@ in vec3 f_lightPosCameraSpace;
 
 out vec4 out_color;
 
+// マテリアルのデータ
 uniform vec3 u_diffColor;
 uniform vec3 u_specColor;
 uniform vec3 u_ambiColor;
