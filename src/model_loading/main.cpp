@@ -124,9 +124,6 @@ void initVAO() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
                  indices.data(), GL_STATIC_DRAW);
     
-    // 頂点番号バッファのサイズを変数に入れておく
-    indexBufferSize = indices.size();
-
     // 頂点バッファのサイズを変数に入れておく
     indexBufferSize = indices.size();
 
