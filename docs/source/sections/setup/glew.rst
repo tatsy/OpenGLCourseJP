@@ -147,7 +147,8 @@ GLEWのインストール
   :linenos:
 
   wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
-  cd glew-2.0.0/cmake
+  tar xvf glew-2.0.0.tgz
+  cd glew-2.0.0/build
   cmake ./cmake
   make
   sudo make install
