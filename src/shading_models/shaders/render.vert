@@ -22,7 +22,7 @@ void main() {
     gl_Position = u_mvpMat * vec4(in_position, 1.0);
 
     // カメラ座標系への変換
-	f_positionCameraSpace = (u_mvMat * vec4(in_position, 1.0)).xyz;
-	f_normalCameraSpace = (u_normMat * vec4(in_normal, 0.0)).xyz;
-	f_lightPosCameraSpace = (u_lightMat * vec4(u_lightPos, 1.0)).xyz;
+    f_positionCameraSpace = (u_mvMat * vec4(in_position, 1.0)).xyz;
+    f_normalCameraSpace = (u_normMat * vec4(in_normal, 0.0)).xyz;
+    f_lightPosCameraSpace = (u_lightMat * vec4(u_lightPos, 1.0)).xyz;
 }
