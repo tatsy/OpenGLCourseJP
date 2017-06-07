@@ -23,10 +23,10 @@ OpenGL Course
   sections/model_loading/index
   sections/shading_models/index
   sections/npr_shading/index
-  sections/framebuffer/index
-  sections/shadow_mapping/index
   sections/keyboard_and_mouse/index
+  sections/object_selection/index
   sections/arcball_control/index
+  sections/framebuffer/index
   sections/wave_equation/index
   sections/shooting_game/index
 
