@@ -26,7 +26,7 @@ after_success:
   - git config --global user.name "Travis CI"
   - git config --global user.email "travis@travis-ci.org"
   - pip install sphinx breathe sphinx_rtd_theme
-  - git submodule update --init -- "html/docs"
+  - git submodule update --init -- "docs/html"
   - cd docs/html
   - git checkout gh-pages
   - cd ..
