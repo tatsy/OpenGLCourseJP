@@ -320,47 +320,24 @@ void resizeGL(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 }
 
-void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    // キーボードの状態と押されたキーを表示する
-    printf("Keyboard: %s\n", action == GLFW_PRESS ? "Press" : "Release");
-    printf("Key: %c\n", (char)key);
-
-    // 特殊キーが押されているかの判定
-    int specialKeys[] = { GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER };
-    char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
-
-    printf("Special Keys: ");
-    for (int i = 0; i < 4; i++) {
-        if ((mods & specialKeys[i]) != 0) {
-            printf("%s ", specialKeyNames[i]);
-        }
-    }
-    printf("\n");
-}
-
 void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
     if (action == GLFW_PRESS) {
         // クリックされた位置を取得
         double px, py;
         glfwGetCursorPos(window, &px, &py);
+        const int cx = (int)px;
+        const int cy = (int)py;        
 
         // 選択モードでの描画
         selectMode = true;
         paintGL();
         selectMode = false;
 
-        // 現在のバッファの値を取得する
-        unsigned char *bytes = new unsigned char[WIN_WIDTH * WIN_HEIGHT * 4];
-        glReadPixels(0, 0, WIN_WIDTH, WIN_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
-
-        // クリックした場所のIDを確認
-        int cx = (int)px;
-        int cy = (int)py;
+        // より適切なやり方
+        char byte[4];
+        glReadPixels(cx, WIN_HEIGHT - cy - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &byte);
         printf("Mouse position: %d %d\n", cx, cy);
-        printf("Select object %d\n", bytes[((WIN_HEIGHT - cy - 1) * WIN_WIDTH + cx) * 4]);
-
-        // メモリを解放
-        delete[] bytes;
+        printf("Select object %d\n", byte[0]);
     }
 }
 
@@ -392,9 +369,6 @@ int main(int argc, char **argv) {
 
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
-
-    // キーボードのイベントを処理する関数を登録
-    glfwSetKeyCallback(window, keyboardEvent);
 
     // マウスのイベントを処理する関数を登録
     glfwSetMouseButtonCallback(window, mouseEvent);
