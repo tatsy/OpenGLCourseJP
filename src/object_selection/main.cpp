@@ -264,15 +264,38 @@ void paintGL() {
     glBindVertexArray(vaoId);
 
     // 1つ目の立方体を描画
-    glm::mat4 modelMat = glm::rotate(modelMat, theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
-    glm::mat4 mvpMat = projMat * viewMat * modelMat;
+    {
+        glm::mat4 modelMat;
+        modelMat = glm::translate(modelMat, glm::vec3(-2.0f, 0.0f, 0.0f));
+        modelMat = glm::rotate(modelMat, theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
+        glm::mat4 mvpMat = projMat * viewMat * modelMat;
 
-    // Uniform変数の転送
-    GLuint uid;
-    uid = glGetUniformLocation(programId, "u_mvpMat");
-    glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvpMat));
+        // Uniform変数の転送
+        GLuint uid;
+        uid = glGetUniformLocation(programId, "u_mvpMat");
+        glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvpMat));
+        uid = glGetUniformLocation(programId, "u_selectID");
+        glUniform1i(uid, selectMode ? 1 : -1);
         
-    glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
+    }
+
+    // 2つ目の立方体を描画
+    {
+        glm::mat4 modelMat;
+        modelMat = glm::translate(modelMat, glm::vec3(2.0f, 0.0f, 0.0f));
+        modelMat = glm::rotate(modelMat, theta * 2.0f, glm::vec3(0.0f, 1.0f, 0.0f)); 
+        glm::mat4 mvpMat = projMat * viewMat * modelMat;
+
+        // Uniform変数の転送
+        GLuint uid;
+        uid = glGetUniformLocation(programId, "u_mvpMat");
+        glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvpMat));
+        uid = glGetUniformLocation(programId, "u_selectID");
+        glUniform1i(uid, selectMode ? 2 : -1);
+        
+        glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
+    }
 
     // VAOの無効化
     glBindVertexArray(0);
@@ -316,29 +339,29 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
 }
 
 void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
-    // マウスが押されたかどうかの判定
-    printf("Mouse: %s\n", action == GLFW_PRESS ? "Press" : "Release");
+    if (action == GLFW_PRESS) {
+        // クリックされた位置を取得
+        double px, py;
+        glfwGetCursorPos(window, &px, &py);
 
-    // クリックされた位置を取得
-    double px, py;
-    glfwGetCursorPos(window, &px, &py);
-    printf("Mouse at: (%d, %d)\n", (int)px, (int)py);
+        // 選択モードでの描画
+        selectMode = true;
+        paintGL();
+        selectMode = false;
 
-    // 特殊キーが押されているかの判定
-    int specialKeys[] = { GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER };
-    char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
+        // 現在のバッファの値を取得する
+        unsigned char *bytes = new unsigned char[WIN_WIDTH * WIN_HEIGHT * 4];
+        glReadPixels(0, 0, WIN_WIDTH, WIN_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
-    printf("Special Keys: ");
-    for (int i = 0; i < 4; i++) {
-        if ((mods & specialKeys[i]) != 0) {
-            printf("%s ", specialKeyNames[i]);
-        }
+        // クリックした場所のIDを確認
+        int cx = (int)px;
+        int cy = (int)py;
+        printf("Mouse position: %d %d\n", cx, cy);
+        printf("Select object %d\n", bytes[((WIN_HEIGHT - cy - 1) * WIN_WIDTH + cx) * 4]);
+
+        // メモリを解放
+        delete[] bytes;
     }
-    printf("\n");
-}
-
-void motionEvent(GLFWwindow *window, double px, double py) {
-    printf("Move: (%d, %d)\n", (int)px, (int)py);
 }
 
 // アニメーションのためのアップデート
@@ -375,9 +398,6 @@ int main(int argc, char **argv) {
 
     // マウスのイベントを処理する関数を登録
     glfwSetMouseButtonCallback(window, mouseEvent);
-
-    // マウスの動きを処理する関数を登録
-    glfwSetCursorPosCallback(window, motionEvent);
 
     // GLEWを初期化する (glfwMakeContextCurrentの後でないといけない)
     glewExperimental = true;
