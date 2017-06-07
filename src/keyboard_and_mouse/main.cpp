@@ -324,6 +324,18 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
     // キーボードの状態と押されたキーを表示する
     printf("Keyboard: %s\n", action == GLFW_PRESS ? "Press" : "Release");
     printf("Key: %c\n", (char)key);
+
+    // 特殊キーが押されているかの判定
+    int specialKeys[] = { GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER };
+    char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
+
+    printf("Special Keys: ");
+    for (int i = 0; i < 4; i++) {
+        if ((mods & specialKeys[i]) != 0) {
+            printf("%s ", specialKeyNames[i]);
+        }
+    }
+    printf("\n");
 }
 
 void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
