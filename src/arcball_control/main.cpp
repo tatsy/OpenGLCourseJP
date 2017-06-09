@@ -436,9 +436,19 @@ void updateMouse() {
 
 void mouseMoveEvent(GLFWwindow *window, double xpos, double ypos) {
     if (isDragging) {
+        // マウスの現在位置を更新
         newPos = glm::ivec2(xpos, ypos);
-        updateMouse();
-        oldPos = glm::ivec2(xpos, ypos);
+
+        // マウスがあまり動いていない時は処理をしない
+        const double dx = newPos.x - oldPos.x;
+        const double dy = newPos.y - oldPos.y;
+        const double length = dx * dx + dy * dy;
+        if (length < 2.0f * 2.0f) {
+            return;
+        } else {
+            updateMouse();
+            oldPos = glm::ivec2(xpos, ypos);
+        }
     }
 }
 
