@@ -94,7 +94,7 @@ glm::mat4 modelMat, viewMat, projMat;
 glm::mat4 acRotMat, acTransMat, acScaleMat;
 glm::vec3 gravity;
 
-double scroll = 0.0;
+float acScale = 1.0f;
 glm::ivec2 oldPos;
 glm::ivec2 newPos;
 
@@ -414,8 +414,7 @@ void updateTranslate() {
 }
 
 void updateScale() {
-    const float scaleVal = 1.0 - scroll;
-    acScaleMat = glm::scale(glm::vec3(scaleVal, scaleVal, scaleVal));
+    acScaleMat = glm::scale(glm::vec3(acScale, acScale, acScale));
 }
 
 void updateMouse() {
@@ -429,7 +428,7 @@ void updateMouse() {
         break;
 
     case ARCBALL_MODE_SCALE:
-        scroll += (float)(oldPos.y - newPos.y) / WIN_HEIGHT;
+        acScale += (float)(oldPos.y - newPos.y) / WIN_HEIGHT;
         updateScale();
         break;
     }
@@ -444,7 +443,7 @@ void mouseMoveEvent(GLFWwindow *window, double xpos, double ypos) {
 }
 
 void wheelEvent(GLFWwindow *window, double xpos, double ypos) {
-    scroll += ypos / 10.0;
+    acScale += ypos / 10.0;
     updateScale();
 }
 
