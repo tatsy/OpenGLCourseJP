@@ -332,10 +332,15 @@ void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
         selectMode = true;
         paintGL();
         selectMode = false;
+        
+        // ピクセルの大きさの計算 (Macの場合には必要)
+        int renderBufferWidth, renderBufferHeight;
+        glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
+        int pixelSize = std::max(renderBufferWidth / WIN_WIDTH, renderBufferHeight / WIN_HEIGHT);
 
         // より適切なやり方
         unsigned char byte[4];
-        glReadPixels(cx, WIN_HEIGHT - cy - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &byte);
+        glReadPixels(cx * pixelSize, (WIN_HEIGHT - cy - 1) * pixelSize, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &byte);
         printf("Mouse position: %d %d\n", cx, cy);
         printf("Select object %d\n", (int)byte[0]);
     }
