@@ -362,6 +362,10 @@ void initializeGL() {
 void paintGL() {
     // ライトスペースのためのMVP行列
     glm::mat4 lightBiasVP;
+    
+    // ビューポート変換の取得
+    int viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
 
     // ライトからの描画
     glUseProgram(smProgramId);
@@ -404,7 +408,7 @@ void paintGL() {
         glBindVertexArray(0);
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
+    glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
     glUseProgram(0);
 
     glUseProgram(programId);
