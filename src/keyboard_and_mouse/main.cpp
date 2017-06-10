@@ -29,10 +29,10 @@ static std::string FRAG_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.fr
 // 頂点オブジェクト
 struct Vertex {
     Vertex(const glm::vec3 &position_, const glm::vec3 &color_)
-        : position(position_)
-        , color(color_) {
+    : position(position_)
+    , color(color_) {
     }
-
+    
     glm::vec3 position;
     glm::vec3 color;
 };
@@ -92,36 +92,36 @@ void initVAO() {
             vertices.push_back(v);
             indices.push_back(idx++);
         }
-
+        
         for (int j = 0; j < 3; j++) {
             Vertex v(positions[faces[i * 2 + 1][j]], colors[i]);
             vertices.push_back(v);
             indices.push_back(idx++);
         }
     }
-
+    
     // VAOの作成
     glGenVertexArrays(1, &vaoId);
     glBindVertexArray(vaoId);
-
+    
     // 頂点バッファの作成
     glGenBuffers(1, &vertexBufferId);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
+    
     // 頂点バッファの有効化
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
-
+    
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-
+    
     // 頂点番号バッファの作成
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
                  indices.data(), GL_STATIC_DRAW);
-
+    
     // VAOをOFFにしておく
     glBindVertexArray(0);
 }
@@ -134,7 +134,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     std::ifstream reader;
     size_t codeSize;
     std::string code;
-
+    
     // ファイルを開く
     reader.open(filename.c_str(), std::ios::in);
     if (!reader.is_open()) {
@@ -142,29 +142,29 @@ GLuint compileShader(const std::string &filename, GLuint type) {
         fprintf(stderr, "Failed to load a shader: %s\n", VERT_SHADER_FILE.c_str());
         exit(1);
     }
-
+    
     // ファイルをすべて読んで変数に格納 (やや難)
-    reader.seekg(0, std::ios::end);             // ファイル読み取り位置を終端に移動 
+    reader.seekg(0, std::ios::end);             // ファイル読み取り位置を終端に移動
     codeSize = reader.tellg();                  // 現在の箇所(=終端)の位置がファイルサイズ
     code.resize(codeSize);                      // コードを格納する変数の大きさを設定
     reader.seekg(0);                            // ファイルの読み取り位置を先頭に移動
     reader.read(&code[0], codeSize);            // 先頭からファイルサイズ分を読んでコードの変数に格納
-
+    
     // ファイルを閉じる
     reader.close();
-
+    
     // コードのコンパイル
     const char *codeChars = code.c_str();
     glShaderSource(shaderId, 1, &codeChars, NULL);
     glCompileShader(shaderId);
-
+    
     // コンパイルの成否を判定する
     GLint compileStatus;
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
     if (compileStatus == GL_FALSE) {
         // コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
         fprintf(stderr, "Failed to compile a shader!\n");
-
+        
         // エラーメッセージの長さを取得する
         GLint logLength;
         glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
@@ -174,14 +174,14 @@ GLuint compileShader(const std::string &filename, GLuint type) {
             std::string errMsg;
             errMsg.resize(logLength);
             glGetShaderInfoLog(shaderId, logLength, &length, &errMsg[0]);
-
+            
             // エラーメッセージとソースコードの出力
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
             fprintf(stderr, "%s\n", code.c_str());
         }
         exit(1);
     }
-
+    
     return shaderId;
 }
 
@@ -202,7 +202,7 @@ GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fSh
     if (linkState == GL_FALSE) {
         // リンクに失敗したらエラーメッセージを表示して終了
         fprintf(stderr, "Failed to link shaders!\n");
-
+        
         // エラーメッセージの長さを取得する
         GLint logLength;
         glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
@@ -212,7 +212,7 @@ GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fSh
             std::string errMsg;
             errMsg.resize(logLength);
             glGetProgramInfoLog(programId, logLength, &length, &errMsg[0]);
-
+            
             // エラーメッセージを出力する
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
         }
@@ -233,13 +233,13 @@ void initShaders() {
 void initializeGL() {
     // 深度テストの有効化
     glEnable(GL_DEPTH_TEST);
-
+    
     // 背景色の設定 (黒)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
+    
     // VAOの初期化
     initVAO();
-
+    
     // シェーダの用意
     initShaders();
 }
@@ -248,35 +248,35 @@ void initializeGL() {
 void paintGL() {
     // 背景色の描画
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     // 座標の変換
     glm::mat4 projMat = glm::perspective(45.0f,
-        (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
-
+                                         (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    
     glm::mat4 viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // 視点の位置
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                     glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
     
     // シェーダの有効化
     glUseProgram(programId);
-        
+    
     // VAOの有効化
     glBindVertexArray(vaoId);
-
+    
     // 1つ目の立方体を描画
-    glm::mat4 modelMat = glm::rotate(modelMat, theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
+    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
-
+    
     // Uniform変数の転送
     GLuint uid;
     uid = glGetUniformLocation(programId, "u_mvpMat");
     glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvpMat));
-        
+    
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
-
+    
     // VAOの無効化
     glBindVertexArray(0);
-
+    
     // シェーダの無効化
     glUseProgram(0);
 }
@@ -301,11 +301,11 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
     // キーボードの状態と押されたキーを表示する
     printf("Keyboard: %s\n", action == GLFW_PRESS ? "Press" : "Release");
     printf("Key: %c\n", (char)key);
-
+    
     // 特殊キーが押されているかの判定
     int specialKeys[] = { GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER };
     char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
-
+    
     printf("Special Keys: ");
     for (int i = 0; i < 4; i++) {
         if ((mods & specialKeys[i]) != 0) {
@@ -318,16 +318,16 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
 void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
     // マウスが押されたかどうかの判定
     printf("Mouse: %s\n", action == GLFW_PRESS ? "Press" : "Release");
-
+    
     // クリックされた位置を取得
     double px, py;
     glfwGetCursorPos(window, &px, &py);
     printf("Mouse at: (%d, %d)\n", (int)px, (int)py);
-
+    
     // 特殊キーが押されているかの判定
     int specialKeys[] = { GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER };
     char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
-
+    
     printf("Special Keys: ");
     for (int i = 0; i < 4; i++) {
         if ((mods & specialKeys[i]) != 0) {
@@ -352,12 +352,12 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Initialization failed!\n");
         return 1;
     }
-
+    
     // OpenGLのバージョン設定 (Macの場合には必ず必要)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+    
     // Windowの作成
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
                                           NULL, NULL);
@@ -366,40 +366,40 @@ int main(int argc, char **argv) {
         glfwTerminate();
         return 1;
     }
-
+    
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
-
+    
     // キーボードのイベントを処理する関数を登録
     glfwSetKeyCallback(window, keyboardEvent);
-
+    
     // マウスのイベントを処理する関数を登録
     glfwSetMouseButtonCallback(window, mouseEvent);
-
+    
     // マウスの動きを処理する関数を登録
     glfwSetCursorPosCallback(window, motionEvent);
-
+    
     // GLEWを初期化する (glfwMakeContextCurrentの後でないといけない)
     glewExperimental = true;
     if (glewInit() != GLEW_OK) {
         fprintf(stderr, "GLEW initialization failed!\n");
         return 1;
     }
-
+    
     // ウィンドウのリサイズを扱う関数の登録
     glfwSetWindowSizeCallback(window, resizeGL);
-
+    
     // OpenGLを初期化
     initializeGL();
-
+    
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         // 描画
         paintGL();
-
+        
         // アニメーション
         animate();
-
+        
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);
         glfwPollEvents();
