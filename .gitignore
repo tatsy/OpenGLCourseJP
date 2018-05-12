@@ -1,5 +1,10 @@
+.idea/*
+cmake-build-debug/*
+cmake-build-release/*
+
 build/*
 docs/doctrees
 docs/source/materials/*
+
 .DS_Store
 common.h
