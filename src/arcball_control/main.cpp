@@ -15,20 +15,20 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-// ƒfƒBƒŒƒNƒgƒŠ‚Ìİ’èƒtƒ@ƒCƒ‹
+// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
 #include "common.h"
 
-static int WIN_WIDTH   = 500;                       // ƒEƒBƒ“ƒhƒE‚Ì•
-static int WIN_HEIGHT  = 500;                       // ƒEƒBƒ“ƒhƒE‚Ì‚‚³
-static const char *WIN_TITLE = "OpenGL Course";     // ƒEƒBƒ“ƒhƒE‚Ìƒ^ƒCƒgƒ‹
+static int WIN_WIDTH   = 500;                       // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹…
+static int WIN_HEIGHT  = 500;                       // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•
+static const char *WIN_TITLE = "OpenGL Course";     // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¿ã‚¤ãƒˆãƒ«
 
 static const double PI = 4.0 * std::atan(1.0);
 
-// ƒVƒF[ƒ_ƒtƒ@ƒCƒ‹
+// ã‚·ã‚§ãƒ¼ãƒ€ãƒ•ã‚¡ã‚¤ãƒ«
 static std::string VERT_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.vert";
 static std::string FRAG_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.frag";
 
-// ’¸“_ƒIƒuƒWƒFƒNƒg
+// é ‚ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 struct Vertex {
     Vertex(const glm::vec3 &position_, const glm::vec3 &color_)
         : position(position_)
@@ -51,12 +51,12 @@ static const glm::vec3 positions[8] = {
 };
 
 static const glm::vec3 colors[6] = {
-    glm::vec3(1.0f, 0.0f, 0.0f),  // Ô
-    glm::vec3(0.0f, 1.0f, 0.0f),  // —Î
-    glm::vec3(0.0f, 0.0f, 1.0f),  // Â
-    glm::vec3(1.0f, 1.0f, 0.0f),  // ƒCƒGƒ[
-    glm::vec3(0.0f, 1.0f, 1.0f),  // ƒVƒAƒ“
-    glm::vec3(1.0f, 0.0f, 1.0f),  // ƒ}ƒ[ƒ“ƒ^
+    glm::vec3(1.0f, 0.0f, 0.0f),  // èµ¤
+    glm::vec3(0.0f, 1.0f, 0.0f),  // ç·‘
+    glm::vec3(0.0f, 0.0f, 1.0f),  // é’
+    glm::vec3(1.0f, 1.0f, 0.0f),  // ã‚¤ã‚¨ãƒ­ãƒ¼
+    glm::vec3(0.0f, 1.0f, 1.0f),  // ã‚·ã‚¢ãƒ³
+    glm::vec3(1.0f, 0.0f, 1.0f),  // ãƒã‚¼ãƒ³ã‚¿
 };
 
 static const unsigned int faces[12][3] = {
@@ -68,18 +68,18 @@ static const unsigned int faces[12][3] = {
     { 0, 2, 5 }, { 0, 5, 3 }
 };
 
-// ƒoƒbƒtƒ@‚ğQÆ‚·‚é”Ô†
+// ãƒãƒƒãƒ•ã‚¡ã‚’å‚ç…§ã™ã‚‹ç•ªå·
 GLuint vaoId;
 GLuint vertexBufferId;
 GLuint indexBufferId;
 
-// ƒVƒF[ƒ_‚ğQÆ‚·‚é”Ô†
+// ã‚·ã‚§ãƒ¼ãƒ€ã‚’å‚ç…§ã™ã‚‹ç•ªå·
 GLuint programId;
 
-// —§•û‘Ì‚Ì‰ñ“]Šp“x
+// ç«‹æ–¹ä½“ã®å›è»¢è§’åº¦
 static float theta = 0.0f;
 
-// ArcballƒRƒ“ƒgƒ[ƒ‹‚Ì‚½‚ß‚Ì•Ï”
+// Arcballã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®ãŸã‚ã®å¤‰æ•°
 bool isDragging = false;
 
 enum ArcballMode {
@@ -98,9 +98,9 @@ float acScale = 1.0f;
 glm::ivec2 oldPos;
 glm::ivec2 newPos;
 
-// VAO‚Ì‰Šú‰»
+// VAOã®åˆæœŸåŒ–
 void initVAO() {
-    // Vertex”z—ñ‚Ìì¬
+    // Vertexé…åˆ—ã®ä½œæˆ
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     int idx = 0;
@@ -122,82 +122,82 @@ void initVAO() {
     }
     gravity /= indices.size();
 
-    // VAO‚Ìì¬
+    // VAOã®ä½œæˆ
     glGenVertexArrays(1, &vaoId);
     glBindVertexArray(vaoId);
 
-    // ’¸“_ƒoƒbƒtƒ@‚Ìì¬
+    // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
     glGenBuffers(1, &vertexBufferId);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
-    // ’¸“_ƒoƒbƒtƒ@‚Ì—LŒø‰»
+    // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®æœ‰åŠ¹åŒ–
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 
-    // ’¸“_”Ô†ƒoƒbƒtƒ@‚Ìì¬
+    // é ‚ç‚¹ç•ªå·ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
                  indices.data(), GL_STATIC_DRAW);
 
-    // VAO‚ğOFF‚É‚µ‚Ä‚¨‚­
+    // VAOã‚’OFFã«ã—ã¦ãŠã
     glBindVertexArray(0);
 }
 
 GLuint compileShader(const std::string &filename, GLuint type) {
-    // ƒVƒF[ƒ_‚Ìì¬
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ä½œæˆ
     GLuint shaderId = glCreateShader(type);
     
-    // ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
     std::ifstream reader;
     size_t codeSize;
     std::string code;
 
-    // ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
     reader.open(filename.c_str(), std::ios::in);
     if (!reader.is_open()) {
-        // ƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚È‚©‚Á‚½‚çƒGƒ‰[‚ğo‚µ‚ÄI—¹
+        // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ãªã‹ã£ãŸã‚‰ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã—ã¦çµ‚äº†
         fprintf(stderr, "Failed to load a shader: %s\n", VERT_SHADER_FILE.c_str());
         exit(1);
     }
 
-    // ƒtƒ@ƒCƒ‹‚ğ‚·‚×‚Ä“Ç‚ñ‚Å•Ï”‚ÉŠi”[ (‚â‚â“ï)
-    reader.seekg(0, std::ios::end);             // ƒtƒ@ƒCƒ‹“Ç‚İæ‚èˆÊ’u‚ğI’[‚ÉˆÚ“® 
-    codeSize = reader.tellg();                  // Œ»İ‚Ì‰ÓŠ(=I’[)‚ÌˆÊ’u‚ªƒtƒ@ƒCƒ‹ƒTƒCƒY
-    code.resize(codeSize);                      // ƒR[ƒh‚ğŠi”[‚·‚é•Ï”‚Ì‘å‚«‚³‚ğİ’è
-    reader.seekg(0);                            // ƒtƒ@ƒCƒ‹‚Ì“Ç‚İæ‚èˆÊ’u‚ğæ“ª‚ÉˆÚ“®
-    reader.read(&code[0], codeSize);            // æ“ª‚©‚çƒtƒ@ƒCƒ‹ƒTƒCƒY•ª‚ğ“Ç‚ñ‚ÅƒR[ƒh‚Ì•Ï”‚ÉŠi”[
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã™ã¹ã¦èª­ã‚“ã§å¤‰æ•°ã«æ ¼ç´ (ã‚„ã‚„é›£)
+    reader.seekg(0, std::ios::end);             // ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿å–ã‚Šä½ç½®ã‚’çµ‚ç«¯ã«ç§»å‹• 
+    codeSize = reader.tellg();                  // ç¾åœ¨ã®ç®‡æ‰€(=çµ‚ç«¯)ã®ä½ç½®ãŒãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
+    code.resize(codeSize);                      // ã‚³ãƒ¼ãƒ‰ã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°ã®å¤§ãã•ã‚’è¨­å®š
+    reader.seekg(0);                            // ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿å–ã‚Šä½ç½®ã‚’å…ˆé ­ã«ç§»å‹•
+    reader.read(&code[0], codeSize);            // å…ˆé ­ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºåˆ†ã‚’èª­ã‚“ã§ã‚³ãƒ¼ãƒ‰ã®å¤‰æ•°ã«æ ¼ç´
 
-    // ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+    // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
     reader.close();
 
-    // ƒR[ƒh‚ÌƒRƒ“ƒpƒCƒ‹
+    // ã‚³ãƒ¼ãƒ‰ã®ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     const char *codeChars = code.c_str();
     glShaderSource(shaderId, 1, &codeChars, NULL);
     glCompileShader(shaderId);
 
-    // ƒRƒ“ƒpƒCƒ‹‚Ì¬”Û‚ğ”»’è‚·‚é
+    // ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã®æˆå¦ã‚’åˆ¤å®šã™ã‚‹
     GLint compileStatus;
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
     if (compileStatus == GL_FALSE) {
-        // ƒRƒ“ƒpƒCƒ‹‚ª¸”s‚µ‚½‚çƒGƒ‰[ƒƒbƒZ[ƒW‚Æƒ\[ƒXƒR[ƒh‚ğ•\¦‚µ‚ÄI—¹
+        // ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãŒå¤±æ•—ã—ãŸã‚‰ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’è¡¨ç¤ºã—ã¦çµ‚äº†
         fprintf(stderr, "Failed to compile a shader!\n");
 
-        // ƒGƒ‰[ƒƒbƒZ[ƒW‚Ì’·‚³‚ğæ“¾‚·‚é
+        // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®é•·ã•ã‚’å–å¾—ã™ã‚‹
         GLint logLength;
         glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0) {
-            // ƒGƒ‰[ƒƒbƒZ[ƒW‚ğæ“¾‚·‚é
+            // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã™ã‚‹
             GLsizei length;
             std::string errMsg;
             errMsg.resize(logLength);
             glGetShaderInfoLog(shaderId, logLength, &length, &errMsg[0]);
 
-            // ƒGƒ‰[ƒƒbƒZ[ƒW‚Æƒ\[ƒXƒR[ƒh‚Ìo—Í
+            // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å‡ºåŠ›
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
             fprintf(stderr, "%s\n", code.c_str());
         }
@@ -208,120 +208,120 @@ GLuint compileShader(const std::string &filename, GLuint type) {
 }
 
 GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fShaderFile) {
-    // ƒVƒF[ƒ_‚Ìì¬
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ä½œæˆ
     GLuint vertShaderId = compileShader(vShaderFile, GL_VERTEX_SHADER);
     GLuint fragShaderId = compileShader(fShaderFile, GL_FRAGMENT_SHADER);
     
-    // ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚ÌƒŠƒ“ƒN
+    // ã‚·ã‚§ãƒ¼ãƒ€ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ãƒªãƒ³ã‚¯
     GLuint programId = glCreateProgram();
     glAttachShader(programId, vertShaderId);
     glAttachShader(programId, fragShaderId);
     glLinkProgram(programId);
     
-    // ƒŠƒ“ƒN‚Ì¬”Û‚ğ”»’è‚·‚é
+    // ãƒªãƒ³ã‚¯ã®æˆå¦ã‚’åˆ¤å®šã™ã‚‹
     GLint linkState;
     glGetProgramiv(programId, GL_LINK_STATUS, &linkState);
     if (linkState == GL_FALSE) {
-        // ƒŠƒ“ƒN‚É¸”s‚µ‚½‚çƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•\¦‚µ‚ÄI—¹
+        // ãƒªãƒ³ã‚¯ã«å¤±æ•—ã—ãŸã‚‰ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ã¦çµ‚äº†
         fprintf(stderr, "Failed to link shaders!\n");
 
-        // ƒGƒ‰[ƒƒbƒZ[ƒW‚Ì’·‚³‚ğæ“¾‚·‚é
+        // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®é•·ã•ã‚’å–å¾—ã™ã‚‹
         GLint logLength;
         glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0) {
-            // ƒGƒ‰[ƒƒbƒZ[ƒW‚ğæ“¾‚·‚é
+            // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã™ã‚‹
             GLsizei length;
             std::string errMsg;
             errMsg.resize(logLength);
             glGetProgramInfoLog(programId, logLength, &length, &errMsg[0]);
 
-            // ƒGƒ‰[ƒƒbƒZ[ƒW‚ğo—Í‚·‚é
+            // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›ã™ã‚‹
             fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
         }
         exit(1);
     }
     
-    // ƒVƒF[ƒ_‚ğ–³Œø‰»‚µ‚½Œã‚ÉID‚ğ•Ô‚·
+    // ã‚·ã‚§ãƒ¼ãƒ€ã‚’ç„¡åŠ¹åŒ–ã—ãŸå¾Œã«IDã‚’è¿”ã™
     glUseProgram(0);
     return programId;
 }
 
-// ƒVƒF[ƒ_‚Ì‰Šú‰»
+// ã‚·ã‚§ãƒ¼ãƒ€ã®åˆæœŸåŒ–
 void initShaders() {
     programId = buildShaderProgram(VERT_SHADER_FILE, FRAG_SHADER_FILE);
 }
 
-// OpenGL‚Ì‰Šú‰»ŠÖ”
+// OpenGLã®åˆæœŸåŒ–é–¢æ•°
 void initializeGL() {
-    // [“xƒeƒXƒg‚Ì—LŒø‰»
+    // æ·±åº¦ãƒ†ã‚¹ãƒˆã®æœ‰åŠ¹åŒ–
     glEnable(GL_DEPTH_TEST);
 
-    // ”wŒiF‚Ìİ’è (•)
+    // èƒŒæ™¯è‰²ã®è¨­å®š (é»’)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-    // VAO‚Ì‰Šú‰»
+    // VAOã®åˆæœŸåŒ–
     initVAO();
 
-    // ƒVƒF[ƒ_‚Ì—pˆÓ
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ç”¨æ„
     initShaders();
 
-    // ƒJƒƒ‰‚Ì‰Šú‰»
+    // ã‚«ãƒ¡ãƒ©ã®åˆæœŸåŒ–
     projMat = glm::perspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
-    viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // ‹“_‚ÌˆÊ’u
-                          glm::vec3(0.0f, 0.0f, 0.0f),   // Œ©‚Ä‚¢‚éæ
-                          glm::vec3(0.0f, 1.0f, 0.0f));  // ‹ŠE‚Ìã•ûŒü
+    viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // è¦–ç‚¹ã®ä½ç½®
+                          glm::vec3(0.0f, 0.0f, 0.0f),   // è¦‹ã¦ã„ã‚‹å…ˆ
+                          glm::vec3(0.0f, 1.0f, 0.0f));  // è¦–ç•Œã®ä¸Šæ–¹å‘
 }
 
-// OpenGL‚Ì•`‰æŠÖ”
+// OpenGLã®æç”»é–¢æ•°
 void paintGL() {
-    // ”wŒiF‚Ì•`‰æ
+    // èƒŒæ™¯è‰²ã®æç”»
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    // ƒVƒF[ƒ_‚Ì—LŒø‰»
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®æœ‰åŠ¹åŒ–
     glUseProgram(programId);
         
-    // VAO‚Ì—LŒø‰»
+    // VAOã®æœ‰åŠ¹åŒ–
     glBindVertexArray(vaoId);
 
-    // 1‚Â–Ú‚Ì—§•û‘Ì‚ğ•`‰æ
+    // 1ã¤ç›®ã®ç«‹æ–¹ä½“ã‚’æç”»
     glm::mat4 mvpMat = projMat * viewMat * modelMat * acTransMat * acRotMat * acScaleMat;
 
-    // Uniform•Ï”‚Ì“]‘—
+    // Uniformå¤‰æ•°ã®è»¢é€
     GLuint uid;
     uid = glGetUniformLocation(programId, "u_mvpMat");
     glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvpMat));
         
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
 
-    // VAO‚Ì–³Œø‰»
+    // VAOã®ç„¡åŠ¹åŒ–
     glBindVertexArray(0);
 
-    // ƒVƒF[ƒ_‚Ì–³Œø‰»
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ç„¡åŠ¹åŒ–
     glUseProgram(0);
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {
-    // ƒ†[ƒUŠÇ—‚ÌƒEƒBƒ“ƒhƒEƒTƒCƒY‚ğ•ÏX
+    // ãƒ¦ãƒ¼ã‚¶ç®¡ç†ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã‚’å¤‰æ›´
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
     
-    // GLFWŠÇ—‚ÌƒEƒBƒ“ƒhƒEƒTƒCƒY‚ğ•ÏX
+    // GLFWç®¡ç†ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã‚’å¤‰æ›´
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
     
-    // ÀÛ‚ÌƒEƒBƒ“ƒhƒEƒTƒCƒY (ƒsƒNƒZƒ‹”) ‚ğæ“¾
+    // å®Ÿéš›ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º (ãƒ”ã‚¯ã‚»ãƒ«æ•°) ã‚’å–å¾—
     int renderBufferWidth, renderBufferHeight;
     glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
     
-    // ƒrƒ…[ƒ|[ƒg•ÏŠ·‚ÌXV
+    // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¤‰æ›ã®æ›´æ–°
     glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 
-    // “Š‰e•ÏŠ·s—ñ‚Ì‰Šú‰»
+    // æŠ•å½±å¤‰æ›è¡Œåˆ—ã®åˆæœŸåŒ–
     projMat = glm::perspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 }
 
 void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
-    // ƒNƒŠƒbƒN‚µ‚½ƒ{ƒ^ƒ“‚Åˆ—‚ğØ‚è‘Ö‚¦‚é
+    // ã‚¯ãƒªãƒƒã‚¯ã—ãŸãƒœã‚¿ãƒ³ã§å‡¦ç†ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         arcballMode = ARCBALL_MODE_ROTATE;
     } else if (button == GLFW_MOUSE_BUTTON_MIDDLE) {
@@ -330,7 +330,7 @@ void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
         arcballMode = ARCBALL_MODE_TRANSLATE;
     }
      
-    // ƒNƒŠƒbƒN‚³‚ê‚½ˆÊ’u‚ğæ“¾
+    // ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸä½ç½®ã‚’å–å¾—
     double px, py;
     glfwGetCursorPos(window, &px, &py);
 
@@ -348,17 +348,17 @@ void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
     }
 }
 
-// ƒXƒNƒŠ[ƒ“ã‚ÌˆÊ’u‚ğƒA[ƒNƒ{[ƒ‹‹…ã‚ÌˆÊ’u‚É•ÏŠ·‚·‚éŠÖ”
+// ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ä¸Šã®ä½ç½®ã‚’ã‚¢ãƒ¼ã‚¯ãƒœãƒ¼ãƒ«çƒä¸Šã®ä½ç½®ã«å¤‰æ›ã™ã‚‹é–¢æ•°
 glm::vec3 getVector(double x, double y) {
     glm::vec3 pt( 2.0 * x / WIN_WIDTH  - 1.0,
                  -2.0 * y / WIN_HEIGHT + 1.0, 0.0);
 
     const double xySquared = pt.x * pt.x + pt.y * pt.y;
     if (xySquared <= 1.0) {
-        // ’PˆÊ‰~‚Ì“à‘¤‚È‚çzÀ•W‚ğŒvZ
+        // å˜ä½å††ã®å†…å´ãªã‚‰zåº§æ¨™ã‚’è¨ˆç®—
         pt.z = std::sqrt(1.0 - xySquared);
     } else {
-        // ŠO‘¤‚È‚ç‹…‚ÌŠO˜gã‚É‚ ‚é‚Æl‚¦‚é
+        // å¤–å´ãªã‚‰çƒã®å¤–æ ä¸Šã«ã‚ã‚‹ã¨è€ƒãˆã‚‹
         pt = glm::normalize(pt);
     }
 
@@ -368,48 +368,48 @@ glm::vec3 getVector(double x, double y) {
 void updateRotate() {
     static const double Pi = 4.0 * std::atan(1.0);
 
-    // ƒXƒNƒŠ[ƒ“À•W‚ğƒA[ƒNƒ{[ƒ‹‹…ã‚ÌÀ•W‚É•ÏŠ·
+    // ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã‚’ã‚¢ãƒ¼ã‚¯ãƒœãƒ¼ãƒ«çƒä¸Šã®åº§æ¨™ã«å¤‰æ›
     const glm::vec3 u = glm::normalize(getVector(newPos.x, newPos.y));
     const glm::vec3 v = glm::normalize(getVector(oldPos.x, oldPos.y));
 
-    // ƒJƒƒ‰À•W‚É‚¨‚¯‚é‰ñ“]—Ê (=ƒIƒuƒWƒFƒNƒgÀ•W‚É‚¨‚¯‚é‰ñ“]—Ê)
+    // ã‚«ãƒ¡ãƒ©åº§æ¨™ã«ãŠã‘ã‚‹å›è»¢é‡ (=ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåº§æ¨™ã«ãŠã‘ã‚‹å›è»¢é‡)
     const double angle = std::acos(std::max(-1.0f, std::min(glm::dot(u, v), 1.0f)));
 
-    // ƒJƒƒ‰‹óŠÔ‚É‚¨‚¯‚é‰ñ“]²
+    // ã‚«ãƒ¡ãƒ©ç©ºé–“ã«ãŠã‘ã‚‹å›è»¢è»¸
     const glm::vec3 rotAxis = glm::cross(v, u);
 
-    // ƒJƒƒ‰À•W‚Ìî•ñ‚ğƒ[ƒ‹ƒhÀ•W‚É•ÏŠ·‚·‚és—ñ
+    // ã‚«ãƒ¡ãƒ©åº§æ¨™ã®æƒ…å ±ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å¤‰æ›ã™ã‚‹è¡Œåˆ—
     const glm::mat4 c2oMat = glm::inverse(viewMat * modelMat);
 
-    // ƒIƒuƒWƒFƒNƒgÀ•W‚É‚¨‚¯‚é‰ñ“]²
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåº§æ¨™ã«ãŠã‘ã‚‹å›è»¢è»¸
     const glm::vec3 rotAxisObjSpace = glm::vec3(c2oMat * glm::vec4(rotAxis, 0.0f));
 
-    // ‰ñ“]s—ñ‚ÌXV
+    // å›è»¢è¡Œåˆ—ã®æ›´æ–°
     acRotMat = glm::rotate((float)(4.0 * angle), rotAxisObjSpace) * acRotMat;
 }
 
 void updateTranslate() {
-    // ƒIƒuƒWƒFƒNƒgdS‚ÌƒXƒNƒŠ[ƒ“À•W‚ğ‹‚ß‚é
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé‡å¿ƒã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã‚’æ±‚ã‚ã‚‹
     glm::vec4 gravityScreenSpace = (projMat * viewMat * modelMat) * glm::vec4(gravity.x, gravity.y, gravity.z, 1.0f);
     gravityScreenSpace /= gravityScreenSpace.w;
 
-    // ƒXƒNƒŠ[ƒ“À•WŒn‚É‚¨‚¯‚éˆÚ“®—Ê
+    // ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ç³»ã«ãŠã‘ã‚‹ç§»å‹•é‡
     glm::vec4 newPosScreenSpace(2.0 * newPos.x / WIN_WIDTH, -2.0 * newPos.y / WIN_HEIGHT, gravityScreenSpace.z, 1.0f);
     glm::vec4 oldPosScreenSpace(2.0 * oldPos.x / WIN_WIDTH, -2.0 * oldPos.y / WIN_HEIGHT, gravityScreenSpace.z, 1.0f);
 
-    // ƒXƒNƒŠ[ƒ“À•W‚Ìî•ñ‚ğƒIƒuƒWƒFƒNƒgÀ•W‚É•ÏŠ·‚·‚és—ñ
+    // ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã®æƒ…å ±ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåº§æ¨™ã«å¤‰æ›ã™ã‚‹è¡Œåˆ—
     const glm::mat4 s2oMat = glm::inverse(projMat * viewMat * modelMat);
 
-    // ƒXƒNƒŠ[ƒ“‹óŠÔ‚ÌÀ•W‚ğƒIƒuƒWƒFƒNƒg‹óŠÔ‚É•ÏŠ·
+    // ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã®åº§æ¨™ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç©ºé–“ã«å¤‰æ›
     glm::vec4 newPosObjSpace = s2oMat * newPosScreenSpace;
     glm::vec4 oldPosObjSpace = s2oMat * oldPosScreenSpace;
     newPosObjSpace /= newPosObjSpace.w;
     oldPosObjSpace /= oldPosObjSpace.w;
 
-    // ƒIƒuƒWƒFƒNƒgÀ•WŒn‚Å‚ÌˆÚ“®—Ê
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåº§æ¨™ç³»ã§ã®ç§»å‹•é‡
     const glm::vec3 transObjSpace = glm::vec3(newPosObjSpace - oldPosObjSpace);
 
-    // ƒIƒuƒWƒFƒNƒg‹óŠÔ‚Å‚Ì•½sˆÚ“®
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç©ºé–“ã§ã®å¹³è¡Œç§»å‹•
     acTransMat = glm::translate(acTransMat, transObjSpace);
 }
 
@@ -436,10 +436,10 @@ void updateMouse() {
 
 void mouseMoveEvent(GLFWwindow *window, double xpos, double ypos) {
     if (isDragging) {
-        // ƒ}ƒEƒX‚ÌŒ»İˆÊ’u‚ğXV
+        // ãƒã‚¦ã‚¹ã®ç¾åœ¨ä½ç½®ã‚’æ›´æ–°
         newPos = glm::ivec2(xpos, ypos);
 
-        // ƒ}ƒEƒX‚ª‚ ‚Ü‚è“®‚¢‚Ä‚¢‚È‚¢‚Íˆ—‚ğ‚µ‚È‚¢
+        // ãƒã‚¦ã‚¹ãŒã‚ã¾ã‚Šå‹•ã„ã¦ã„ãªã„æ™‚ã¯å‡¦ç†ã‚’ã—ãªã„
         const double dx = newPos.x - oldPos.x;
         const double dy = newPos.y - oldPos.y;
         const double length = dx * dx + dy * dy;
@@ -458,18 +458,18 @@ void wheelEvent(GLFWwindow *window, double xpos, double ypos) {
 }
 
 int main(int argc, char **argv) {
-    // OpenGL‚ğ‰Šú‰»‚·‚é
+    // OpenGLã‚’åˆæœŸåŒ–ã™ã‚‹
     if (glfwInit() == GL_FALSE) {
         fprintf(stderr, "Initialization failed!\n");
         return 1;
     }
 
-    // OpenGL‚Ìƒo[ƒWƒ‡ƒ“İ’è (Mac‚Ìê‡‚É‚Í•K‚¸•K—v)
+    // OpenGLã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³è¨­å®š (Macã®å ´åˆã«ã¯å¿…ãšå¿…è¦)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // Window‚Ìì¬
+    // Windowã®ä½œæˆ
     GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
                                           NULL, NULL);
     if (window == NULL) {
@@ -478,33 +478,33 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    // OpenGL‚Ì•`‰æ‘ÎÛ‚ÉWindow‚ğ’Ç‰Á
+    // OpenGLã®æç”»å¯¾è±¡ã«Windowã‚’è¿½åŠ 
     glfwMakeContextCurrent(window);
 
-    // ƒ}ƒEƒX‚ÌƒCƒxƒ“ƒg‚ğˆ—‚·‚éŠÖ”‚ğ“o˜^
+    // ãƒã‚¦ã‚¹ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã™ã‚‹é–¢æ•°ã‚’ç™»éŒ²
     glfwSetMouseButtonCallback(window, mouseEvent);
     glfwSetCursorPosCallback(window, mouseMoveEvent);
     glfwSetScrollCallback(window, wheelEvent);
 
-    // GLEW‚ğ‰Šú‰»‚·‚é (glfwMakeContextCurrent‚ÌŒã‚Å‚È‚¢‚Æ‚¢‚¯‚È‚¢)
+    // GLEWã‚’åˆæœŸåŒ–ã™ã‚‹ (glfwMakeContextCurrentã®å¾Œã§ãªã„ã¨ã„ã‘ãªã„)
     glewExperimental = true;
     if (glewInit() != GLEW_OK) {
         fprintf(stderr, "GLEW initialization failed!\n");
         return 1;
     }
 
-    // ƒEƒBƒ“ƒhƒE‚ÌƒŠƒTƒCƒY‚ğˆµ‚¤ŠÖ”‚Ì“o˜^
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒªã‚µã‚¤ã‚ºã‚’æ‰±ã†é–¢æ•°ã®ç™»éŒ²
     glfwSetWindowSizeCallback(window, resizeGL);
 
-    // OpenGL‚ğ‰Šú‰»
+    // OpenGLã‚’åˆæœŸåŒ–
     initializeGL();
 
-    // ƒƒCƒ“ƒ‹[ƒv
+    // ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        // •`‰æ
+        // æç”»
         paintGL();
 
-        // •`‰æ—pƒoƒbƒtƒ@‚ÌØ‚è‘Ö‚¦
+        // æç”»ç”¨ãƒãƒƒãƒ•ã‚¡ã®åˆ‡ã‚Šæ›¿ãˆ
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
