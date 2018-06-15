@@ -1,4 +1,4 @@
-#include <cstdio>
+﻿#include <cstdio>
 #include <cmath>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要

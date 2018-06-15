@@ -1,4 +1,4 @@
-#include <cstdio>
+﻿#include <cstdio>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
