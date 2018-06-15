@@ -67,12 +67,15 @@ void paintGL() {
     // 立方体の描画
     glBegin(GL_TRIANGLES);
     for (int face = 0; face < 6; face++) {
-        glColor3fv(colors[face]);
+        //glColor3fv(colors[face]);
         for (int i = 0; i < 3; i++) {
+            glColor3fv(colors[face]);
+            glTexCoord2f()
             glVertex3fv(positions[indices[face * 2 + 0][i]]);
         }
 
         for (int i = 0; i < 3; i++) {
+            glColor3fv(colors[face]);
             glVertex3fv(positions[indices[face * 2 + 1][i]]);
         }
     }
