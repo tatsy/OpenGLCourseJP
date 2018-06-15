@@ -1,4 +1,4 @@
-﻿#include <cstdio>
+#include <cstdio>
 #include <cmath>
 static const float Pi = std::atan(1.0) * 4.0;
 

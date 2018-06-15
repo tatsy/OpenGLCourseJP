@@ -1,4 +1,4 @@
-﻿#include <cstdio>
+#include <cstdio>
 #include <vector>
 
 #define GLFW_INCLUDE_GLU
