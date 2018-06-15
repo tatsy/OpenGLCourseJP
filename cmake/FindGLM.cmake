@@ -2,6 +2,7 @@ if (WIN32)
   find_path(GLM_INCLUDE_DIR
             NAMES glm/glm.hpp
             PATHS
+            ${GLM_ROOT}
             ${GLM_ROOT}/include)
 else()
   find_path(GLM_INCLUDE_DIR

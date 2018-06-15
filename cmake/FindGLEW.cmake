@@ -7,7 +7,8 @@ if (WIN32)
   find_library(GLEW_LIBRARY
                NAMES glew32.lib
                PATHS
-               ${GLEW_ROOT}/lib)
+               ${GLEW_ROOT}/lib
+               ${GLEW_ROOT}/lib/Release/x64)
 else()
   find_path(GLEW_INCLUDE_DIR
             NAMES GL/glew.h
