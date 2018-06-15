@@ -70,7 +70,6 @@ void paintGL() {
         //glColor3fv(colors[face]);
         for (int i = 0; i < 3; i++) {
             glColor3fv(colors[face]);
-            glTexCoord2f()
             glVertex3fv(positions[indices[face * 2 + 0][i]]);
         }
 
