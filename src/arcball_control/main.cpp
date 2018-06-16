@@ -271,6 +271,12 @@ void initializeGL() {
     viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // 視点の位置
                           glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                           glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
+
+    // その他の行列の初期化
+    modelMat = glm::mat4(1.0);
+    acRotMat = glm::mat4(1.0);
+    acTransMat = glm::mat4(1.0);
+    acScaleMat = glm::mat4(1.0);
 }
 
 // OpenGLの描画関数
