@@ -266,7 +266,7 @@ void paintGL() {
 
     // 1つ目の立方体を描画
     {
-        glm::mat4 modelMat;
+        glm::mat4 modelMat = glm::mat4(1.0);
         modelMat = glm::translate(modelMat, glm::vec3(-2.0f, 0.0f, 0.0f));
         modelMat = glm::rotate(modelMat, theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
         glm::mat4 mvpMat = projMat * viewMat * modelMat;
@@ -283,7 +283,7 @@ void paintGL() {
 
     // 2つ目の立方体を描画
     {
-        glm::mat4 modelMat;
+        glm::mat4 modelMat = glm::mat4(1.0);
         modelMat = glm::translate(modelMat, glm::vec3(2.0f, 0.0f, 0.0f));
         modelMat = glm::rotate(modelMat, theta * 2.0f, glm::vec3(0.0f, 1.0f, 0.0f)); 
         glm::mat4 mvpMat = projMat * viewMat * modelMat;
