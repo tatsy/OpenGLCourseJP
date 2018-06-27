@@ -309,7 +309,7 @@ struct RenderObject {
         glUseProgram(programId);
         
         GLuint location;
-        location = glGetUniformLocation(programId, "u_ambColor");
+        location = glGetUniformLocation(programId, "u_ambiColor");
         glUniform3fv(location, 1, glm::value_ptr(ambiColor));
         location = glGetUniformLocation(programId, "u_diffColor");
         glUniform3fv(location, 1, glm::value_ptr(diffColor));

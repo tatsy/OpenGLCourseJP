@@ -90,6 +90,7 @@ static float theta = 0.0f;
 // シャドウ・マップのためのFBO
 struct ShadowMap {
     GLuint fboId;
+    GLuint colorTexId;
     GLuint depthTexId;
 } shadowMap;
 
@@ -323,8 +324,11 @@ void initShaders() {
 
 // FBOの初期化
 void initFBO() {
-    glGenTextures(1, &shadowMap.depthTexId);
-    glBindTexture(GL_TEXTURE_2D, shadowMap.depthTexId);
+    glGenFramebuffers(1, &shadowMap.fboId);
+    glBindFramebuffer(GL_FRAMEBUFFER, shadowMap.fboId);
+
+    glGenTextures(1, &shadowMap.colorTexId);
+    glBindTexture(GL_TEXTURE_2D, shadowMap.colorTexId);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -332,9 +336,11 @@ void initFBO() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glGenFramebuffers(1, &shadowMap.fboId);
-    glBindFramebuffer(GL_FRAMEBUFFER, shadowMap.fboId);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadowMap.depthTexId, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadowMap.colorTexId, 0);
+
+    glGenRenderbuffers(1, &shadowMap.depthTexId);
+    glBindRenderbuffer(GL_RENDERBUFFER, shadowMap.depthTexId);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_DEPTH_COMPONENT16, shadowMap.depthTexId);
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -459,7 +465,7 @@ void paintGL() {
             glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(lightBiasMVP));
 
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, shadowMap.depthTexId);
+            glBindTexture(GL_TEXTURE_2D, shadowMap.colorTexId);
             uid = glGetUniformLocation(programId, "u_depthTex");
             glUniform1i(uid, 0);
 
