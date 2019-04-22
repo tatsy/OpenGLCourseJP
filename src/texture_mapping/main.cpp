@@ -65,7 +65,7 @@ void initializeGL() {
     
     // 単純なテクスチャの転送
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight,
-                    0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+                 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
     // テクスチャの画素値参照方法の設定
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

@@ -2,12 +2,13 @@ cmake_minimum_required(VERSION 2.8.0)
 project(OpenGLCourseJP)
 
 if (WIN32)
-  set(GLEW_ROOT "GLEW_ROOT" CACHE PATH "")
-  set(GLFW3_ROOT "GLFW3_ROOT" CACHE PATH "")
-  set(GLM_ROOT "GLM_ROOT" CACHE PATH "")
+  set(GLEW_DIR "GLEW_DIR" CACHE PATH "")
+  set(GLFW3_DIR "GLFW3_DIR" CACHE PATH "")
+  set(GLM_DIR "GLM_DIR" CACHE PATH "")
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(Macros)
 
 # ------------------------------------------------------------------------------
 # Set build options
@@ -32,9 +33,13 @@ set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_DEBUG_POSTFIX "-debug")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -44,7 +49,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(ALL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIRS}
                      ${GLFW3_INCLUDE_DIR}
                      ${GLEW_INCLUDE_DIR}
-                     ${GLM_INCLUDE_DIR})
+                     ${GLM_INCLUDE_DIR}
+                     ${CMAKE_CURRENT_LIST_DIR}/support)
 
 set(ALL_LIBRARIES ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY} ${GLEW_LIBRARY})
 if (UNIX AND NOT APPLE)
@@ -61,6 +67,7 @@ endif()
 # Add subdirectory
 # ------------------------------------------------------------------------------
 add_subdirectory(src)
+add_subdirectory(advanced)
 if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/practice/CMakeLists.txt")
   add_subdirectory(practice)
 endif()

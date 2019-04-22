@@ -55,9 +55,17 @@ int main(int argc, char **argv) {
     initializeGL();
 
     // メインループ
+    int i = 0;
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        // 描画
+        if (i % 2 == 0) {
+            // 描画
+            glDrawBuffer(GL_FRONT);
+        }
+        else {
+            glDrawBuffer(GL_BACK);
+        }
         paintGL();
+        i++;
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);

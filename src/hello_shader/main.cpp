@@ -5,10 +5,13 @@
 #include <string>
 #include <vector>
 
+#define GLAD_GL_IMPLEMENTATION
+#include <glad/gl.h>
+
 #define GLFW_INCLUDE_GLU
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -129,7 +132,6 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     
     // ファイルの読み込み
     std::ifstream reader;
-    size_t codeSize;
     std::string code;
 
     // ファイルを開く
@@ -141,11 +143,11 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     }
 
     // ファイルをすべて読んで変数に格納 (やや難)
-    reader.seekg(0, std::ios::end);             // ファイル読み取り位置を終端に移動 
-    codeSize = reader.tellg();                  // 現在の箇所(=終端)の位置がファイルサイズ
-    code.resize(codeSize);                      // コードを格納する変数の大きさを設定
-    reader.seekg(0);                            // ファイルの読み取り位置を先頭に移動
-    reader.read(&code[0], codeSize);            // 先頭からファイルサイズ分を読んでコードの変数に格納
+    reader.seekg(0, std::ios::end);                      // ファイル読み取り位置を終端に移動 
+	code.reserve(reader.tellg());                        // コードを格納する変数の大きさを予約 (文字列のサイズは変化しない)
+    reader.seekg(0, std::ios::beg);                      // ファイルの読み取り位置を先頭に移動
+    code.assign(std::istreambuf_iterator<char>(reader),
+                std::istreambuf_iterator<char>());       // 先頭からファイルサイズ分を読んでコードの変数に格納
 
     // ファイルを閉じる
     reader.close();
@@ -307,7 +309,8 @@ int main(int argc, char **argv) {
     }
 
     // OpenGLのバージョン設定 (Macの場合には必ず必要)
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -323,12 +326,15 @@ int main(int argc, char **argv) {
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
 
-    // GLEWを初期化する (glfwMakeContextCurrentの後でないといけない)
-    glewExperimental = true;
-    if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "GLEW initialization failed!\n");
+    // OpenGL 3.x/4.xの関数をロードする (glfwMakeContextCurrentの後でないといけない)
+    const int version = gladLoadGL(glfwGetProcAddress);
+    if (version == 0) {
+        fprintf(stderr, "Failed to load OpenGL 3.x/4.x libraries!\n");
         return 1;
     }
+
+    // バージョンを出力する
+    printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
     // ウィンドウのリサイズを扱う関数の登録
     glfwSetWindowSizeCallback(window, resizeGL);

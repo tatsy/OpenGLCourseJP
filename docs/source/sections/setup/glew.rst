@@ -4,9 +4,17 @@ GLEWとGLMの設定
 
 (この内容は「 :doc:`../hello_shader/index` 」以降に必要になります)
 
-第10回以降のソースコードを動かすためには, 最近のOpenGLの機能を扱うためのライブラリが必要です。
-このコースではGLEW (OpenGL Extension Wrangler Library) を使ってプログラムを作ります。
+第10回以降のソースコードを動かすためには、最近のOpenGLの機能を扱うためのライブラリが必要です。
+以前はGLEW (OpenGL Extension Wrangler Library) というライブラリを使っていましたが、こちらのライブラリはあまり更新されていないこともあり、2019年度からGLADというライブラリを用いることにいたしました。
+新しい内容を確認したい方は、以下からGLADの準備方法をご確認ください。
 
+:doc:`glad`
+
+.. raw:: html
+
+  <span style="color: #f00; font-weight: bold;">以下の内容は過去のものになりますので、ご注意ください</span>
+
+このコースではGLEW (OpenGL Extension Wrangler Library) を使ってプログラムを作ります。
 合わせて、ベクトルや行列の計算を簡単に扱うためのライブラリとしてGLM (OpenGL Mathematics) も導入しておきます。
 
 ----

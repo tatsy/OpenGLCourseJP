@@ -6,4 +6,4 @@
   :maxdepth: 1
 
   glfw
-  glew
+  glad

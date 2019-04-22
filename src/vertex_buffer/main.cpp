@@ -1,8 +1,10 @@
 ﻿#include <cstdio>
 #include <vector>
 
+#define GLAD_GL_IMPLEMENTATION
+#include <glad/gl.h>
+
 #define GLFW_INCLUDE_GLU
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
@@ -160,11 +162,15 @@ int main(int argc, char **argv) {
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
 
-    // GLEWを初期化する (glfwMakeContextCurrentの後でないといけない)
-    if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "GLEW initialization failed!\n");
+    // OpenGL 3.x/4.xの関数をロードする (glfwMakeContextCurrentの後でないといけない)
+    const int version = gladLoadGL(glfwGetProcAddress);
+    if (version == 0) {
+        fprintf(stderr, "Failed to load OpenGL 3.x/4.x libraries!\n");
         return 1;
     }
+
+    // バージョンを出力する
+    printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
     // OpenGLを初期化
     initializeGL();
