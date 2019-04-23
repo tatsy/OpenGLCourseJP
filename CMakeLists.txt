@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8.0)
 project(OpenGLCourseJP)
 
 if (WIN32)
-  set(GLEW_DIR "GLEW_DIR" CACHE PATH "")
   set(GLFW3_DIR "GLFW3_DIR" CACHE PATH "")
   set(GLM_DIR "GLM_DIR" CACHE PATH "")
 endif()
