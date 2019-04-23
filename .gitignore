@@ -6,5 +6,8 @@ build/*
 docs/doctrees
 docs/source/materials/*
 
+*.o
+
+
 .DS_Store
 common.h
