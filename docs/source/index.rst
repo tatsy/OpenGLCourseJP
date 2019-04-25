@@ -34,12 +34,22 @@ OpenGL Course
 -------------
 
 * |tokoi_lab_opengl|
+* |opengl_tutorial|
 * |opengl_de_programming|
+* |wikibook_opengl|
 
 .. |tokoi_lab_opengl| raw:: html
 
   <a href="http://marina.sys.wakayama-u.ac.jp/~tokoi/oglarticles.html" target="_blank">和歌山大学 床井研究室 OpenGL記事一覧</a>
 
+.. |opengl_tutorial| raw:: html
+
+  <a href="http://www.opengl-tutorial.org/jp/" target="_blank">opengl-tutorial</a>
+
 .. |opengl_de_programming| raw:: html
 
   <a href="http://seesaawiki.jp/w/mikk_ni3_92/" target="_blank">OpenGL de プログラミング</a>
+
+.. |wikibook_opengl| raw:: html
+
+  <a href="https://en.wikibooks.org/wiki/OpenGL_Programming" target="_blank">OpenGL Programming - Wikibook (英語)</a>

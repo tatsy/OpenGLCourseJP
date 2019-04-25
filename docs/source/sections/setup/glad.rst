@@ -16,71 +16,15 @@ GLADのインストール (Windows/Mac共通)
 
 ページが開いたら下の画像のように設定項目を入力し、右下にある「GENERATE」ボタンをクリックします。
 
-.. image:: ./figures/glad_setting.jpg
+.. image:: ./figures/glad_setup_01.jpg
+
+.. image:: ./figures/glad_setup_02.jpg
 
 すると下記のような画面が開くので ``glad.zip`` をクリックして、ファイルをダウンロードします。
 
 .. image:: ./figures/glad_download.jpg
 
-このファイルを展開すると ``glad/glad.h`` というファイルが見つかりますので、これを適当な場所におき、自分のソースコードからインクルードするようにします。
-
-GLMのインストール (Windowsの場合)
-------------------------------------------------
-
-GLMも公式のウェブページからライブラリをダウンロードします。
-
-| **GLMのダウンロードページ**
-| http://glm.g-truc.net
-|
-
-.. image:: ./figures/glm_top_page.jpg
-
-上記のウェブページの左側にある「Downloads」というリンクをクリックします。
-するとダウンロードページに移動するので、その中から最新版である0.9.9.5をダウンロードします (2019年4月1日現在) 。
-ダウンロードしたファイルは「glm-0.9.9.5.zip」という名前になっているはずです。
-
-.. image:: ./figures/glm_download_page.jpg
-
-ダウンロードが完了したら、ZIPファイルを展開して適当なディレクトリに配置します。
-
-
-プロパティシートの更新
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-初回の準備の際に作成したプロパティシートを更新して、GLEWおよびGLMを使用できるようにします。
-
-設定方法に関しては、:doc:`glfw` を参照してください。設定項目は以下の通りです。
-
-VC++ ディレクトリ
-""""""""""""""""""""""""""""""""""""
-
-| **インクルードディレクトリ**
-| C:\\Libraries\\opengl\\glm-0.9.8.4  (GLM)
-|
-
-GLMのインストール (Macの場合)
-------------------------------------------------
-
-`GLMのGitHub <https://github.com/g-truc/glm.git>`_ からソースコードを
-ダウンロードして、ビルドとインストールを行います。次のコマンドをターミナルで実行してください。
-
-.. code-block:: shell
-  :linenos:
-
-  git clone https://github.com/g-truc/glm.git
-  cd glm
-  mkdir build && cd build
-  cmake ..
-  make
-  sudo make install
-
-これだけでインストールは完了です。
-
-
-Xcodeの設定
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Macの場合、上記のコマンドでGLMは ``/usr/local/include`` というシステム全体から見える場所にインストールされるため、Xcodeでインクルード・ディレクトリ等を設定する必要ありません。
+このファイルを展開すると ``glad/gl.h`` というファイルが見つかりますので、これを適当な場所におき、自分のソースコードからインクルードするようにします。
 
 サンプルプログラムの実行
 -------------------------------------
@@ -112,6 +56,54 @@ https://github.com/tatsy/OpenGLCourseJP/blob/master/src/hello_shader
 
 サンプルプログラムでは、シェーダのファイルが見つからなければエラーを返すように
 していますので、もし実行が上手くいかない場合にはシェーダの置き場所を確認してみてください。
+
+プログラムの変更点①
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+一つ目は使用するOpenGLの種類の設定です。設定項目としては、
+
+1. GLFWにOpenGLのバージョンを指定する
+2. GLFWにOpenGLのプロファイルの種類を指定する
+3. GLFWにOpenGLの互換性を指定する
+
+これらは以下のように設定できます。
+
+.. code-block:: cpp
+  :linenos:
+
+  // OpenGLのバージョン設定 (4を指定すると4.xの中で使用可能なもののうち、最新のものが使われる)
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  // OpenGLのプロファイル (Core, Compatibility) を設定
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  // OpenGLの関数の新しい関数だけを使う場合は GL_TRUE を指定する (初期値は GL_FALSE)
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+これらの項目はWindowsの場合には特に設定しなくても、最新バージョンのOpenGLでかつ、Compatibility profileを使い、古い関数もサポートする形で初期化されます。一方でMacの場合には、上記の設定をしない場合には、OpenGL 2.1の機能までしか使えないため、設定は必須になります。さらにMacではCore profileのみがサポートされているため、上記の三項目の設定が必要になります。
+
+プログラムの変更点②
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+上記の設定後、OpenGLのライブラリをロードするコードを追加します。具体的には ``glfwMakeContextCurrent`` を呼び出しの下に以下のコードを追加します。
+
+.. code-block:: cpp
+  :linenos:
+
+  // OpenGL 3.x/4.xの関数をロードする (glfwMakeContextCurrentの後でないといけない)
+  const int version = gladLoadGL(glfwGetProcAddress);
+  if (version == 0) {
+      fprintf(stderr, "Failed to load OpenGL 3.x/4.x libraries!\n");
+      return 1;
+  }
+
+  // バージョンを出力する
+  printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+
+``gladLoadGL`` 関数はライブラリの読み込みに成功するとOpenGLのバージョンを表す3桁の整数を返してします (OpenGL 4.5なら450)。もし読み込みに失敗した場合には ``0`` が返ってくるので、これを使って読み込みに成功したかどうかを確認しています。
+
+またその下の ``printf`` では、実際に期待するバージョンのライブラリが読み込めているかどうかを確認しています。特にMacの場合には設定が正しく行えていない場合にバージョン2.1が読み込まれるので注意してください。
+
+プログラムの実行
+^^^^^^^^^^^^^^^^^^^
 
 実際にプログラムをビルドして実行結果を確認してください。
 

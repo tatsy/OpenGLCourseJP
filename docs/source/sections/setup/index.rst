@@ -6,4 +6,7 @@
   :maxdepth: 1
 
   glfw
+  glm
   glad
+
+少し古いやり方になりますがGLEWの設定方法については、「:doc:`glew`」に解説があります。

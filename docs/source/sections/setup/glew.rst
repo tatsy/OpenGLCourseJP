@@ -222,14 +222,14 @@ Xcodeには、このコピーを自動化する機能がありますので、そ
 「New Group」を選びます。そうすると、フォルダの名前を入力できるようになるので、
 その名前を **shaders** などの名前に変更します。
 
-.. image:: ./figures/create_new_group_before.png
+.. image:: ./figures/create_new_group_before.jpg
   :width: 300px
 
 Groupが作成出来たら、そのGroupを右クリックして、「Add files to "shaders"」を選びます。
 すると、ファイルを選択する画面になるので、シェーダのソースコード (今回の場合には
 render.vertとrender.frag)を選択します。追加が完了すると以下の図のようになるはずです。
 
-.. image:: ./figures/adding_shaders.png
+.. image:: ./figures/adding_shaders.jpg
   :width: 300px
 
 Groupにシェーダのソースコードが登録出来たら、次に自動コピーの設定をします。
@@ -238,7 +238,7 @@ Groupにシェーダのソースコードが登録出来たら、次に自動コ
 「Build Phases」を選びます。すると画面下部に「Copy Files」という項目があるので、
 その項目を以下の図のように設定します。
 
-.. image:: ./figures/after_adding_shaders.png
+.. image:: ./figures/after_adding_shaders.jpg
 
 ファイルを新規に追加するときには、下側にある「＋」ボタンを押すと現れるダイアログ上で、
 **shaders** に追加したシェーダのソースコードを選べばOKです。
