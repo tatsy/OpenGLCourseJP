@@ -7,7 +7,7 @@ compiler:
 before_install:
   - sudo apt-get install -y xorg-dev libglu1-mesa-dev
   - sudo apt-get install -y libxmu-dev libxi-dev
-  - sudo apt-get install -y libglew-dev
+  - sudo apt-get install -y python3 python3-pip
   - git clone https://github.com/glfw/glfw.git
   - cd glfw && mkdir build && cd build
   - cmake .. && make && sudo make install
@@ -25,7 +25,7 @@ script:
 after_success:
   - git config --global user.name "Travis CI"
   - git config --global user.email "travis@travis-ci.org"
-  - pip install sphinx breathe sphinx_rtd_theme
+  - pip3 install sphinx breathe sphinx_rtd_theme
   - git submodule update --init -- "docs/html"
   - cd docs/html
   - git checkout gh-pages
