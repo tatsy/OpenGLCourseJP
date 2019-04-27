@@ -98,7 +98,7 @@ https://github.com/tatsy/OpenGLCourseJP/blob/master/src/hello_shader
   // バージョンを出力する
   printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
-``gladLoadGL`` 関数はライブラリの読み込みに成功するとOpenGLのバージョンを表す3桁の整数を返してします (OpenGL 4.5なら450)。もし読み込みに失敗した場合には ``0`` が返ってくるので、これを使って読み込みに成功したかどうかを確認しています。
+``gladLoadGL`` 関数はライブラリの読み込みに成功するとOpenGLのバージョンを表す5桁の整数を返してします (OpenGL 4.5なら40005)。もし読み込みに失敗した場合には ``0`` が返ってくるので、これを使って読み込みに成功したかどうかを確認しています。
 
 またその下の ``printf`` では、実際に期待するバージョンのライブラリが読み込めているかどうかを確認しています。特にMacの場合には設定が正しく行えていない場合にバージョン2.1が読み込まれるので注意してください。
 
