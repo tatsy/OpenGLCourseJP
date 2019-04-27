@@ -29,18 +29,18 @@ all: $(PROGRAM)
 
 # ソースコードのコンパイル
 $(OBJS): $(SRC)
-    $(CXX) $(CXXFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) -c $<
 
 # プログラムのリンク
 $(PROGRAM): $(OBJS)
-    $(CXX) $(LDFLAGS) $(FRAMEWORKS) -o $(PROGRAM) $^
+	$(CXX) $(LDFLAGS) $(FRAMEWORKS) -o $(PROGRAM) $^
 
 # プログラムの実行
 .PHONY: run
 run:
-    @./$(PROGRAM)
+	@./$(PROGRAM)
 
 # コンパイル結果を削除する
 .PHONY: clean
 clean:
-    @$(RM) $(PROGRAM) $(OBJS)
+	@$(RM) $(PROGRAM) $(OBJS)
