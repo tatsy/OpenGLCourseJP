@@ -83,9 +83,6 @@
       // 背景色と深度値のクリア
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      // ビューポート変換の指定
-      glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
-
       // 座標の変換
       glMatrixMode(GL_PROJECTION);
       glLoadIdentity();
