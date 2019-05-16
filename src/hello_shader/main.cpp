@@ -143,8 +143,8 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     }
 
     // ファイルをすべて読んで変数に格納 (やや難)
-    reader.seekg(0, std::ios::end);                      // ファイル読み取り位置を終端に移動 
-	code.reserve(reader.tellg());                        // コードを格納する変数の大きさを予約 (文字列のサイズは変化しない)
+    reader.seekg(0, std::ios::end);                      // ファイル読み取り位置を終端に移動
+    code.reserve(reader.tellg());                        // コードを格納する変数の大きさを予約 (文字列のサイズは変化しない)
     reader.seekg(0, std::ios::beg);                      // ファイルの読み取り位置を先頭に移動
     code.assign(std::istreambuf_iterator<char>(reader),
                 std::istreambuf_iterator<char>());       // 先頭からファイルサイズ分を読んでコードの変数に格納
