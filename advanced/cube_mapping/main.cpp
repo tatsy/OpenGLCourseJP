@@ -455,9 +455,6 @@ int main(int argc, char **argv) {
 
     // OpenGLの描画対象にWindowを追加
     glfwMakeContextCurrent(window);
-    
-    // OpenGL情報の表示
-    printGLInfo();
 
     // OpenGL 3.x/4.xの関数をロードする (glfwMakeContextCurrentの後でないといけない)
     const int version = gladLoadGL(glfwGetProcAddress);
@@ -468,6 +465,9 @@ int main(int argc, char **argv) {
 
     // バージョンを出力する
     printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+
+    // OpenGL情報の表示
+    printGLInfo();
 
     // ウィンドウのリサイズを扱う関数の登録
     glfwSetWindowSizeCallback(window, resizeGL);
