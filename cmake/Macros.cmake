@@ -17,7 +17,9 @@ function(BUILD_EXAMPLE EXPNAME)
   endif()
 
   file(GLOB SOURCE_FILES "${EXPNAME}/*.cpp" "${EXPNAME}/*.h")
-  file(GLOB SHADER_FILES "${EXPNAME}/shaders/*.vert" "${EXPNAME}/shaders/*.frag")
+  file(GLOB SHADER_FILES "${EXPNAME}/shaders/*.vert"
+                         "${EXPNAME}/shaders/*.geom"
+                         "${EXPNAME}/shaders/*.frag")
 
   include_directories(${ALL_INCLUDE_DIRS})
   add_executable(${EXPNAME} ${SOURCE_FILES} ${SHADER_FILES} ${GLAD_FILES})

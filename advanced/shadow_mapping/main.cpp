@@ -68,7 +68,7 @@ GLuint programId;
 GLuint smProgramId;
 
 // ライトの位置
-static const glm::vec3 lightPos = glm::vec3(0.0f, 5.0f, 5.0f);
+static const glm::vec3 lightPos = glm::vec3(0.0f, 7.0f, 7.0f);
 
 // シェーディングのための情報
 // Gold (参照: http://www.barradeau.com/nicoptere/dump/materials.html)
@@ -332,20 +332,22 @@ void initFBO() {
 
     glGenTextures(1, &shadowMap.colorTexId);
     glBindTexture(GL_TEXTURE_2D, shadowMap.colorTexId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, 1024, 1024, 0, GL_RED, GL_FLOAT, 0);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadowMap.colorTexId, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     glGenRenderbuffers(1, &shadowMap.depthTexId);
     glBindRenderbuffer(GL_RENDERBUFFER, shadowMap.depthTexId);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_DEPTH_COMPONENT16, shadowMap.depthTexId);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, 1024, 1024);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadowMap.colorTexId, 0);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, shadowMap.depthTexId);
 
-    glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -376,6 +378,11 @@ void paintGL() {
     int viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
 
+    // モデルの変形
+    glm::mat4 modelMat = glm::mat4(1.0f);
+    modelMat = glm::translate(modelMat, glm::vec3(0.0f, 0.5f, 0.0f));
+    modelMat = glm::rotate(modelMat, glm::radians(theta), glm::vec3(0.0f, 1.0f, 0.0f));
+
     // ライトからの描画
     glUseProgram(smProgramId);
     glBindFramebuffer(GL_FRAMEBUFFER, shadowMap.fboId);
@@ -387,19 +394,13 @@ void paintGL() {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         // 座標の変換
-        glm::mat4 projMat = glm::perspective(45.0f,
-            (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 1.0f, 50.0f);
 
         glm::mat4 viewMat = glm::lookAt(lightPos,                      // 視点の位置
                                         glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                         glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
-        glm::mat4 modelMat;
-        modelMat = glm::translate(modelMat, glm::vec3(0.0f, 0.5f, 0.0f));
-        modelMat = glm::scale(modelMat, glm::vec3(0.03f, 0.03f, 0.03f));
-        modelMat = glm::rotate(modelMat, glm::radians(theta), glm::vec3(0.0f, 1.0f, 0.0f));
-
-        lightBiasVP = projMat * viewMat;
+        lightBiasVP = projMat * viewMat; // * modelMat;
 
         glm::mat4 mvpMat = lightBiasVP * modelMat;
 
@@ -417,8 +418,9 @@ void paintGL() {
         glBindVertexArray(0);
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
     glUseProgram(0);
+
+    glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
 
     glUseProgram(programId);
     {
@@ -426,16 +428,15 @@ void paintGL() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // 座標の変換
-        glm::mat4 projMat = glm::perspective(45.0f,
-            (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+        glm::mat4 projMat = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 1.0f, 50.0f);
 
-        glm::mat4 viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // 視点の位置
+        glm::mat4 viewMat = glm::lookAt(glm::vec3(4.0f, 5.0f, 6.0f),   // 視点の位置
                                         glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                         glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
         {
             // Uniform変数の転送
-            glm::mat4 modelMat;
+            glm::mat4 modelMat = glm::mat4(1.0f);
 
             glm::mat4 mvMat = viewMat * modelMat;
             glm::mat4 normMat = glm::transpose(glm::inverse(mvMat));
@@ -487,11 +488,6 @@ void paintGL() {
 
         {
             // Uniform変数の転送
-            glm::mat4 modelMat;
-            modelMat = glm::translate(modelMat, glm::vec3(0.0f, 0.5f, 0.0f));
-            modelMat = glm::scale(modelMat, glm::vec3(0.03f, 0.03f, 0.03f));
-            modelMat = glm::rotate(modelMat, glm::radians(theta), glm::vec3(0.0f, 1.0f, 0.0f)); 
-
             glm::mat4 mvMat = viewMat * modelMat;
             glm::mat4 normMat = glm::transpose(glm::inverse(mvMat));
             glm::mat4 mvpMat = projMat * viewMat * modelMat;
