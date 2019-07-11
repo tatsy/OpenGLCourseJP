@@ -281,7 +281,7 @@ void paintGL() {
         uid = glGetUniformLocation(programId, "u_selectID");
         glUniform1i(uid, selectMode ? 1 : -1);
         
-        glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
     }
 
     // 2つ目の立方体を描画
@@ -298,7 +298,7 @@ void paintGL() {
         uid = glGetUniformLocation(programId, "u_selectID");
         glUniform1i(uid, selectMode ? 2 : -1);
         
-        glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
     }
 
     // VAOの無効化

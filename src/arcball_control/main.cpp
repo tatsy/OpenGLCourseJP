@@ -301,7 +301,7 @@ void paintGL() {
     uid = glGetUniformLocation(programId, "u_mvpMat");
     glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvpMat));
         
-    glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
     // VAOの無効化
     glBindVertexArray(0);
@@ -394,7 +394,7 @@ void updateRotate() {
     const glm::vec3 rotAxisObjSpace = glm::vec3(c2oMat * glm::vec4(rotAxis, 0.0f));
 
     // 回転行列の更新
-    acRotMat = glm::rotate((float)(4.0 * angle), rotAxisObjSpace) * acRotMat;
+    acRotMat = glm::rotate((float)(4.0f * angle), rotAxisObjSpace) * acRotMat;
 }
 
 void updateTranslate() {
