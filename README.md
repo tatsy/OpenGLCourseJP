@@ -26,6 +26,6 @@ OpenGLCourseJP
 | 第13回 | [様々なシェーディングモデル](src/shading_models) |
 | 第13回 | [キーボードとマウスの操作](src/keyboard_and_mouse) |
 | 第15回 | [オブジェクトの選択](src/object_selection) |
-| 第16回 | [アークボール操作](arcball_control) |
+| 第16回 | [アークボール操作](src/arcball_control) |
 
 
