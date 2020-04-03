@@ -23,19 +23,19 @@ script:
   - cmake .. && cmake --build .
   - cd ..
 
-after_success:
-  - git config --global user.name "Travis CI"
-  - git config --global user.email "travis@travis-ci.org"
-  - pip3 install sphinx breathe sphinx_rtd_theme
-  - git submodule update --init -- "docs/html"
-  - cd docs/html
-  - git checkout gh-pages
-  - cd ..
-  - make html
-  - cd html
-  - git add --all
-  - git commit -m "Commit from Travis CI for build $TRAVIS_BUILD_NUMBER ."
-  - git push --force --quiet https://$GH_TOKEN@github.com/tatsy/OpenGLCourseJP.git gh-pages:gh-pages
+#after_success:
+  # - git config --global user.name "Travis CI"
+  # - git config --global user.email "travis@travis-ci.org"
+  # - pip3 install sphinx breathe sphinx_rtd_theme
+  # - git submodule update --init -- "docs/html"
+  # - cd docs/html
+  # - git checkout gh-pages
+  # - cd ..
+  # - make html
+  # - cd html
+  # - git add --all
+  # - git commit -m "Commit from Travis CI for build $TRAVIS_BUILD_NUMBER ."
+  # - git push --force --quiet https://$GH_TOKEN@github.com/tatsy/OpenGLCourseJP.git gh-pages:gh-pages
 
 git:
   submodules: false
