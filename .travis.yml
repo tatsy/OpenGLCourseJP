@@ -13,8 +13,8 @@ before_install:
   - cmake .. && make && sudo make install
   - cd ../..
   - git clone https://github.com/g-truc/glm.git
-  - git checkout 0.9.9.5
-  - cd glm && mkdir build && cd build
+  - cd glm && git checkout 0.9.9.5
+  - mkdir build && cd build
   - cmake .. && make && sudo make install
   - cd ../..
 
