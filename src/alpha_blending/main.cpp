@@ -6,7 +6,7 @@
 
 static int WIN_WIDTH   = 500;                 // ウィンドウの幅
 static int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
-static char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
+static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
 static const double PI = 4.0 * atan(1.0);           // 円周率の定義
 

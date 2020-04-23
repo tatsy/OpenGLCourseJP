@@ -15,7 +15,8 @@ before_install:
   - git clone https://github.com/g-truc/glm.git
   - cd glm && git checkout 0.9.9.5
   - mkdir build && cd build
-  - cmake .. && make && sudo make install
+  - cmake -DBUILD_STATIC_LIBS=OFF -DBUILD_SHARED_LIBS=OFF -DGLM_TEST_ENABLE=OFF ..
+  - make && sudo make install
   - cd ../..
 
 script:
