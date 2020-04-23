@@ -1,6 +1,3 @@
-[submodule "jekyll"]
-	path = jekyll
-	url = https://github.com/tatsy/OpenGLCourseJP.git
 [submodule "practice"]
 	path = practice
 	url = https://github.com/tatsy/OpenGLCoursePractice.git
