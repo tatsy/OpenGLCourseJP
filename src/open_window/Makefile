@@ -9,11 +9,11 @@ SH          := bash
 # ソースコードの設定 (ファイルを追加する場合はここに足す)
 SRC         := main.cpp
 OBJS        := $(patsubst %.cpp, %.o, $(SRC))
-DEPS		:= $(patsubst %.cpp, %.d, $(SRC))
+DEPS        := $(patsubst %.cpp, %.d, $(SRC))
 
 # コンパイラ引数の設定 (インクルード・ディレクトリ等)
 CFLAGS      := -Wall -g -O2 -MP -MMD -I/usr/include -I/usr/local/include -I../../support -DGL_SILENCE_DEPRECATION
-CXXFLAGS    := -Wall -g -O2 -MP -MMD -std=c++11 -I/usr/include -I/usr/local/include -I../../support -DGL_SILENCE_DEPRECATION
+CXXFLAGS    := -std=c++11 $(CFLAGS)
 
 # フレームワークの設定 (Mac特有のもの)
 FRAMEWORKS  := -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
