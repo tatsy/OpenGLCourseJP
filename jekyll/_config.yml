@@ -1,0 +1,38 @@
+title: OpenGL Course (JP)
+email: tatsy.mail@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  OpenGLの講義用資料です。シェーダを用いて対話的なCGプログラムを書くことを目標にしています。
+baseurl: "/OpenGLCourseJP"
+url: "https://tatsy.github.io"
+github_username: tatsy
+encoding: UTF-8
+lang: ja
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+  syntax_highlighter_opts:
+    css_class: 'github'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+exclude:
+  - .jekyll-cache/
+  - .sass-cache/
+  - node_modules/
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
