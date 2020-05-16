@@ -307,7 +307,7 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
     
     // 特殊キーが押されているかの判定
     int specialKeys[] = { GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER };
-    char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
+    const char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
     
     printf("Special Keys: ");
     for (int i = 0; i < 4; i++) {
@@ -329,7 +329,7 @@ void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
     
     // 特殊キーが押されているかの判定
     int specialKeys[] = { GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, GLFW_MOD_ALT, GLFW_MOD_SUPER };
-    char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
+    const char *specialKeyNames[] = { "Shift", "Ctrl", "Alt", "Super" };
     
     printf("Special Keys: ");
     for (int i = 0; i < 4; i++) {

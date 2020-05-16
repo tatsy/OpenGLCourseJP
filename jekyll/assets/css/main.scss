@@ -1,0 +1,122 @@
+---
+---
+
+@import "minima";
+
+$accent_color: #d14;
+$gray_color: #f8f8f8;
+
+/* General settings */
+html {
+    font-size: 100%;
+}
+
+body {
+    font-size: 1.0rem;
+}
+
+.wrapper {
+    max-width: calc(800px - (30px * 2));
+}
+
+.page-content {
+
+    h1 {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    h2 {
+        margin-top: 2rem;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        margin-top: 1.5rem;
+        font-size: 1.1rem;
+        padding-left: 1.5rem;
+        font-weight: bold !important;
+        line-height: 1.4rem;
+        position: relative;
+    }
+
+    h3:before {
+        content: "";
+        border-radius: 1.5rem;
+        -webkit-border-radius: 1.5rem;
+        -moz-border-radius: 1.5rem;
+        height: 1rem;
+        width: 1rem;
+        display: block;
+        position: absolute;
+        top: 0.2rem;
+        left: 0.1rem;
+        background-color: #111111;
+    }    
+
+    .accent {
+        color: #f12e42;
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+
+    em {
+        font-style: normal;
+        color: $accent_color;
+    }
+
+    hr {
+        margin-top: 2rem;
+        border: 1px solid #bbb;
+        border-top: none;
+    }
+    
+    /* Images */
+    a.lightbox-link {
+        img { width: 50%; }
+    }
+
+    /* Source code */
+    code.highlighter-rouge {
+        color: $accent_color;
+        background: none;
+        border: 0px;
+    }
+
+    pre {
+        padding: 0px;
+        margin: 0px;
+        background: $gray_color;
+        border: 0px;
+        
+        &.highlight {
+            padding: 10px;
+        }
+        &.lineno {
+            text-align: right;
+            padding: 0px 5px;
+        }
+        &.rouge-table {
+            width: auto;
+        }
+    }
+    
+    table.rouge-table {
+        padding: 0px;
+        margin: 0px;
+
+        td {
+            border: 0px;
+
+            &.gutter.gl {
+                padding: 0px 10px;
+                border-right: 1px #ddd solid;
+            }
+            
+            &.code {
+                padding-left: 15px;
+            }
+        }
+    }
+}
