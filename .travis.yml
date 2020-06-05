@@ -9,7 +9,8 @@ before_install:
   - sudo apt-get install -y libxmu-dev libxi-dev
   - sudo apt-get install -y python3 python3-pip
   - git clone https://github.com/glfw/glfw.git
-  - cd glfw && mkdir build && cd build
+  - cd glfw && git checkout 3.3.2
+  - mkdir build && cd build
   - cmake .. && make && sudo make install
   - cd ../..
   - git clone https://github.com/g-truc/glm.git
