@@ -7,6 +7,7 @@ find_path(GLM_INCLUDE_DIR
           PATHS
           /usr/include
           /usr/local/include
+          /usr/local/opt/glm/include
           ${GLM_DIR}
           ${GLM_DIR}/include)
 
