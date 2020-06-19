@@ -50,7 +50,7 @@ void paintGL() {
     // 背景色と深度値のクリア
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // ビューポート変換の指定 (MacのLetinaディスプレイだと変になる)
+    // ビューポート変換の指定 (MacのRetinaディスプレイだと変になる)
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
     
     // 座標の変換
@@ -106,9 +106,7 @@ int main(int argc, char **argv) {
     // メインループ
     while (glfwWindowShouldClose(window) == GL_FALSE) {
         // 描画
-        double startTime = glfwGetTime();
         paintGL();
-        printf("%f\n", glfwGetTime() - startTime);
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);
