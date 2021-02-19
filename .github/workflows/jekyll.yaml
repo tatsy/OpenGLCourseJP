@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - dev
 
 jobs:
   jekyll:
@@ -19,9 +20,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gems-
     # Specify the target branch (optional)
-    - uses: helaili/jekyll-action@56f7087e21a9a8a069e5896c5caf160f1ff361c5
-      env:
-        JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
+    - uses: helaili/jekyll-action@v2
       with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         jekyll_src: 'jekyll'
         target_branch: 'gh-pages'

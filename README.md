@@ -11,7 +11,7 @@ OpenGLCourseJP
 ## コンテンツ
 | 回数 | 内容 |
 |:-----|:-----|
-| 第1回 | [環境構築](https://tatsy.github.io/OpenGLCourseJP/sections/setup/index.html) |
+| 第1回 | [環境構築](https://tatsy.github.io/OpenGLCourseJP/setup/) |
 | 第2回 | [ウィンドウを開く](src/open_window) | 
 | 第3回 | [三角形を描く](src/hello_triangle) | 
 | 第4回 | [座標変換](src/coordinate_transformation) |

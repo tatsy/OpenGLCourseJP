@@ -5,7 +5,7 @@ description: >-
 url: "https://tatsy.github.io"
 baseurl: "/OpenGLCourseJP"
 permalink: pretty
-disqus_shortname:    'tatsy-github-io'
+# disqus_shortname:    'tatsy-github-io'
 google_analytics:    'UA-186105178-1'
 
 # About/contact

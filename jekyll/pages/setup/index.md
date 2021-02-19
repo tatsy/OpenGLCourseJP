@@ -3,6 +3,7 @@ layout: page
 title: 環境設定
 permalink: /setup/
 priority: 1
+speaker_deck_id: 7d25c26c73684654b7779ebb621472d1
 ---
 
 * [GLFWの設定]({% link pages/setup/glfw.md %})
