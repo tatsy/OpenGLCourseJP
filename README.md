@@ -3,12 +3,12 @@ OpenGLCourseJP
 
 [![Build Status](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
 
+[![github pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
+
 
 ## 講義のWebページ (作成中)
 
 [https://tatsy.github.io/OpenGLCourseJP](https://tatsy.github.io/OpenGLCourseJP)
-
-[![github pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
 
 ## コンテンツ
 | 回数 | 内容 |
