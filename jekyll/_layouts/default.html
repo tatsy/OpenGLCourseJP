@@ -1,20 +1,66 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="en-us">
 
-  {%- include head.html -%}
+{% include head.html %}
 
-  <body>
-    
-    {%- include header.html -%}
+<body>
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
+  {% include sidebar.html %}
+
+  <!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. -->
+  <div class="wrap">
+    <div class="masthead">
+      <div class="container">
+        <h3 class="masthead-title">
+          <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+          <small>{{ site.tagline }}</small>
+        </h3>
       </div>
-    </main>
+    </div>
 
-    {%- include footer.html -%}
+    <div class="container content">
+      {{ content }}
+    </div>
+  </div>
 
-  </body>
+  <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+  <footer class="site-footer h-card">
+    <data class="u-url" href="/{{ site.baseurl }}/"></data>
+
+    <div class="wrapper">
+      <div class="container content">
+        <div class="footer-col-wrapper">
+          <div class="footer-col footer-col-1">
+            <ul class="contact-list">
+              <li class="p-name">{{ site.title }}</li>
+              <li><a class="u-email" href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-2">
+            <ul class="social-media-list">
+              <li>
+                <a href="https://github.com/{{ site.github.name }}">
+                  <svg class="svg-icon">
+                    <use xlink:href="{{ site.baseurl }}/public/minima-social-icons.svg#github"></use>
+                  </svg>
+                  <span class="username">tatsy</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-3">
+            <p>{{ site.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src='{{ site.baseurl }}/public/js/script.js'></script>
+
+</body>
 
 </html>

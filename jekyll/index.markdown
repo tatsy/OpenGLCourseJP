@@ -8,11 +8,11 @@ permalink: /
 
 | 回数 | 内容 |
 |:-----|:-----|
-| 第1回 | [環境構築]({{ '/sections/setup/' | relative_url }}) |
-| 第2回 | [ウィンドウを開く](src/open_window) | 
-| 第3回 | [三角形を描く](src/hello_triangle) | 
-| 第4回 | [座標変換](src/coordinate_transformation) |
-| 第5回 | [深度テスト](src/depth_testing) |
+| 第1回 | [環境構築]({% link pages/setup/index.md %}) |
+| 第2回 | [ウィンドウを開く]({% link pages/open_window/index.md %}) | 
+| 第3回 | [三角形を描く]({% link pages/hello_triangle/index.md %}) | 
+| 第4回 | [座標変換]({% link pages/coord_transform/index.md %}) |
+| 第5回 | [深度テスト]({% link pages/depth_testing/index.md %}) |
 | 第6回 | [ウィンドウサイズの変更](src/window_resizing) |
 | 第7回 | [アニメーション](src/animation) |
 | 第8回 | [テクスチャ・マッピング](src/texture_mapping) |
@@ -27,17 +27,19 @@ permalink: /
 
 ## GitHub
 
-* [https://github.com/tatsy/OpenGLCourseJP](https://github.com/tatsy/OpenGLCourseJP)
+* <https://github.com/tatsy/OpenGLCourseJP>
 
 ## 参考資料
 
-* **GLUTによる「手抜き」OpenGL入門** <br/>
-[https://tokoik.github.io/opengl/libglut.html](https://tokoik.github.io/opengl/libglut.html) <br/>
-和歌山大学の床井先生が作成されたGLUTを用いたOpenGLの講義資料
-* **OpenGL Programming - Wikibook (英語)** <br/>
-[https://en.wikibooks.org/wiki/OpenGL_Programming](https://en.wikibooks.org/wiki/OpenGL_Programming) <br/>
-Wikipediaの姉妹サイトで解説されているOpenGLプログラミングの記事。かなり高度な内容もある。
-* **OGLdev: Modern OpenGL Tutorials** <br/>
-[http://ogldev.atspace.co.uk/](http://ogldev.atspace.co.uk/) <br/>
-ステップバイステップでOpenGLプログラミングについて解説しているWebページ。ソースコードも全てダウンロードできる。
+* **GLUTによる「手抜き」OpenGL入門**  
+  <https://tokoik.github.io/opengl/libglut.html>  
+  和歌山大学の床井先生が作成されたGLUTを用いたOpenGLの講義資料
+
+* **OpenGL Programming - Wikibook (英語)**  
+  <https://en.wikibooks.org/wiki/OpenGL_Programming>  
+  Wikipediaの姉妹サイトで解説されているOpenGLプログラミングの記事。かなり高度な内容もある。
+
+* **OGLdev: Modern OpenGL Tutorials**  
+  <http://ogldev.atspace.co.uk/>  
+  ステップバイステップでOpenGLプログラミングについて解説しているWebページ。ソースコードも全てダウンロードできる。
 
