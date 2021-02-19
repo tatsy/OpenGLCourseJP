@@ -179,3 +179,14 @@ html {
     vertical-align: text-top;
   }
 }
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  padding-bottom: 8px;
+  img {
+    margin: 0;
+    width: 32px;
+    height: 32px;
+  }
+}

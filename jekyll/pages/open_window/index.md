@@ -1,9 +1,10 @@
 ---
-layout: default
+layout: page
 title: ウィンドウを開く
 permalink: /open_window/
 weight: 2
-source: "https://github.com/tatsy/OpenGLCourseJP/blob/master/src/001_open_window/main.cpp"
+github_link: https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window
+speaker_deck_id: 1e19ff37052d4f06923101af396df297
 ---
 
 OpenGLの初期化
