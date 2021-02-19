@@ -8,6 +8,8 @@ OpenGLCourseJP
 
 [https://tatsy.github.io/OpenGLCourseJP](https://tatsy.github.io/OpenGLCourseJP)
 
+[![github pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
+
 ## コンテンツ
 | 回数 | 内容 |
 |:-----|:-----|
