@@ -1,9 +1,6 @@
-[submodule "docs\\html"]
-	path = docs\\html
-	url = https://github.com/tatsy/OpenGLCourse.git
-[submodule "docs/html"]
-	path = docs/html
-	url = https://github.com/tatsy/OpenGLCourseJP.git
 [submodule "practice"]
 	path = practice
 	url = https://github.com/tatsy/OpenGLCoursePractice.git
+[submodule "jekyll/_site"]
+	path = jekyll/_site
+	url = https://github.com/tatsy/OpenGLCourseJP.git

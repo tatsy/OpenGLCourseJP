@@ -81,7 +81,7 @@ void resizeGL(GLFWwindow *window, int width, int height) {
     // ユーザ管理のウィンドウサイズを変更
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
-    
+
     // GLFW管理のウィンドウサイズを変更
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
 

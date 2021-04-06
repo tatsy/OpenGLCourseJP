@@ -1,0 +1,10 @@
+<div class="lightbox-container">
+  <a class="lightbox-link" href="{{ include.src | relative_url }}" data-lightbox="images-1" data-title="{{ include.title }}">
+    <img src="{{ include.src | relative_url }}" alt="{{ include.title }}" style="{{ include.style }}"/>
+  </a>
+  {{ if include.caption }}
+  <span class="lightbox-caption">
+    {{ include.caption | markdownify }}
+  </span>
+  {{ endif }}
+</div>

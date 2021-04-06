@@ -12,9 +12,11 @@ include(Macros)
 # ------------------------------------------------------------------------------
 # Set build options
 # ------------------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (NOT MSVC)
-  set(CMAKE_CXX_STANDARD 11)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -std=c++11")
+  set(CMAKE_CXX_FLAGS "-pthread")
+  set(CMAKE_CXX_FLAGS_RELEASE "-g")
 endif()
 
 # ------------------------------------------------------------------------------

@@ -1,0 +1,42 @@
+# Setup
+title: OpenGL Course (JP)
+description: >- 
+  Welcome to OpenGL programming course!
+url: "https://tatsy.github.io"
+baseurl: "/OpenGLCourseJP"
+permalink: pretty
+# disqus_shortname:    'tatsy-github-io'
+google_analytics:    'UA-186105178-1'
+
+# About/contact
+author:
+  name: Tatsuya Yatagawa
+  url: https://tatsy.github.io/
+  email: tatsy.mail@gmail.com
+
+github:
+  name: tatsy
+  repo: https://github.com/tatsy/OpenGLCourseJP
+
+# Build settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Custom vars
+version: 1.0.0
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      weight: 999
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge

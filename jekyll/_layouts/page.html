@@ -1,0 +1,17 @@
+---
+layout: default
+---
+
+<div class="page">
+  <h1 class="page-title">
+    {{ page.title }}
+    {% include github_link.html %}
+  </h1>
+  {{ content }}
+
+  {% include speakerdeck.html %}
+</div>
+
+{% if site.disqus_shortname %}
+  {% include disqus.html %}
+{% endif %}

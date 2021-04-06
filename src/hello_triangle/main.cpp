@@ -16,19 +16,14 @@ void paintGL() {
     // 背景色の描画
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // 見る範囲の指定
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glOrtho(-2.0f, 2.0f, -2.0f, 2.0f, -1.0f, 1.0f);
-
     // 三角形の描画
     glBegin(GL_TRIANGLES);
     glColor3f(1.0f, 0.0f, 0.0f);    // 赤
-    glVertex2f(-1.0f, -1.0f);
+    glVertex2f(-0.5f, -0.5f);
     glColor3f(0.0f, 1.0f, 0.0f);    // 緑
-    glVertex2f(-1.0f, 1.0f);
+    glVertex2f(-0.5f, 0.5f);
     glColor3f(0.0f, 0.0f, 1.0f);    // 青
-    glVertex2f(1.0f, -1.0f);
+    glVertex2f(0.5f, -0.5f);
     glEnd();
 }
 
@@ -55,17 +50,9 @@ int main(int argc, char **argv) {
     initializeGL();
 
     // メインループ
-    int i = 0;
     while (glfwWindowShouldClose(window) == GL_FALSE) {
-        if (i % 2 == 0) {
-            // 描画
-            glDrawBuffer(GL_FRONT);
-        }
-        else {
-            glDrawBuffer(GL_BACK);
-        }
+        // 描画
         paintGL();
-        i++;
 
         // 描画用バッファの切り替え
         glfwSwapBuffers(window);
