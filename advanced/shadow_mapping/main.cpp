@@ -332,7 +332,7 @@ void initFBO() {
 
     glGenTextures(1, &shadowMap.colorTexId);
     glBindTexture(GL_TEXTURE_2D, shadowMap.colorTexId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, 1024, 1024, 0, GL_RED, GL_FLOAT, 0);
+    glTexStorage2D(GL_TEXTURE_2D, 1, GL_R32F, 1024, 1024);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -561,6 +561,7 @@ int main(int argc, char **argv) {
 
     // OpenGLのバージョン設定 (Macの場合には必ず必要)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 

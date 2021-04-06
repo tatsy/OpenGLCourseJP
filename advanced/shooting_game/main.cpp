@@ -524,11 +524,8 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 
 void update() {
     if (gameMode == GAME_MODE_PLAY) {
-        std::deque<glm::vec3>::iterator it;
-        std::deque<glm::vec3>::iterator jt;
-
         // 球の位置のアップデート
-        for (it = bulletPos.begin(); it != bulletPos.end(); ++it) {
+        for (auto it = bulletPos.begin(); it != bulletPos.end(); ++it) {
             it->z += -2.0f;
         }
 
@@ -536,8 +533,8 @@ void update() {
         bool hit = true;
         while(hit) {
             hit = false;
-            for (it = bulletPos.begin(); it != bulletPos.end() && !hit; ++it) {
-                for (jt = balloonPos.begin(); jt != balloonPos.end() && !hit; ++jt) {
+            for (auto it = bulletPos.begin(); it != bulletPos.end() && !hit; ++it) {
+                for (auto jt = balloonPos.begin(); jt != balloonPos.end() && !hit; ++jt) {
                     glm::vec3 diff = *it - *jt;
                     if (glm::length(*it - *jt) <= 2.0f) {
                         bulletPos.erase(it);
