@@ -3,8 +3,8 @@
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 
-static const int WIN_WIDTH   = 500;                 // ウィンドウの幅
-static const int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
+static const int WIN_WIDTH   = 700;                 // ウィンドウの幅
+static const int WIN_HEIGHT  = 700;                 // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
 static const float positions[8][3] = {
@@ -56,7 +56,13 @@ void paintGL() {
     // 座標の変換
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+
+    // 平行投影
+    // glOrtho(-2.0f, 2.0f, -2.0f, 2.0f, 0.1f, 10.0f);
+    // 透視投影
+    glFrustum(-2.0f, 2.0f, -2.0f, 2.0f, 5.0f, 10.0f);
+    // 透視投影
+    // gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 1.0f, 10.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

@@ -58,7 +58,13 @@ void paintGL() {
     // 射影変換行列
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+
+    // 平行投影
+    // glOrtho(-2.0f, 2.0f, -2.0f, 2.0f, 0.1f, 10.0f);
+    // 透視投影
+    // glFrustum(-2.0f, 2.0f, -2.0f, 2.0f, 5.0f, 10.0f);
+    // 透視投影
+    gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 1.0f, 10.0f);
 
     // モデルビュー変換行列
     glMatrixMode(GL_MODELVIEW);
