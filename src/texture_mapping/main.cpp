@@ -18,7 +18,7 @@ static const double PI = 4.0 * atan(1.0);           // 円周率の定義
 
 static float theta = 0.0f;
 
-static const std::string TEX_FILE = std::string(DATA_DIRECTORY) + "lena.png";
+static const std::string TEX_FILE = std::string(DATA_DIRECTORY) + "checker.png";
 static GLuint textureId = 0u;
 static bool enableMipmap = true;
 
@@ -67,9 +67,17 @@ void initializeGL() {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texWidth, texHeight,
                  0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
-    // テクスチャの画素値参照方法の設定
+    // MIP-mapを用いたテクスチャの転送
+    //gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA8, texWidth, texHeight,
+    //                  GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+
+    // テクスチャの画素値参照方法の設定 (MIP mapなし)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    // テクスチャの画素値参照方法の設定 (MIP mapあり)
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
     // テクスチャ境界の折り返し設定
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -90,14 +98,15 @@ void paintGL() {
     // 座標の変換
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    gluPerspective(60.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(3.0f, 4.0f, 5.0f,     // 視点の位置
+    gluLookAt(0.0f, 3.0f, 5.0f,     // 視点の位置
               0.0f, 0.0f, 0.0f,     // 見ている先
               0.0f, 1.0f, 0.0f);    // 視界の上方向
 
+    glTranslatef(0.0f, 0.0f, std::cos(PI * theta / 180.0f) * 4.0f - 4.0f);  // 前後方向に移動
     glRotatef(theta, 0.0f, 1.0f, 0.0f);  // y軸中心にthetaだけ回転
 
     // 立方体の描画
