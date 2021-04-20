@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.0)
+cmake_minimum_required(VERSION 3.1.0)
 project(OpenGLCourseJP)
 
 if (WIN32)
@@ -15,8 +15,7 @@ include(Macros)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (NOT MSVC)
-  set(CMAKE_CXX_FLAGS "-pthread")
-  set(CMAKE_CXX_FLAGS_RELEASE "-g")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall -pthread")
 endif()
 
 # ------------------------------------------------------------------------------

@@ -1,8 +1,11 @@
 OpenGLCourseJP
 ===
 
-[![Build Status](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
-[![github pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
+[![Travis CI](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
+[![Windows CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml)
+[![MacOS CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml)
+[![Ubuntu CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml)
+[![GitHub Pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
 
 
 ## 講義のWebページ (作成中)
