@@ -321,7 +321,7 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
 void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
     // マウスが押されたかどうかの判定
     printf("Mouse: %s\n", action == GLFW_PRESS ? "Press" : "Release");
-    
+
     // クリックされた位置を取得
     double px, py;
     glfwGetCursorPos(window, &px, &py);

@@ -278,9 +278,10 @@ void paintGL() {
         GLuint uid;
         uid = glGetUniformLocation(programId, "u_mvpMat");
         glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(mvpMat));
+
         uid = glGetUniformLocation(programId, "u_selectID");
         glUniform1i(uid, selectMode ? 1 : -1);
-        
+
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
     }
 
@@ -344,7 +345,7 @@ void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
 
         // より適切なやり方
         unsigned char byte[4];
-        glReadPixels(cx * pixelSize, (WIN_HEIGHT - cy - 1) * pixelSize, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &byte);
+        glReadPixels(cx * pixelSize, (WIN_HEIGHT - cy - 1) * pixelSize, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, byte);
         printf("Mouse position: %d %d\n", cx, cy);
         printf("Select object %d\n", (int)byte[0]);
     }

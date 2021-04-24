@@ -403,8 +403,8 @@ void updateTranslate() {
     gravityScreenSpace /= gravityScreenSpace.w;
 
     // スクリーン座標系における移動量
-    glm::vec4 newPosScreenSpace(2.0 * newPos.x / WIN_WIDTH, -2.0 * newPos.y / WIN_HEIGHT, gravityScreenSpace.z, 1.0f);
-    glm::vec4 oldPosScreenSpace(2.0 * oldPos.x / WIN_WIDTH, -2.0 * oldPos.y / WIN_HEIGHT, gravityScreenSpace.z, 1.0f);
+    glm::vec4 newPosScreenSpace(2.0 * newPos.x / WIN_WIDTH - 1.0, -2.0 * newPos.y / WIN_HEIGHT + 1.0, gravityScreenSpace.z, 1.0f);
+    glm::vec4 oldPosScreenSpace(2.0 * oldPos.x / WIN_WIDTH - 1.0, -2.0 * oldPos.y / WIN_HEIGHT + 1.0, gravityScreenSpace.z, 1.0f);
 
     // スクリーン座標の情報をオブジェクト座標に変換する行列
     const glm::mat4 s2oMat = glm::inverse(projMat * viewMat * modelMat);
