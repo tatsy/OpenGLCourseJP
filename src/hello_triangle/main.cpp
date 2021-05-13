@@ -1,4 +1,4 @@
-﻿#include <cstdio>
+#include <cstdio>
 #include <GLFW/glfw3.h>
 
 static const int WIN_WIDTH   = 500;                 // ウィンドウの幅

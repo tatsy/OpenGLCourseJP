@@ -1,4 +1,4 @@
-﻿#include <cstdio>
+#include <cstdio>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
@@ -28,12 +28,12 @@ static const float colors[6][3] = {
 };
 
 static const unsigned int indices[12][3] = {
-    { 1, 6, 7 }, { 1, 7, 4 },
-    { 2, 5, 7 }, { 2, 7, 4 },
-    { 3, 5, 7 }, { 3, 7, 6 },
-    { 0, 1, 4 }, { 0, 4, 2 },
-    { 0, 1, 6 }, { 0, 6, 3 },
-    { 0, 2, 5 }, { 0, 5, 3 }
+    { 7, 4, 1 }, { 7, 1, 6 },
+    { 2, 4, 7 }, { 2, 7, 5 },
+    { 5, 7, 6 }, { 5, 6, 3 },
+    { 4, 2, 0 }, { 4, 0, 1 },
+    { 3, 6, 1 }, { 3, 1, 0 },
+    { 2, 5, 3 }, { 2, 3, 0 }
 };
 
 // OpenGLの初期化関数
@@ -60,9 +60,9 @@ void paintGL() {
     // 平行投影
     // glOrtho(-2.0f, 2.0f, -2.0f, 2.0f, 0.1f, 10.0f);
     // 透視投影
-    glFrustum(-2.0f, 2.0f, -2.0f, 2.0f, 5.0f, 10.0f);
+    // glFrustum(-2.0f, 2.0f, -2.0f, 2.0f, 5.0f, 10.0f);
     // 透視投影
-    // gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 1.0f, 10.0f);
+    gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 1.0f, 10.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

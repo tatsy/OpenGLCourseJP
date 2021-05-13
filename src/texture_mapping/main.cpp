@@ -1,4 +1,4 @@
-﻿#include <cstdio>
+#include <cstdio>
 #include <cmath>
 #include <string>
 
@@ -64,20 +64,20 @@ void initializeGL() {
     glBindTexture(GL_TEXTURE_2D, textureId);
     
     // 単純なテクスチャの転送
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texWidth, texHeight,
-                 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texWidth, texHeight,
+    //              0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
     // MIP-mapを用いたテクスチャの転送
-    //gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA8, texWidth, texHeight,
-    //                  GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA8, texWidth, texHeight,
+                     GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
     // テクスチャの画素値参照方法の設定 (MIP mapなし)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     // テクスチャの画素値参照方法の設定 (MIP mapあり)
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
     // テクスチャ境界の折り返し設定
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

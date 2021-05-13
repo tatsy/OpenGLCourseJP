@@ -1,4 +1,4 @@
-﻿#include <cmath>
+#include <cmath>
 #include <ctime>
 #include <cstdio>
 #include <iostream>
@@ -60,17 +60,17 @@ static const glm::vec3 positions[8] = {
 };
 
 static const glm::vec2 texcoords[2][3] = {
-    { glm::vec2(0.0f, 0.0f), glm::vec2(0.0f, 1.0f), glm::vec2(1.0f, 1.0f) },
-    { glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f) }
+    { glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 0.0f), glm::vec2(1.0f, 1.0f) },
+    { glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), glm::vec2(0.0f, 1.0f) }
 };
 
 static const unsigned int faces[12][3] = {
-    { 1, 6, 7 }, { 1, 7, 4 },
-    { 2, 5, 7 }, { 2, 7, 4 },
-    { 3, 5, 7 }, { 3, 7, 6 },
-    { 0, 1, 4 }, { 0, 4, 2 },
-    { 0, 1, 6 }, { 0, 6, 3 },
-    { 0, 2, 5 }, { 0, 5, 3 }
+    { 7, 4, 1 }, { 7, 1, 6 },
+    { 2, 4, 7 }, { 2, 7, 5 },
+    { 5, 7, 6 }, { 5, 6, 3 },
+    { 4, 2, 0 }, { 4, 0, 1 },
+    { 3, 6, 1 }, { 3, 1, 0 },
+    { 2, 5, 3 }, { 2, 3, 0 }
 };
 
 // バッファを参照する番号
@@ -398,6 +398,8 @@ void initFBO() {
 void initializeGL() {
     // 深度テストの有効化
     glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_CULL_FACE);
+    // glCullFace(GL_BACK);
 
     // 背景色の設定 (黒)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -417,9 +419,6 @@ void initializeGL() {
 
 // OpenGLの描画関数
 void paintGL() {
-    // 背景色の描画
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     // 時間の計測
     time_t t = time(0);
     struct tm *now = localtime(&t);
@@ -429,6 +428,10 @@ void paintGL() {
 
     // 背景色の描画
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // ビューポート変換の取得
+    int viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
     glViewport(0, 0, 1024, 1024);
 
     glDisable(GL_DEPTH_TEST);
@@ -437,7 +440,7 @@ void paintGL() {
         glUseProgram(programId);
     
         // Uniform変数の転送
-        glm::mat4 mvpMat;
+        glm::mat4 mvpMat(1.0f);
 
         GLuint uid;
         uid = glGetUniformLocation(programId, "u_mvpMat");
@@ -472,7 +475,7 @@ void paintGL() {
         float rot = -now->tm_hour * (2.0 * PI) / 12.0f
                     -now->tm_min * (2.0 * PI) / (60.0f * 12.0f); 
 
-        glm::mat4 mvpMat;
+        glm::mat4 mvpMat(1.0f);
         mvpMat = glm::rotate(mvpMat, rot, glm::vec3(0.0f, 0.0f, 1.0f));
         mvpMat = glm::scale(mvpMat, glm::vec3(0.5f, 0.6f, 1.0f));
 
@@ -506,7 +509,7 @@ void paintGL() {
         float rot = -now->tm_min * (2.0 * PI) / 60.0f;
                     -now->tm_sec * (2.0 * PI) / (60.0f * 60.0f); 
 
-        glm::mat4 mvpMat;
+        glm::mat4 mvpMat(1.0f);
         mvpMat =glm::rotate(mvpMat, rot, glm::vec3(0.0f, 0.0f, 1.0f));        
         mvpMat = glm::scale(mvpMat, glm::vec3(0.5f, 0.9f, 1.0f));
 
@@ -539,7 +542,7 @@ void paintGL() {
         // Uniform変数の転送
         float rot = -now->tm_sec * (2.0 * PI) / 60.0f;
 
-        glm::mat4 mvpMat;
+        glm::mat4 mvpMat(1.0f);
         mvpMat = glm::rotate(mvpMat, rot, glm::vec3(0.0f, 0.0f, 1.0f));
         mvpMat = glm::scale(mvpMat, glm::vec3(0.2f, 0.9f, 1.0f));
 
@@ -568,7 +571,11 @@ void paintGL() {
 
     // 立方体の描画
     {
-        glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
+        // ビューポートを戻す
+        glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+
+        // 背景色の描画
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // シェーダの有効化
         glUseProgram(programId);
@@ -581,11 +588,10 @@ void paintGL() {
                                         glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                         glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
-        glm::mat4 modelMat;
+        glm::mat4 modelMat(1.0f);
         modelMat = glm::rotate(modelMat, theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
         modelMat = glm::rotate(modelMat, theta * 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
         
-
         glm::mat4 mvpMat = projMat * viewMat * modelMat;
 
         GLuint uid;
