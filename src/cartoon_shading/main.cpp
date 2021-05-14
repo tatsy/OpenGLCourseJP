@@ -25,8 +25,8 @@
 // ディレクトリの設定ファイル
 #include "common.h"
 
-static int WIN_WIDTH   = 500;                       // ウィンドウの幅
-static int WIN_HEIGHT  = 500;                       // ウィンドウの高さ
+static int WIN_WIDTH   = 512;                       // ウィンドウの幅
+static int WIN_HEIGHT  = 512;                       // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
 static const double PI = 4.0 * std::atan(1.0);
@@ -65,7 +65,7 @@ static float theta = 0.0f;
 
 // シェーディングのための情報
 static const glm::vec3 lightPos = glm::vec3(5.0f, 5.0f, 5.0f);
-static const std::string TEX_FILE = std::string(DATA_DIRECTORY) + "npr_texture.png";
+static const std::string TEX_FILE = std::string(DATA_DIRECTORY) + "cartoon_shading.png";
 GLuint textureId;
 
 // VAOの初期化
@@ -275,8 +275,8 @@ void initializeGL() {
     // 深度テストの有効化
     glEnable(GL_DEPTH_TEST);
 
-    // 背景色の設定 (黒)
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    // 背景色の設定 (白)
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     // VAOの初期化
     initVAO();

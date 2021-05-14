@@ -4,7 +4,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <unordered_map>
 
 #define GLAD_GL_IMPLEMENTATION
 #include <glad/gl.h>
@@ -44,28 +43,9 @@ struct Vertex {
         , normal(normal_) {
     }
 
-    bool operator==(const Vertex &other) const {
-        return (position == other.position) && (normal == other.normal);
-    }
-
     glm::vec3 position;
     glm::vec3 normal;
 };
-
-// ハッシュ値の計算 (unordered_mapに必要)
-namespace std {
-
-template<>
-struct hash<Vertex> {
-    size_t operator()(const Vertex &v) const {
-        size_t ret = 0;
-        ret = std::hash<glm::vec3>()(v.position) ^ (ret << 1);
-        ret = std::hash<glm::vec3>()(v.normal) ^ (ret << 1);
-        return ret;
-    }
-};
-
-}  // namespace std
 
 // バッファを参照する番号
 GLuint vaoId;
@@ -100,7 +80,6 @@ void initVAO() {
 
     // Vertex配列の作成
     // uniqueVerticesは重複なしの頂点と"vertices"内でのインデックスを保存
-    std::unordered_map<Vertex, uint32_t> uniqueVertices;
     std::vector<Vertex> vertices;
     std::vector<uint32_t> indices;
     for (int s = 0; s < shapes.size(); s++) {
@@ -124,12 +103,8 @@ void initVAO() {
 
             const Vertex vertex(position, normal);
 
-            // uniqueVertices内にvertexが存在するかを調べる (countが0なら存在しないということ)
-            if (uniqueVertices.count(vertex) == 0) {
-                uniqueVertices.insert(std::make_pair(vertex, vertices.size()));
-                vertices.push_back(vertex);
-            }
-            indices.push_back(uniqueVertices[vertex]);
+            indices.push_back(vertices.size());
+            vertices.push_back(vertex);
         }
     }
 
@@ -293,7 +268,7 @@ void paintGL() {
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                     glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
-    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 modelMat = glm::rotate(glm::radians(theta), glm::vec3(0.0f, 1.0f, 0.0f));
 
     glm::mat4 mvMat = viewMat * modelMat;
     glm::mat4 mvpMat = projMat * viewMat * modelMat;

@@ -1,5 +1,6 @@
 #version 330
 
+in vec3 f_worldPos;
 in vec3 f_fragColor;
 
 out vec4 out_color;
