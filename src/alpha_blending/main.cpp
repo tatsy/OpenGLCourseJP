@@ -8,8 +8,6 @@ static int WIN_WIDTH   = 500;                 // ウィンドウの幅
 static int WIN_HEIGHT  = 500;                 // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
-static const double PI = 4.0 * atan(1.0);           // 円周率の定義
-
 static float theta = 0.0f;
 
 static const float positions[8][3] = {
@@ -55,9 +53,6 @@ void paintGL() {
     // 背景色と深度値のクリア
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // ビューポート変換の指定
-    glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
-
     // 座標の変換
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -75,7 +70,6 @@ void paintGL() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDepthMask(GL_FALSE);
-    //glDisable(GL_DEPTH_TEST);
 
     // 立方体の描画
     glBegin(GL_TRIANGLES);
@@ -95,7 +89,6 @@ void paintGL() {
     glDisable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ZERO);
     glDepthMask(GL_TRUE);
-    //glEnable(GL_DEPTH_TEST);
 }
 
 void resizeGL(GLFWwindow *window, int width, int height) {

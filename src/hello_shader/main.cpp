@@ -23,8 +23,6 @@ static int WIN_WIDTH   = 500;                       // ウィンドウの幅
 static int WIN_HEIGHT  = 500;                       // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
-static const double PI = 4.0 * std::atan(1.0);
-
 // シェーダファイル
 static std::string VERT_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.vert";
 static std::string FRAG_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.frag";
@@ -256,7 +254,7 @@ void paintGL() {
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                     glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
-    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
+    glm::mat4 modelMat = glm::rotate(glm::radians(theta), glm::vec3(0.0f, 1.0f, 0.0f)); 
 
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
     
@@ -298,7 +296,7 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 
 // アニメーションのためのアップデート
 void animate() {
-    theta += 2.0f * PI / 360.0f;  // 10分の1回転
+    theta += 1.0f;  // 10分の1回転
 }
 
 int main(int argc, char **argv) {

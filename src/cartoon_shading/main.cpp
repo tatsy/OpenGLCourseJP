@@ -29,8 +29,6 @@ static int WIN_WIDTH   = 512;                       // ウィンドウの幅
 static int WIN_HEIGHT  = 512;                       // ウィンドウの高さ
 static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
 
-static const double PI = 4.0 * std::atan(1.0);
-
 // シェーダファイル
 static const std::string VERT_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.vert";
 static const std::string FRAG_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.frag";
