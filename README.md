@@ -7,9 +7,8 @@ OpenGLCourseJP
 [![Ubuntu CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml)
 [![GitHub Pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
 
-## コンテンツ
 
-### 第1回 環境構築
+## 第1回 環境構築
 
 #### スライド
 
@@ -19,7 +18,7 @@ OpenGLCourseJP
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window>
 
 
-### 第2回 ウィンドウを開く
+## 第2回 ウィンドウを開く
 
 #### スライド
 
@@ -31,7 +30,7 @@ OpenGLCourseJP
 #### ソースコード (三角形の描画)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_triangle>
 
-### 第3回 座標変換
+## 第3回 座標変換
 
 #### スライド
 <https://speakerdeck.com/tatsy/3-coordinate-transform>
@@ -42,7 +41,7 @@ OpenGLCourseJP
 #### ソースコード (深度テスト込み)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/depth_testing>
 
-### 第4回 ウィンドウサイズの変更
+## 第4回 ウィンドウサイズの変更
 
 #### スライド
 <https://speakerdeck.com/tatsy/4-window-resize>
@@ -50,7 +49,7 @@ OpenGLCourseJP
 #### ソースコード (ウィンドウサイズの変更)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/window_resizing>
 
-### 第5回 アニメーション
+## 第5回 アニメーション
 
 #### スライド
 <https://speakerdeck.com/tatsy/5-animation>
@@ -58,7 +57,7 @@ OpenGLCourseJP
 #### ソースコード (アニメーション)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/animation>
 
-### 第6回 テクスチャ・マッピング
+## 第6回 テクスチャ・マッピング
 
 #### スライド
 <https://speakerdeck.com/tatsy/6-texture-mapping>
@@ -66,7 +65,7 @@ OpenGLCourseJP
 #### ソースコード (テクスチャ・マッピング)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/texture_mapping>
 
-### 第7回 頂点バッファ
+## 第7回 頂点バッファ
 
 #### スライド
 <https://speakerdeck.com/tatsy/7-vertex-buffer-object>
@@ -74,7 +73,7 @@ OpenGLCourseJP
 #### ソースコード (頂点バッファ)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/vertex_buffer>
 
-### 第8回 頂点配列オブジェクト
+## 第8回 頂点配列オブジェクト
 
 #### スライド
 <https://speakerdeck.com/tatsy/8-vertex-array-object>
@@ -82,7 +81,7 @@ OpenGLCourseJP
 #### ソースコード (シェーダ言語の基礎)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_shader>
 
-### 第9回 シェーダ言語
+## 第9回 シェーダ言語
 
 #### スライド
 <https://speakerdeck.com/tatsy/9-shader-language>
@@ -90,7 +89,7 @@ OpenGLCourseJP
 #### ソースコード (シェーダ言語の基礎, 第8回と同じ)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_shader>
 
-### 第10回 形状モデルの読み込み
+## 第10回 形状モデルの読み込み
 
 #### モデルの読み込み
 <https://speakerdeck.com/tatsy/10-model-loading>
@@ -101,7 +100,7 @@ OpenGLCourseJP
 #### ソースコード (形状モデルの読み込み)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/model_loading>
 
-### 第11回 シェーディング
+## 第11回 シェーディング
 
 #### スライド
 <https://speakerdeck.com/tatsy/11-shading-models>
@@ -112,14 +111,30 @@ OpenGLCourseJP
 #### ソースコード (カートゥーン・シェーディング)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/cartoon_shading>
 
-### 第12回 キーボードとマウス
+## 第12回 キーボードとマウス
 
-Coming soon...
+#### スライド
+<https://speakerdeck.com/tatsy/12-keyboard-and-mouse>
 
-### 第13回 オブジェクトの選択
+#### ソースコード (キーボードとマウス)
+<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/keyboard_and_mouse>
 
-Coming soon...
+## 第13回 オブジェクトの選択
 
-### 第14回 アークボール操作
+#### スライド
+<https://speakerdeck.com/tatsy/13-object-selection>
 
-Coming soon...
+#### ソースコード (オブジェクトの選択)
+<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/object_selection>
+
+## 第14回 アークボール操作
+
+#### スライド
+<https://speakerdeck.com/tatsy/14-arcball-control>
+
+#### ソースコード (アークボール操作)
+<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/arcball_control>
+
+## Copyright
+
+2018-2021 (c) Tatsuya Yatagawa
