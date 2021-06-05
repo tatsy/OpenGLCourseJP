@@ -338,7 +338,7 @@ void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
     } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
         arcballMode = ARCBALL_MODE_TRANSLATE;
     }
-     
+    
     // クリックされた位置を取得
     double px, py;
     glfwGetCursorPos(window, &px, &py);
