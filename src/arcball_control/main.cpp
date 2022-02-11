@@ -403,11 +403,7 @@ void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
     } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
         arcballMode = ARCBALL_MODE_TRANSLATE;
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> cec74e4 (Add Python script for texture_mapping.)
     // クリックされた位置を取得
     // Acquire a click position
     double px, py;
