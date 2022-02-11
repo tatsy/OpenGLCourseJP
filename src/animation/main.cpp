@@ -42,7 +42,7 @@ static const float colors[6][3] = {
 // 立方体の面となる三角形の定義
 // Vertex indices to form triangles of a cube
 // clang-format off
-static const unsigned int indices[12][3] = {
+static const unsigned int faces[12][3] = {
     { 7, 4, 1 }, { 7, 1, 6 },
     { 2, 4, 7 }, { 2, 7, 5 },
     { 5, 7, 6 }, { 5, 6, 3 },
@@ -71,11 +71,11 @@ void drawCube() {
     for (int face = 0; face < 6; face++) {
         glColor3fv(colors[face]);
         for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 0][i]]);
+            glVertex3fv(positions[faces[face * 2 + 0][i]]);
         }
 
         for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 1][i]]);
+            glVertex3fv(positions[faces[face * 2 + 1][i]]);
         }
     }
     glEnd();
@@ -103,7 +103,7 @@ void paintGL() {
     // 1つ目のキューブ
     // First cube
     glPushMatrix();
-    glTranslatef(1.0f, 0.0f, 0.0f);
+    glTranslatef(-1.0f, 0.0f, 0.0f);
     glRotatef(theta, 0.0f, 1.0f, 0.0f);
     glRotatef(theta * 0.5f, 1.0f, 0.0f, 0.0f);
     glScalef(0.5f, 0.5f, 0.5f);
@@ -114,7 +114,7 @@ void paintGL() {
     // 2つ目のキューブ
     // Second cube
     glPushMatrix();
-    glTranslatef(-1.0f, 0.0f, 0.0f);
+    glTranslatef(1.0f, 0.0f, 0.0f);
     glRotated(2.0f * theta, 0.0f, 1.0f, 0.0f);
     glRotatef(theta, 1.0f, 0.0f, 0.0f);
     glScalef(0.5f, 0.5f, 0.5f);

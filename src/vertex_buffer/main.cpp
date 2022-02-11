@@ -60,6 +60,10 @@ static const unsigned int faces[12][3] = {
 GLuint vertexBufferId;
 GLuint indexBufferId;
 
+// 立方体の回転角度
+// Rotation angle for animating a cube
+static float theta = 0.0f;
+
 // ユーザ定義のOpenGLの初期化
 // User-define OpenGL initialization
 void initializeGL() {
@@ -106,8 +110,8 @@ void initializeGL() {
 // ユーザ定義のOpenGL描画
 // User-defined OpenGL drawing
 void paintGL() {
-    // 背景色の描画
-    // Fill background color
+    // 背景色と深度値のクリア
+    // Clear background color and depth values
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // 座標の変換
@@ -121,6 +125,11 @@ void paintGL() {
     gluLookAt(3.0f, 4.0f, 5.0f,   // 視点の位置 / Eye position
               0.0f, 0.0f, 0.0f,   // 見ている先 / Looking position
               0.0f, 1.0f, 0.0f);  // 視界の上方向 / Upward direction
+
+    // 回転行列の設定
+    // Setup rotation matrix
+    glPushMatrix();
+    glRotatef(theta, 0.0f, 1.0f, 0.0f);
 
     // 頂点バッファの有効化
     // Enable vertex buffer object
@@ -143,6 +152,10 @@ void paintGL() {
     // Disable vertex buffer object
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+
+    // 回転行列の破棄
+    // Dispose of rotation matrix
+    glPopMatrix();
 }
 
 // ウィンドウサイズ変更のコールバック関数
@@ -167,6 +180,12 @@ void resizeGL(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 }
 
+// アニメーションのためのアップデート
+// Update parameters for animation
+void animate() {
+    theta += 1.0f;  // 1度だけ回転 / Rotate 1 degree of angle
+}
+
 int main(int argc, char **argv) {
     // OpenGLを初期化する
     // OpenGL initialization
@@ -189,6 +208,13 @@ int main(int argc, char **argv) {
     // Specify window as an OpenGL context
     glfwMakeContextCurrent(window);
 
+    // OpenGL 3.x/4.xの関数をロードする (glfwMakeContextCurrentの後でないといけない)
+    const int version = gladLoadGL(glfwGetProcAddress);
+    if (version == 0) {
+        fprintf(stderr, "Failed to load OpenGL 3.x/4.x libraries!\n");
+        return 1;
+    }
+
     // ウィンドウのリサイズを扱う関数の登録
     // Register a callback function for window resizing
     glfwSetWindowSizeCallback(window, resizeGL);
@@ -201,6 +227,9 @@ int main(int argc, char **argv) {
     while (glfwWindowShouldClose(window) == GLFW_FALSE) {
         // 描画 / Draw
         paintGL();
+
+        // アニメーション / Animation
+        animate();
 
         // 描画用バッファの切り替え
         // Swap drawing target buffers

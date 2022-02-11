@@ -39,7 +39,7 @@ static const float colors[6][3] = {
 // 立方体の面となる三角形の定義
 // Vertex indices to form triangles of a cube
 // clang-format off
-static const unsigned int indices[12][3] = {
+static const unsigned int faces[12][3] = {
     { 7, 4, 1 }, { 7, 1, 6 },
     { 2, 4, 7 }, { 2, 7, 5 },
     { 5, 7, 6 }, { 5, 6, 3 },
@@ -99,11 +99,11 @@ void paintGL() {
         // 1つの面(四角形)は2つの三角形から成る
         // A square face of a cube consists of two triangles
         for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 0][i]]);
+            glVertex3fv(positions[faces[face * 2 + 0][i]]);
         }
 
         for (int i = 0; i < 3; i++) {
-            glVertex3fv(positions[indices[face * 2 + 1][i]]);
+            glVertex3fv(positions[faces[face * 2 + 1][i]]);
         }
     }
     glEnd();

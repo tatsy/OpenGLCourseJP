@@ -12,7 +12,7 @@ uniform vec3 u_specColor;
 uniform vec3 u_ambiColor;
 uniform float u_alpha = 0.05;
 
-float Pi = 3.14159265358979;
+float PI3.14159265358979;
 
 float FresnelSchlick(vec3 N, vec3 L) {
 	float eta0 = 1.0;

@@ -1,3 +1,21 @@
+# MacOS Big Sur以降で動かすための設定
+# Special settings for working on MacOS Big Sur or later
+import platform
+import ctypes.util
+
+uname = platform.uname()
+if uname.system == "Darwin" and uname.release >= "20.":
+    _find_library = ctypes.util.find_library
+
+    def find_library(name):
+        if name in ["OpenGL"]:
+            return "/System/Library/Frameworks/{0}.framework/{0}".format(name)
+        return _find_library(name)
+
+    ctypes.util.find_library = find_library
+
+# 必要なパッケージのインポート
+# Import required packages
 import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -37,7 +55,7 @@ colors = [
 # 立方体の面となる三角形の定義
 # Vertex indices to form triangles of a cube
 # yapf: disable
-indices = [
+faces = [
     [ 7, 4, 1 ], [ 7, 1, 6 ],
     [ 2, 4, 7 ], [ 2, 7, 5 ],
     [ 5, 7, 6 ], [ 5, 6, 3 ],
@@ -104,10 +122,10 @@ def paintGL():
         # 1つの面(四角形)は2つの三角形から成る
         # A square face of a cube consists of two triangles
         for i in range(3):
-            glVertex3fv(positions[indices[face * 2 + 0][i]])
+            glVertex3fv(positions[faces[face * 2 + 0][i]])
 
         for i in range(3):
-            glVertex3fv(positions[indices[face * 2 + 1][i]])
+            glVertex3fv(positions[faces[face * 2 + 1][i]])
 
     glEnd()
 

@@ -1,8 +1,29 @@
+# MacOS Big Sur以降で動かすための設定
+# Special settings for working on MacOS Big Sur or later
+import os
+import ctypes.util
+
+try:
+    uname = os.uname()
+    if uname.sysname == "Darwin" and uname.release >= "20.":
+        _find_library = ctypes.util.find_library
+
+        def find_library(name):
+            if name in ["OpenGL"]:
+                return "/System/Library/Frameworks/{0}.framework/{0}".format(name)
+            return _find_library(name)
+
+        ctypes.util.find_library = find_library
+except:
+    pass
+
+# 必要なパッケージのインポート
+# Import required packages
 import glfw
-from OpenGL.GL import *
-from OpenGL.GLU import *
 import numpy as np
 import ctypes
+from OpenGL.GL import *
+from OpenGL.GLU import *
 
 WIN_WIDTH = 500  # ウィンドウの幅 / Window width
 WIN_HEIGHT = 500  # ウィンドウの高さ / Window height
@@ -45,6 +66,10 @@ faces = [
 # Indices for vertex/index buffers
 vertexBufferId = 0
 indexBufferId = 0
+
+# 立方体の回転角度
+# Rotation angle for animating a cube
+theta = 0
 
 
 # ユーザ定義のOpenGLの初期化
@@ -113,6 +138,11 @@ def paintGL():
               0.0, 1.0, 0.0)   # 視界の上方向 / Upward direction
     # yapf: enable
 
+    # 回転行列の設定
+    # Setup rotation matrix
+    glPushMatrix()
+    glRotatef(theta, 0.0, 1.0, 0.0)
+
     # 頂点バッファの有効化
     # Enable vertex buffer object
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId)
@@ -134,6 +164,10 @@ def paintGL():
     # Disable vertex buffer object
     glDisableClientState(GL_VERTEX_ARRAY)
     glDisableClientState(GL_COLOR_ARRAY)
+
+    # 回転行列の破棄
+    # Dispose of rotation matrix
+    glPopMatrix()
 
 
 # ウィンドウサイズ変更のコールバック関数
@@ -157,6 +191,13 @@ def resizeGL(window, width, height):
     # ビューポート変換の更新
     # Update viewport transform
     glViewport(0, 0, renderBufferWidth, renderBufferHeight)
+
+
+# アニメーションのためのアップデート
+# Update for animating object
+def animate():
+    global theta
+    theta += 1.0  # 1度だけ回転 / Rotate by 1 degree of angle
 
 
 def main():
@@ -193,6 +234,9 @@ def main():
     while glfw.window_should_close(window) == glfw.FALSE:
         # 描画 / Draw
         paintGL()
+
+        # アニメーション / Animation
+        animate()
 
         # 描画用バッファの切り替え
         # Swap drawing target buffers

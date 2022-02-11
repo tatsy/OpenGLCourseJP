@@ -1,8 +1,0 @@
-numpy
-pyrr
-glfw==2.5.0
-pyopengl==3.1.5
-yapf
-flake8
-mypy
-isort

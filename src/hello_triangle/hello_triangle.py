@@ -1,3 +1,21 @@
+# MacOS Big Sur以降で動かすための設定
+# Special settings for working on MacOS Big Sur or later
+import platform
+import ctypes.util
+
+uname = platform.uname()
+if uname.system == "Darwin" and uname.release >= "20.":
+    _find_library = ctypes.util.find_library
+
+    def find_library(name):
+        if name in ["OpenGL"]:
+            return "/System/Library/Frameworks/{0}.framework/{0}".format(name)
+        return _find_library(name)
+
+    ctypes.util.find_library = find_library
+
+# 必要なパッケージのインポート
+# Import required packages
 import glfw
 from OpenGL.GL import *
 
