@@ -9,6 +9,9 @@ docs/source/materials/*
 
 *.o
 
-
 .DS_Store
 common.h
+
+__pycache__
+*.pyc
+Pipfile.lock
