@@ -10,9 +10,8 @@ OpenGLCourseJP
 
 ## 1. 環境構築 (Environment setup)
 
-**スライド**
-[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
-[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
+[![](https://img.shields.io/badge/スライド-日本語-red.svg?style=flat-square)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg?style=flat-square)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
 
 **ソースコード**
 
