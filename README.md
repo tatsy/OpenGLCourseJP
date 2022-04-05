@@ -17,7 +17,8 @@ OpenGLCourseJP
 
 ## ソースコード
 
-- ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-Open_window-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+- ウィンドウを開く (Open a window)
+  [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
 
 ## 第2回 ウィンドウを開く
 
