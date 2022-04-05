@@ -1,11 +1,14 @@
-OpenGLCourseJP
-===
+<div align="center">
+
+![logo](logo.png)
 
 [![Travis CI](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
 [![Windows CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml)
 [![MacOS CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml)
 [![Ubuntu CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml)
 [![GitHub Pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
+
+</div>
 
 
 ## 1. 環境構築 (Environment setup)
@@ -92,7 +95,6 @@ OpenGLCourseJP
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/11-shading-models)
 
 - **コード/Code:** Blinn-Phongシェーディング (Blinn-Phong shading) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/shading_models)
-
 - **コード/Code:** カートゥーン・シェーディング (Cartoon shading) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/cartoon_shading)
 
 
