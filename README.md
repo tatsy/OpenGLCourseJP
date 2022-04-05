@@ -13,9 +13,7 @@ OpenGLCourseJP
 [![](https://img.shields.io/badge/スライド-日本語-red.svg?style=flat-square)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg?style=flat-square)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
 
-**ソースコード**
-
-[![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+[![](https://img.shields.io/badge/Code-C++/Python-green.svg?style=flat-square)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
 **ウィンドウを開く (Open a window)**
 
 ## 第2回 ウィンドウを開く
