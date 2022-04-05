@@ -1,6 +1,6 @@
 <div align="center">
 
-![logo](logo.png)
+<img src="logo.png" width="300px" />
 
 [![Travis CI](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
 [![Windows CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml)
