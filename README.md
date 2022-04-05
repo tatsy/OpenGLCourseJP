@@ -10,29 +10,20 @@ OpenGLCourseJP
 
 ## 1. 環境構築 (Environment setup)
 
-[![](https://img.shields.io/badge/Slides-日本語-red.svg?style=flat-square)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
-[![](https://img.shields.io/badge/Slides-English-blue.svg?style=flat-square)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
+[![](https://img.shields.io/badge/Slides-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
 
-- **コード/Code:** ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-C++/Python-green.svg?style=flat-square)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+- **コード/Code:** ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
 
 
-## 第2回 ウィンドウを開く
-
-#### スライド
+## 2. ウィンドウを開く (Open a window)
 
 [![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/02.pdf)
-[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
-[![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/2-opengl-window)
 
+- **コード/Code:** ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+- **コード/Code:** 三角形の描画 (Draw a triangle) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_triangle)
 
-:jp: <https>
-:gb: <https://speakerdeck.com/tatsy/1-introduction-to-opengl>
-
-#### ソースコード (ウィンドウを開く, 第1回と同じ)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window>
-
-#### ソースコード (三角形の描画)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_triangle>
 
 ## 第3回 座標変換
 
