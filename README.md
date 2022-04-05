@@ -10,13 +10,23 @@ OpenGLCourseJP
 
 ## 1. 環境構築 (Environment setup)
 
+### スライド
+
 [![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
-[![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+
+## ソースコード
+
+- ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-Open_window-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
 
 ## 第2回 ウィンドウを開く
 
 #### スライド
+
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/02.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
+[![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+
 
 :jp: <https>
 :gb: <https://speakerdeck.com/tatsy/1-introduction-to-opengl>
