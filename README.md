@@ -8,21 +8,18 @@ OpenGLCourseJP
 [![GitHub Pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
 
 
-## 第1回 環境構築
+## 1. 環境構築 (Environment setup)
 
-#### スライド
-
-<https://speakerdeck.com/tatsy/1-introduction-to-opengl>
-
-#### ソースコード (ウィンドウを開く)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window>
-
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
+[![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
 
 ## 第2回 ウィンドウを開く
 
 #### スライド
 
-<https://speakerdeck.com/tatsy/1-introduction-to-opengl>
+:jp: <https>
+:gb: <https://speakerdeck.com/tatsy/1-introduction-to-opengl>
 
 #### ソースコード (ウィンドウを開く, 第1回と同じ)
 <https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window>
