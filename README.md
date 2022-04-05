@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="logo.png" width="300px" />
+<img src="logo.png" width="500px" />
 
 [![Travis CI](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
 [![Windows CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml)
@@ -33,12 +33,14 @@
 [![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/03.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/3-coordinate-transform)
 
+- **コード/Code:** 二次元座標変換 (2D coordinate transformation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/2d_transformation)
+
 ## 4. 三次元座標変換 (3D coordinate transformation)
 
 [![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/04.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/3-coordinate-transform)
 
-- **コード/Code:** 単純な三次元座標変換 (Simple 3D coordinate transformation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/coordinate_transformation)
+- **コード/Code:** 単純な三次元座標変換 (Simple 3D coordinate transformation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/3d_transformation)
 - **コード/Code:** 深度テスト込み (With depth testing) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/depth_testing)
 
 
