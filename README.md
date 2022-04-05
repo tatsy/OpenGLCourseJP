@@ -10,7 +10,7 @@ OpenGLCourseJP
 
 ## 1. 環境構築 (Environment setup)
 
-[![](https://img.shields.io/badge/Slides-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
 
 - **コード/Code:** ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
@@ -25,16 +25,18 @@ OpenGLCourseJP
 - **コード/Code:** 三角形の描画 (Draw a triangle) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_triangle)
 
 
-## 第3回 座標変換
+## 3. 二次元座標変換
 
-#### スライド
-<https://speakerdeck.com/tatsy/3-coordinate-transform>
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/03.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/3-coordinate-transform)
 
-#### ソースコード (単純な三次元座標変換)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/coordinate_transformation>
+## 4. 三次元座標変換
 
-#### ソースコード (深度テスト込み)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/depth_testing>
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/04.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/3-coordinate-transform)
+
+- **コード/Code** 単純な三次元座標変換 (Simple 3D coordinate transformation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/coordinate_transformation)
+- **コード/Code** 深度テスト込み (With depth testing) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/depth_testing)
 
 ## 第4回 ウィンドウサイズの変更
 
