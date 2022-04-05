@@ -10,11 +10,10 @@ OpenGLCourseJP
 
 ## 1. 環境構築 (Environment setup)
 
-[![](https://img.shields.io/badge/スライド-日本語-red.svg?style=flat-square)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
+[![](https://img.shields.io/badge/Slides-日本語-red.svg?style=flat-square)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg?style=flat-square)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
 
-[![](https://img.shields.io/badge/Code-C++/Python-green.svg?style=flat-square) **ウィンドウを開く (Open a window)**](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
-
+[![](https://img.shields.io/badge/Code-C++/Python-green.svg?style=flat-square)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window) - <span style="font-weight: bold; margin-bottom: 1pt;">ウィンドウを開く (Open a window)</span>
 
 ## 第2回 ウィンドウを開く
 
