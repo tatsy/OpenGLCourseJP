@@ -152,6 +152,8 @@ void paintGL() {
     // Disable vertex buffer object
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     // 回転行列の破棄
     // Dispose of rotation matrix
