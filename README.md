@@ -54,6 +54,7 @@
 
 ## 6. アニメーション (Animation)
 
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/06.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/5-animation)
 
 - **コード/Code:** アニメーション (Animation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/animation)
@@ -61,6 +62,7 @@
 
 ## 7. テクスチャ・マッピング (Texture mapping)
 
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/07.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/6-texture-mapping)
 
 - **コード/Code:** テクスチャ・マッピング (Texture mapping) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/texture_mapping)
@@ -68,6 +70,7 @@
 
 ## 8. 頂点バッファ (Vertex buffer)
 
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/08.pdf)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/7-vertex-buffer-object)
 
 - **コード/Code:** 頂点バッファ (Vertex buffer) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/vertex_buffer)
