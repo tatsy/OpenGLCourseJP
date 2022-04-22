@@ -215,6 +215,9 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    // バージョンを出力する / Check OpenGL version
+    printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+
     // ウィンドウのリサイズを扱う関数の登録
     // Register a callback function for window resizing
     glfwSetWindowSizeCallback(window, resizeGL);
