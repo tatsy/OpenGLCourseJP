@@ -171,7 +171,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     if (!reader.is_open()) {
         // ファイルを開けなかったらエラーを出して終了
         // Finish with error message if source file could not be opened
-        fprintf(stderr, "Failed to load a shader: %s\n", VERT_SHADER_FILE.c_str());
+        fprintf(stderr, "Failed to load a shader: %s\n", filename.c_str());
         exit(1);
     }
 
