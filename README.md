@@ -1,5 +1,6 @@
-OpenGLCourseJP
-===
+<div align="center">
+
+<img src="logo.png" width="500px" />
 
 [![Travis CI](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP)
 [![Windows CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml)
@@ -7,134 +8,120 @@ OpenGLCourseJP
 [![Ubuntu CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml)
 [![GitHub Pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
 
-
-## 第1回 環境構築
-
-#### スライド
-
-<https://speakerdeck.com/tatsy/1-introduction-to-opengl>
-
-#### ソースコード (ウィンドウを開く)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window>
+</div>
 
 
-## 第2回 ウィンドウを開く
+## 1. 環境構築 (Environment setup)
 
-#### スライド
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/01.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/1-introduction-to-opengl)
 
-<https://speakerdeck.com/tatsy/1-introduction-to-opengl>
+- **コード/Code:** ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
 
-#### ソースコード (ウィンドウを開く, 第1回と同じ)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window>
 
-#### ソースコード (三角形の描画)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_triangle>
+## 2. ウィンドウを開く (Open a window)
 
-## 第3回 座標変換
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/02.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/2-opengl-window)
 
-#### スライド
-<https://speakerdeck.com/tatsy/3-coordinate-transform>
+- **コード/Code:** ウィンドウを開く (Open a window) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/open_window)
+- **コード/Code:** 三角形の描画 (Draw a triangle) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_triangle)
 
-#### ソースコード (単純な三次元座標変換)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/coordinate_transformation>
 
-#### ソースコード (深度テスト込み)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/depth_testing>
+## 3. 二次元座標変換 (2D coordinate transformation)
 
-## 第4回 ウィンドウサイズの変更
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/03.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/3-coordinate-transform)
 
-#### スライド
-<https://speakerdeck.com/tatsy/4-window-resize>
+- **コード/Code:** 二次元座標変換 (2D coordinate transformation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/2d_transformation)
 
-#### ソースコード (ウィンドウサイズの変更)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/window_resizing>
+## 4. 三次元座標変換 (3D coordinate transformation)
 
-## 第5回 アニメーション
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/04.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/3-coordinate-transform)
 
-#### スライド
-<https://speakerdeck.com/tatsy/5-animation>
+- **コード/Code:** 単純な三次元座標変換 (Simple 3D coordinate transformation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/3d_transformation)
+- **コード/Code:** 深度テスト込み (With depth testing) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/depth_testing)
 
-#### ソースコード (アニメーション)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/animation>
 
-## 第6回 テクスチャ・マッピング
+## 5. ウィンドウサイズの変更 (Window resizing)
 
-#### スライド
-<https://speakerdeck.com/tatsy/6-texture-mapping>
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/05.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/4-window-resize)
 
-#### ソースコード (テクスチャ・マッピング)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/texture_mapping>
+- **コード/Code:** ウィンドウサイズの変更 (Window resizing) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/window_resizing)
 
-## 第7回 頂点バッファ
 
-#### スライド
-<https://speakerdeck.com/tatsy/7-vertex-buffer-object>
+## 6. アニメーション (Animation)
 
-#### ソースコード (頂点バッファ)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/vertex_buffer>
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/06.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/5-animation)
 
-## 第8回 頂点配列オブジェクト
+- **コード/Code:** アニメーション (Animation) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/animation)
 
-#### スライド
-<https://speakerdeck.com/tatsy/8-vertex-array-object>
 
-#### ソースコード (シェーダ言語の基礎)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_shader>
+## 7. テクスチャ・マッピング (Texture mapping)
 
-## 第9回 シェーダ言語
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/07.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/6-texture-mapping)
 
-#### スライド
-<https://speakerdeck.com/tatsy/9-shader-language>
+- **コード/Code:** テクスチャ・マッピング (Texture mapping) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/texture_mapping)
+- 
 
-#### ソースコード (シェーダ言語の基礎, 第8回と同じ)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_shader>
+## 8. 頂点バッファ (Vertex buffer)
 
-## 第10回 形状モデルの読み込み
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/08.pdf)
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/7-vertex-buffer-object)
 
-#### モデルの読み込み
-<https://speakerdeck.com/tatsy/10-model-loading>
+- **コード/Code:** 頂点バッファ (Vertex buffer) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/vertex_buffer)
 
-#### スライド
-<https://speakerdeck.com/tatsy/10-model-loading>
 
-#### ソースコード (形状モデルの読み込み)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/model_loading>
+## 9. 頂点配列オブジェクト (Vertex array object)
 
-## 第11回 シェーディング
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/8-vertex-array-object)
 
-#### スライド
-<https://speakerdeck.com/tatsy/11-shading-models>
+- **コード/Code:** シェーダ言語の基礎 (Basic shader language) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_shader)
 
-#### ソースコード (Blinn-Phongシェーディング)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/shading_models>
+## 10. シェーダ言語 (Shader language)
 
-#### ソースコード (カートゥーン・シェーディング)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/cartoon_shading>
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/9-shader-language)
 
-## 第12回 キーボードとマウス
+- **コード/Code:** シェーダ言語の基礎 (Basic shader language) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/hello_shader)
 
-#### スライド
-<https://speakerdeck.com/tatsy/12-keyboard-and-mouse>
 
-#### ソースコード (キーボードとマウス)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/keyboard_and_mouse>
+## 11. 形状モデルの読み込み (Loading a shape model)
 
-## 第13回 オブジェクトの選択
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/10-model-loading)
 
-#### スライド
-<https://speakerdeck.com/tatsy/13-object-selection>
+- **コード/Code:** 形状モデルの読み込み (Loading a shape model) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/model_loading)
 
-#### ソースコード (オブジェクトの選択)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/object_selection>
 
-## 第14回 アークボール操作
+## 12. シェーディング (Shading)
 
-#### スライド
-<https://speakerdeck.com/tatsy/14-arcball-control>
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/11-shading-models)
 
-#### ソースコード (アークボール操作)
-<https://github.com/tatsy/OpenGLCourseJP/tree/master/src/arcball_control>
+- **コード/Code:** Blinn-Phongシェーディング (Blinn-Phong shading) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/shading_models)
+- **コード/Code:** カートゥーン・シェーディング (Cartoon shading) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/cartoon_shading)
+
+
+## 13. キーボードとマウス (Keyboard and mouse)
+
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/12-keyboard-and-mouse)
+
+- **コード/Code:** キーボードとマウス (Keyboard and mouse) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/keyboard_and_mouse)
+
+## 14. オブジェクトの選択 (Object selection)
+
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/13-object-selection)
+
+- **コード/Code:** オブジェクトの選択 (Object selection) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/object_selection)
+
+## 15. アークボール操作 (Arcball control)
+
+[![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/14-arcball-control)
+
+- **コード/Code:** アークボール操作 (Arcball control) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/arcball_control)
 
 ## Copyright
 
-2018-2021 (c) Tatsuya Yatagawa
+2018-2022 (c) Tatsuya Yatagawa

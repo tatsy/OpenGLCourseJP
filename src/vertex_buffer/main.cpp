@@ -152,6 +152,8 @@ void paintGL() {
     // Disable vertex buffer object
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     // 回転行列の破棄
     // Dispose of rotation matrix
@@ -214,6 +216,9 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Failed to load OpenGL 3.x/4.x libraries!\n");
         return 1;
     }
+
+    // バージョンを出力する / Check OpenGL version
+    printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
     // ウィンドウのリサイズを扱う関数の登録
     // Register a callback function for window resizing
