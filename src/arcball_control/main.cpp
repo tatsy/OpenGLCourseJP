@@ -106,7 +106,7 @@ enum ArcballMode {
 // 座標変換のための変数
 // Variables for coordinate transformation
 int arcballMode = ARCBALL_MODE_NONE;
-glm::mat4 viewMat, projMat;
+glm::mat4 viewMat;
 glm::mat4 acRotMat, acTransMat, acScaleMat;
 float acScale = 1.0f;
 
@@ -319,8 +319,6 @@ void initializeGL() {
 
     // カメラの姿勢を決定する変換行列の初期化
     // Initialize transformation matrices for camera pose
-    projMat = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
-
     viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // 視点の位置 / Eye position
                           glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先 / Looking position
                           glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向 / Upward vector
@@ -342,6 +340,7 @@ void paintGL() {
     // 座標の変換. アークボール操作からモデル行列を決定する
     // Coordinate transformation. Model matrix is determined by arcball control
     glm::mat4 modelMat = acTransMat * acRotMat * acScaleMat;
+    glm::mat4 projMat = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
 
     // シェーダの有効化
@@ -482,34 +481,25 @@ void updateRotate() {
 // 平行移動量成分の更新
 // Update translation matrix
 void updateTranslate() {
-    // NOTE:
-    // この関数では物体が世界座標の原点付近にあるとして平行移動量を計算する
-    // This function assumes the object locates near to the world-space origin and computes the amount of translation
+    // 近接クリッピング面におけるマウス移動の視点と終点の計算.
+    // Calculate the start and end points of mouse motion on the near clipping plane
+    glm::vec4 newPosCamSpace(2.0f * newPos.x / WIN_WIDTH - 1.0f, -2.0f * newPos.y / WIN_HEIGHT + 1.0f, 1.0f, 1.0f);
+    glm::vec4 oldPosCamSpace(2.0f * oldPos.x / WIN_WIDTH - 1.0f, -2.0f * oldPos.y / WIN_HEIGHT + 1.0f, 1.0f, 1.0f);
 
-    // 世界座標の原点のスクリーン座標を求める
-    // Calculate screen-space coordinates of the world-space origin
-    glm::vec4 originScreenSpace = (projMat * viewMat) * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-    originScreenSpace /= originScreenSpace.w;
-
-    // スクリーン座標系におけるマウス移動の視点と終点の計算. これらの位置はスクリーン座標系のZ座標に依存することに注意する
-    // Calculate the start and end points of mouse motion, which depend Z coordinate in screen space
-    glm::vec4 newPosScreenSpace(2.0f * newPos.x / WIN_WIDTH - 1.0f, -2.0f * newPos.y / WIN_HEIGHT + 1.0f, originScreenSpace.z, 1.0f);
-    glm::vec4 oldPosScreenSpace(2.0f * oldPos.x / WIN_WIDTH - 1.0f, -2.0f * oldPos.y / WIN_HEIGHT + 1.0f, originScreenSpace.z, 1.0f);
-
-    // スクリーン座標の情報を世界座標座標に変換する行列 (= MVP行列の逆行列)
-    // Transformation from screen space to world space (= inverse of MVP matrix)
-    glm::mat4 invMvpMat = glm::inverse(projMat * viewMat);
+    // カメラ座標の情報を世界座標座標に変換する行列 (= ビュー行列の逆行列)
+    // Transformation from camera space to world space (= inverse of view matrix)
+    glm::mat4 invViewMat = glm::inverse(viewMat);
 
     // スクリーン空間の座標を世界座標に変換
     // Transform screen-space positions to world-space positions
-    glm::vec4 newPosObjSpace = invMvpMat * newPosScreenSpace;
-    glm::vec4 oldPosObjSpace = invMvpMat * oldPosScreenSpace;
-    newPosObjSpace /= newPosObjSpace.w;
-    oldPosObjSpace /= oldPosObjSpace.w;
+    glm::vec4 newPosWorldSpace = invViewMat * newPosCamSpace;
+    glm::vec4 oldPosWorldSpace = invViewMat * oldPosCamSpace;
+    newPosWorldSpace /= newPosWorldSpace.w;
+    oldPosWorldSpace /= oldPosWorldSpace.w;
 
     // 世界座標系で移動量を求める
     // Calculate the amount of translation in world space
-    const glm::vec3 transWorldSpace = glm::vec3(newPosObjSpace - oldPosObjSpace);
+    const glm::vec3 transWorldSpace = glm::vec3(newPosWorldSpace - oldPosWorldSpace);
 
     // 行列に変換
     // Calculate translation matrix
