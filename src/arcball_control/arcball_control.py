@@ -507,10 +507,10 @@ def motionEvent(window, xpos, ypos):
 
 # マウスホイールを処理するコールバック関数
 # Callback for mouse wheel event
-def wheelEvent(window, xpos, ypos):
+def wheelEvent(window, xoffset, yoffset):
     global acScale
 
-    acScale += ypos / 10.0
+    acScale += yoffset / 10.0
     updateScale()
 
 

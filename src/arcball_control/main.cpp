@@ -569,8 +569,8 @@ void motionEvent(GLFWwindow *window, double xpos, double ypos) {
 
 // マウスホイールを処理するコールバック関数
 // Callback for mouse wheel event
-void wheelEvent(GLFWwindow *window, double xpos, double ypos) {
-    acScale += ypos / 10.0;
+void wheelEvent(GLFWwindow *window, double xoffset, double yoffset) {
+    acScale += yoffset / 10.0;
     updateScale();
 }
 
