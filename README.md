@@ -110,18 +110,21 @@
 
 ## 13. キーボードとマウス (Keyboard and mouse)
 
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/13)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/12-keyboard-and-mouse)
 
 - **コード/Code:** キーボードとマウス (Keyboard and mouse) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/keyboard_and_mouse)
 
 ## 14. オブジェクトの選択 (Object selection)
 
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/14)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/13-object-selection)
 
 - **コード/Code:** オブジェクトの選択 (Object selection) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/object_selection)
 
 ## 15. アークボール操作 (Arcball control)
 
+[![](https://img.shields.io/badge/スライド-日本語-red.svg)](https://tatsy.github.io/OpenGLCourseSlides/15)
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://speakerdeck.com/tatsy/14-arcball-control)
 
 - **コード/Code:** アークボール操作 (Arcball control) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/arcball_control)
