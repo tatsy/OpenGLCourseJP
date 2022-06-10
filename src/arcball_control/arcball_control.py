@@ -312,7 +312,7 @@ def paintGL():
 # ウィンドウサイズ変更のコールバック関数
 # Callback function for window resizing
 def resizeGL(window, width, height):
-    global WIN_WIDTH, WIN_HEIGHT
+    global WIN_WIDTH, WIN_HEIGHT, projMat
 
     # ユーザ管理のウィンドウサイズを変更
     # Update user-managed window size
@@ -330,6 +330,10 @@ def resizeGL(window, width, height):
     # ビューポート変換の更新
     # Update viewport transform
     glViewport(0, 0, renderBufferWidth, renderBufferHeight)
+
+    # 透視投影変換行列の更新
+    # Update perspective projection matrix
+    projMat = pyrr.matrix44.create_perspective_projection(45.0, WIN_WIDTH / WIN_HEIGHT, 0.1, 1000.0)
 
 
 # マウスのクリックを処理するコールバック関数
@@ -463,7 +467,8 @@ def updateTranslate():
 # 物体の拡大縮小率を更新
 # Update object scale
 def updateScale():
-    global acScaleMat
+    global acScale, acScaleMat
+    acScale += (oldPos[1] - newPos[1]) / WIN_HEIGHT
     acScaleMat = pyrr.matrix44.create_from_scale([acScale, acScale, acScale])
 
 
@@ -475,7 +480,6 @@ def updateTransform():
     elif arcballMode == ARCBALL_MODE_TRANSLATE:
         updateTranslate()
     elif arcballMode == ARCBALL_MODE_SCALE:
-        acScale += (oldPos[1] - newPos[1]) / WIN_HEIGHT
         updateScale()
 
 
