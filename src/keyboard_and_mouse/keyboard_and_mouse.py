@@ -333,9 +333,17 @@ def keyboardEvent(window, key, scancode, action, mods):
 # マウスのクリックを処理するコールバック関数
 # Callback for mouse click events
 def mouseEvent(window, button, action, mods):
-    # マウスが押されたかどうかの判定
-    # Check whether mouse is pressed or released
+    # マウスが押されたかとどのボタンが押されたかの判定
+    # Check which mouse button is pressed or released
     print("Mouse: %s" % ("Press" if action == glfw.PRESS else "Release"))
+    if button == glfw.MOUSE_BUTTON_LEFT:
+        print("Button: left")
+    elif button == glfw.MOUSE_BUTTON_RIGHT:
+        print("Button :right")
+    elif button == glfw.MOUSE_BUTTON_MIDDLE:
+        print("Button: middle")
+    else:
+        print("Button: other")
 
     # クリックされた位置を取得
     # Obtain a click position
