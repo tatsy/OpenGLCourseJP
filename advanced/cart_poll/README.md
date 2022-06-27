@@ -24,7 +24,7 @@ python main.py --dqn
 **DQN (1000 steps)**  
 <img src="./results/movie_01000.gif" width="500"/>
 
-**DQN (2000 steps)  
+**DQN (2000 steps)**  
 <img src="./results/movie_02000.gif" width="500"/>
 
 **DQN (3000 steps)**  
