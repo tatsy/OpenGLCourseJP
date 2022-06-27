@@ -18,4 +18,20 @@ python main.py --dqn
 
 ### Results
 
-<video src="https://github.com/tatsy/OpenGLCourseJP/blob/master/advanced/cart_poll/results/movie_00000.mp4" width="300px" />
+**DQN (0 steps)**  
+<img src="./results/movie_00000.gif" width="500"/>
+
+**DQN (1000 steps)**  
+<img src="./results/movie_01000.gif" width="500"/>
+
+**DQN (2000 steps)**  
+<img src="./results/movie_02000.gif" width="500"/>
+
+**DQN (3000 steps)**  
+<img src="./results/movie_03000.gif" width="500"/>
+
+**DQN (4000 steps)**  
+<img src="./results/movie_04000.gif" width="500"/>
+
+**DQN (5000 steps)**  
+<img src="./results/movie_05000.gif" width="500"/>
