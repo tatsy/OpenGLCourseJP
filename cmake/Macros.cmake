@@ -17,6 +17,12 @@ function(BUILD_EXAMPLE EXPNAME)
   endif()
 
   file(GLOB SOURCE_FILES "${EXPNAME}/*.cpp" "${EXPNAME}/*.h")
+  list(LENGTH SOURCE_FILES N_FILES)
+  if (N_FILES EQUAL 0)
+    message(WARNING "No *.cpp file detected in ${TARGET_EXAMPLE_DIR}")
+    return()
+  endif()
+
   file(GLOB SHADER_FILES "${EXPNAME}/shaders/*.vert"
                          "${EXPNAME}/shaders/*.geom"
                          "${EXPNAME}/shaders/*.frag")
