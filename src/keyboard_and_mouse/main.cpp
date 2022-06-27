@@ -395,9 +395,18 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
 // マウスのクリックを処理するコールバック関数
 // Callback for mouse click events
 void mouseEvent(GLFWwindow *window, int button, int action, int mods) {
-    // マウスが押されたかどうかの判定
-    // Check whether mouse is pressed or released
+    // マウスが押されたかとどのボタンが押されたかの判定
+    // Check which mouse button is pressed or released
     printf("Mouse: %s\n", action == GLFW_PRESS ? "Press" : "Release");
+    if (button == GLFW_MOUSE_BUTTON_LEFT) {
+        printf("Button: left\n");
+    } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+        printf("Button: right\n");
+    } else if (button == GLFW_MOUSE_BUTTON_MIDDLE) {
+        printf("Button: middle\n");
+    } else {
+        printf("Button: other\n");
+    }
 
     // クリックされた位置を取得
     // Obtain a click position
