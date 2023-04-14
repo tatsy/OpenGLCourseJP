@@ -1,0 +1,19 @@
+name: cartpoll
+channels:
+  - defaults
+dependencies:
+  - python
+  - numpy
+  - opencv
+  - tqdm
+  - PyOpenGL
+  - pytorch::pytorch
+  - open3d-admin::open3d
+  - mypy
+  - yapf
+  - flake8
+  - isort
+  - pip
+  - pip:
+    - glfw
+    - pyrr
