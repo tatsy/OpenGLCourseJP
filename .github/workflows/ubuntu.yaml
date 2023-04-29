@@ -10,8 +10,8 @@ env:
   BUILD_TYPE: Release
   GNU_CC: gcc-10
   GNU_CXX: g++-10
-  LLVM_CC: clang-10
-  LLVM_CXX: clang++-10
+  LLVM_CC: clang-11
+  LLVM_CXX: clang++-11
 
 jobs:
   ubuntu:
@@ -31,13 +31,13 @@ jobs:
         if: ${{ matrix.compiler == 'gcc' }}
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y gcc-9 g++-9
+          sudo apt-get install -y $GNU_CC $GNU_CXX
 
       - name: Install LLVM Clang
         if: ${{ matrix.compiler == 'clang' }}
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y clang-10 clang++-10
+          sudo apt-get install -y $LLVM_CC $LLVM_CXX
 
       - name: Install OpenGL envs
         run: |
