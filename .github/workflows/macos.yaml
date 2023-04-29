@@ -8,10 +8,10 @@ on:
 
 env:
   BUILD_TYPE: Release
-  GNU_CC: /usr/local/bin/gcc-10
-  GNU_CXX: /usr/local/bin/g++-10
-  LLVM_CC: /usr/local/opt/llvm/bin/clang
-  LLVM_CXX: /usr/local/opt/llvm/bin/clang++
+  GNU_CC: gcc
+  GNU_CXX: g++
+  LLVM_CC: clang
+  LLVM_CXX: clang++
 
 jobs:
   macos:
