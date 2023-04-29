@@ -8,8 +8,8 @@ on:
 
 env:
   BUILD_TYPE: Release
-  GNU_CC: /usr/local/bin/gcc-9
-  GNU_CXX: /usr/local/bin/g++-9
+  GNU_CC: /usr/local/bin/gcc-10
+  GNU_CXX: /usr/local/bin/g++-10
   LLVM_CC: /usr/local/opt/llvm/bin/clang
   LLVM_CXX: /usr/local/opt/llvm/bin/clang++
 
@@ -24,40 +24,40 @@ jobs:
           - clang
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-        token: ${{ secrets.MY_PAT }}
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          token: ${{ secrets.MY_PAT }}
 
-    - name: Install LLVM Clang
-      if: ${{ matrix.compiler == 'clang' }}
-      run: |
-        brew install llvm
+      - name: Install LLVM Clang
+        if: ${{ matrix.compiler == 'clang' }}
+        run: |
+          brew install llvm
 
-    - name: Install GLFW3
-      run: |
-        brew install glfw3
+      - name: Install GLFW3
+        run: |
+          brew install glfw3
 
-    - name: Install GLM
-      run: |
-        brew install glm
+      - name: Install GLM
+        run: |
+          brew install glm
 
-    - name: CMake Build
-      env:
-        C_COMPILER: ${{ matrix.compiler }}
-      run: |
-        cmake -E make_directory ${{runner.workspace}}/build
-        cd ${{runner.workspace}}/build
-        if [ "$C_COMPILER" = "gcc" ]; then
-          cmake $GITHUB_WORKSPACE \
-            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-            -DCMAKE_C_COMPILER=$GNU_CC \
-            -DCMAKE_CXX_COMPILER=$GNU_CXX
-        fi
-        if [ "$C_COMPILER" = "clang" ]; then
-          cmake $GITHUB_WORKSPACE \
-            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-            -DCMAKE_C_COMPILER=$LLVM_CC \
-            -DCMAKE_CXX_COMPILER=$LLVM_CXX
-        fi
-        cmake --build . --config $BUILD_TYPE --parallel 2
+      - name: CMake Build
+        env:
+          C_COMPILER: ${{ matrix.compiler }}
+        run: |
+          cmake -E make_directory ${{runner.workspace}}/build
+          cd ${{runner.workspace}}/build
+          if [ "$C_COMPILER" = "gcc" ]; then
+            cmake $GITHUB_WORKSPACE \
+              -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+              -DCMAKE_C_COMPILER=$GNU_CC \
+              -DCMAKE_CXX_COMPILER=$GNU_CXX
+          fi
+          if [ "$C_COMPILER" = "clang" ]; then
+            cmake $GITHUB_WORKSPACE \
+              -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+              -DCMAKE_C_COMPILER=$LLVM_CC \
+              -DCMAKE_CXX_COMPILER=$LLVM_CXX
+          fi
+          cmake --build . --config $BUILD_TYPE --parallel 2
