@@ -65,7 +65,6 @@
 [![](https://img.shields.io/badge/Slides-English-blue.svg)](https://tatsy.github.io/OpenGLCourseSlides/07-en)
 
 - **コード/Code:** テクスチャ・マッピング (Texture mapping) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/texture_mapping)
-- 
 
 ## 8. 頂点バッファ (Vertex buffer)
 
