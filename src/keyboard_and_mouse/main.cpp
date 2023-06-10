@@ -370,11 +370,11 @@ void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mo
     // キーボードの状態と押されたキーを表示する
     // Key pressed/released, which key is interacted
     if (action == GLFW_PRESS) {
-        printf("Mouse: Press\n");
+        printf("Keyboard: Press\n");
     } else if (action == GLFW_RELEASE) {
-        printf("Mouse: Release\n");
+        printf("Keyboard: Release\n");
     } else if (action == GLFW_REPEAT) {
-        printf("Mouse: Repeat\n");
+        printf("Keyboard: Repeat\n");
     } else {
         printf("Unknown press/release event!!\n");
     }
