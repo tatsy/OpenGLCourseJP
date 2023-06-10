@@ -369,7 +369,16 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 void keyboardEvent(GLFWwindow *window, int key, int scancode, int action, int mods) {
     // キーボードの状態と押されたキーを表示する
     // Key pressed/released, which key is interacted
-    printf("Keyboard: %s\n", action == GLFW_PRESS ? "Press" : "Release");
+    if (action == GLFW_PRESS) {
+        printf("Mouse: Press\n");
+    } else if (action == GLFW_RELEASE) {
+        printf("Mouse: Release\n");
+    } else if (action == GLFW_REPEAT) {
+        printf("Mouse: Repeat\n");
+    } else {
+        printf("Unknown press/release event!!\n");
+    }
+
     if (key >= 0 && key < 127) {
         // ASCII文字は127未満の整数
         // ASCII chars correspond to integer less than 127
