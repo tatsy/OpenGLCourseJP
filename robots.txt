@@ -1,0 +1,1 @@
+Sitemap: https://tatsy.github.io/OpenGLCourseJP/sitemap.xml

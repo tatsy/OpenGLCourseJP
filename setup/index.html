@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      環境設定 &middot; OpenGL Course (JP)
+    
+  </title>
+
+  
+  <link rel="canonical" href="https://tatsy.github.io/OpenGLCourseJP/setup/">
+  
+
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/poole.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/syntax.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://tatsy.github.io/OpenGLCourseJP/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https://tatsy.github.io/OpenGLCourseJP/public/favicon.ico">
+
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/lightbox.min.js"></script>
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://tatsy.github.io/OpenGLCourseJP/atom.xml">
+
+  
+</head>
+
+
+<body>
+
+  <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Welcome to OpenGL programming course!</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/depth_testing/">深度テスト</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/coordinate_transform/">座標変換</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_shader/">シェーダの利用</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_triangle/">三角形を描く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item active" href="https://tatsy.github.io/OpenGLCourseJP/setup/">環境設定</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/window_resize/">ウィンドウサイズの変更</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP/archive/v1.0.0.zip">Download</a>
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2024. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+  <!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. -->
+  <div class="wrap">
+    <div class="masthead">
+      <div class="container">
+        <h3 class="masthead-title">
+          <a href="/OpenGLCourseJP/" title="Home">OpenGL Course (JP)</a>
+          <small></small>
+        </h3>
+      </div>
+    </div>
+
+    <div class="container content">
+      <div class="page">
+  <h1 class="page-title">
+    環境設定
+    
+
+
+  </h1>
+  <ul>
+  <li><a href="/OpenGLCourseJP/setup/glfw/">GLFWの設定</a></li>
+  <li><a href="/OpenGLCourseJP/setup/glm/">GLMのインストール</a></li>
+  <li><a href="/OpenGLCourseJP/setup/glad/">OpenGL 3.x/4.xのローダとGLMの設定</a></li>
+</ul>
+
+<p>少し古いやり方になりますがGLEWの設定方法については、「<a href="/OpenGLCourseJP/setup/glew/">GLEWの設定</a>」に解説があります。MacでXcodeを使わない場合や、Linuxで開発をする場合には「<a href="/OpenGLCourseJP/setup/makefile/">Makefileを用いたビルド</a>」も参考にしてください。</p>
+
+
+  
+<script async class="speakerdeck-embed" data-id="7d25c26c73684654b7779ebb621472d1" src="//speakerdeck.com/assets/embed.js"></script>
+
+</div>
+
+
+
+    </div>
+  </div>
+
+  <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+  <footer class="site-footer h-card">
+    <data class="u-url" href="//OpenGLCourseJP/"></data>
+
+    <div class="wrapper">
+      <div class="container content">
+        <div class="footer-col-wrapper">
+          <div class="footer-col footer-col-1">
+            <ul class="contact-list">
+              <li class="p-name">OpenGL Course (JP)</li>
+              <li><a class="u-email" href="mailto:tatsy.mail@gmail.com">tatsy.mail@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-2">
+            <ul class="social-media-list">
+              <li>
+                <a href="https://github.com/tatsy">
+                  <svg class="svg-icon">
+                    <use xlink:href="/OpenGLCourseJP/public/minima-social-icons.svg#github"></use>
+                  </svg>
+                  <span class="username">tatsy</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-3">
+            <p>Welcome to OpenGL programming course!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src='/OpenGLCourseJP/public/js/script.js'></script>
+
+</body>
+
+</html>

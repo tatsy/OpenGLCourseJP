@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      三角形を描く &middot; OpenGL Course (JP)
+    
+  </title>
+
+  
+  <link rel="canonical" href="https://tatsy.github.io/OpenGLCourseJP/hello_triangle/">
+  
+
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/poole.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/syntax.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://tatsy.github.io/OpenGLCourseJP/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https://tatsy.github.io/OpenGLCourseJP/public/favicon.ico">
+
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/lightbox.min.js"></script>
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://tatsy.github.io/OpenGLCourseJP/atom.xml">
+
+  
+</head>
+
+
+<body>
+
+  <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Welcome to OpenGL programming course!</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/depth_testing/">深度テスト</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/coordinate_transform/">座標変換</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_shader/">シェーダの利用</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item active" href="https://tatsy.github.io/OpenGLCourseJP/hello_triangle/">三角形を描く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/setup/">環境設定</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/window_resize/">ウィンドウサイズの変更</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP/archive/v1.0.0.zip">Download</a>
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2024. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+  <!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. -->
+  <div class="wrap">
+    <div class="masthead">
+      <div class="container">
+        <h3 class="masthead-title">
+          <a href="/OpenGLCourseJP/" title="Home">OpenGL Course (JP)</a>
+          <small></small>
+        </h3>
+      </div>
+    </div>
+
+    <div class="container content">
+      <div class="page">
+  <h1 class="page-title">
+    三角形を描く
+    
+
+
+  </h1>
+  <p>前回は、単に塗りつぶされた画面が表示されるだけのプログラムを紹介しました。
+今回は、これを少し発展させて、三角形を表示させるプログラムを作りたいと思います。</p>
+
+<hr />
+
+<h2 id="三角形の座標指定">三角形の座標指定</h2>
+
+<p>三角形の頂点座標は<code class="highlighter-rouge">glVertex2f</code>関数で指定します。この関数は引数を3つ取り、
+そのそれぞれがx座標、y座標に対応するものになっています。</p>
+
+<p>頂点を指定するためには、指定前に<code class="highlighter-rouge">glBegin</code>関数、指定後に<code class="highlighter-rouge">glEnd</code>関数を呼びます。
+このとき<code class="highlighter-rouge">glBegin</code>関数は今から何を描画しようとしているのかを表す定数を引数に取ります。
+これから描くのは三角形なので、<code class="highlighter-rouge">GL_TRIANGLES</code>を指定します。</p>
+
+<p>それでは、メインループの<code class="highlighter-rouge">glClear</code>関数のあとに以下のようなコードを書いてみましょう。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">glBegin</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">);</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.5</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="mf">0.5</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glEnd</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>正しい位置にコードがかけていれば、次のような画面が表示されるはずです。この時、ビルドをやり直すのを忘れないようにしてください。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/assets/images/hello_triangle/white_triangle.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/assets/images/hello_triangle/white_triangle.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+<p>三角形を描画するときには頂点の色を指定することもできます。この時に使う関数が<code class="highlighter-rouge">glColor3f</code>関数です。
+この関数は3つの引数を取り、それぞれが赤、緑、青の成分に対応しています。
+色の指定は、頂点位置を<code class="highlighter-rouge">glVertex2f</code>で指定する直前のものが反映されます。
+上のコードを次のように書き換えてみましょう。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">glBegin</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">);</span>
+<span class="n">glColor3f</span><span class="p">(</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">);</span>  <span class="c1">// 赤</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glColor3f</span><span class="p">(</span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">);</span>  <span class="c1">// 緑</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.5</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glColor3f</span><span class="p">(</span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>  <span class="c1">// 青</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="mf">0.5</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glEnd</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>すると次のような色の付いた三角形が表示されるはずです。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/assets/images/hello_triangle/002_hello_triangle.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/assets/images/hello_triangle/002_hello_triangle.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+<p>さて、内容としては第2回はこれで終わりなのですが、2つほど、疑問が生じます。</p>
+
+<ul>
+  <li>画面上の座標系はどうなっているのか？ (どこが原点？値の範囲は？)</li>
+  <li>なぜ描画される三角形の色がグラデーションになるのか？</li>
+</ul>
+
+<p>以下では、このぞれぞれについて解説をしてみたいと思います。</p>
+
+<hr />
+
+<h2 id="openglの座標系">OpenGLの座標系</h2>
+
+<p>先ほど三角形を描画するときに指定した座標は、<code class="highlighter-rouge">(-0.5, -0.5)</code>,<code class="highlighter-rouge">(-0.5, 0.5)</code>,<code class="highlighter-rouge">(0.5, -0.5)</code>でした。
+この時、<code class="highlighter-rouge">(-0.5, -0.5)</code>は左下の赤色の頂点、<code class="highlighter-rouge">(-0.5, 0.5)</code>は左上の緑色の頂点、
+<code class="highlighter-rouge">(0.5, -0.5)</code> は右下の青色の頂点に対応しています。</p>
+
+<p>ここから考えると、画面上の座標系がどうなっているか分かりそうです。もし、頂点の座標が、
+等間隔で変わっていくと考えるならば、画面の左下が<code class="highlighter-rouge">(-1, -1)</code>になり、画面の右上が<code class="highlighter-rouge">(1, 1)</code>になりそうです。</p>
+
+<p>では、実際に座標位置を変えて試してみましょう。上で作ったコードを以下のように書き換えます。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">glBegin</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">);</span>
+<span class="n">glColor3f</span><span class="p">(</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">);</span>  <span class="c1">// 赤</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glColor3f</span><span class="p">(</span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">);</span>  <span class="c1">// 緑</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glColor3f</span><span class="p">(</span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>  <span class="c1">// 青</span>
+<span class="n">glVertex2f</span><span class="p">(</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>
+<span class="n">glEnd</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>さっそく、描画結果を確認してみてください。おそらく、次のような画面が表示されるはずです。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/assets/images/hello_triangle/large_triangle.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/assets/images/hello_triangle/large_triangle.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+<p>こちらの実験からも確認できる通り、OpenGLの画面における座標系は、以下の図のようになっています。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/assets/images/hello_triangle/coordinate_system.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/assets/images/hello_triangle/coordinate_system.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+<p>では、この座標系を変更することができるのか？という疑問が当然生じてくるわけですが、これに関しては、
+次回以降でお話できればと思っています。</p>
+
+<hr />
+
+<h2 id="三角形がグラデーションになる理由">三角形がグラデーションになる理由</h2>
+
+<p>さきほどのコードでは、三角形の各頂点に違う色が指定されていました。もちろん同じ色が指定されていれば、
+その指定されている色で三角形全体を塗りつぶせば良さそうですが、違う色である場合には、
+どのように内部を塗りつぶすのが正しいのでしょうか？</p>
+
+<p>この問題を解決するために、OpenGLでは重心座標系という方法を使って、内部の色を決定しています。
+三角形の各頂点 $\textbf{x}_0$ ,\(\textbf{x}_1\), $\textbf{x}_2$
+とすると、三角形内部の位置 $\textbf{x}$ は内分のパラメータ $s$ および $t$ を使って、</p>
+
+\[\mathbf{x} = (1 - s - t) \mathbf{x}_0 + s \mathbf{x}_1 + t \mathbf{x}_2 \qquad ( 0 \leq s, t \leq 1 )\]
+
+<p>のように書けるのは、お分かりいただけるかと思います。OpenGLでは三角形内部の色を決定するときには、
+この $s, t$ を使用して、頂点の色 $\mathbf{c}_0$ , $\mathbf{c}_1$ , $\mathbf{c}_2$
+を同じように内分し、今描画したい位置の色 $\mathbf{c}$ を決定します。</p>
+
+\[\mathbf{c} = (1 - s - t) \mathbf{c}_0 + s \mathbf{c}_1 + t \mathbf{c}_2 \qquad ( 0 \leq s, t \leq 1 )\]
+
+<p>このような理由から、三角形の内部の色がグラデーションのように補間されて表示されていたというわけです。
+この考え方は頂点に色以外の別の情報が与えられたときでも同様で、以後、OpenGLを使って
+三次元空間にオブジェクトを描画するときに大切な考え方になってきます。</p>
+
+<h2 id="練習">練習</h2>
+
+<ol>
+  <li>三角形の頂点の位置を変えるとどうなるかを調べる</li>
+  <li>三角形の頂点の色を変えるとどうなるかを調べる</li>
+  <li>三角形の頂点の色を部分的にコメントアウトするとどうなるかを調べる</li>
+</ol>
+
+
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+  <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+  <footer class="site-footer h-card">
+    <data class="u-url" href="//OpenGLCourseJP/"></data>
+
+    <div class="wrapper">
+      <div class="container content">
+        <div class="footer-col-wrapper">
+          <div class="footer-col footer-col-1">
+            <ul class="contact-list">
+              <li class="p-name">OpenGL Course (JP)</li>
+              <li><a class="u-email" href="mailto:tatsy.mail@gmail.com">tatsy.mail@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-2">
+            <ul class="social-media-list">
+              <li>
+                <a href="https://github.com/tatsy">
+                  <svg class="svg-icon">
+                    <use xlink:href="/OpenGLCourseJP/public/minima-social-icons.svg#github"></use>
+                  </svg>
+                  <span class="username">tatsy</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-3">
+            <p>Welcome to OpenGL programming course!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src='/OpenGLCourseJP/public/js/script.js'></script>
+
+</body>
+
+</html>

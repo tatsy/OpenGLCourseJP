@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      OpenGL 3.x/4.xのローダとGLMの設定 &middot; OpenGL Course (JP)
+    
+  </title>
+
+  
+  <link rel="canonical" href="https://tatsy.github.io/OpenGLCourseJP/setup/glad/">
+  
+
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/poole.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/syntax.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://tatsy.github.io/OpenGLCourseJP/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https://tatsy.github.io/OpenGLCourseJP/public/favicon.ico">
+
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/lightbox.min.js"></script>
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://tatsy.github.io/OpenGLCourseJP/atom.xml">
+
+  
+</head>
+
+
+<body>
+
+  <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Welcome to OpenGL programming course!</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/depth_testing/">深度テスト</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/coordinate_transform/">座標変換</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_shader/">シェーダの利用</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_triangle/">三角形を描く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/setup/">環境設定</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/window_resize/">ウィンドウサイズの変更</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP/archive/v1.0.0.zip">Download</a>
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2024. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+  <!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. -->
+  <div class="wrap">
+    <div class="masthead">
+      <div class="container">
+        <h3 class="masthead-title">
+          <a href="/OpenGLCourseJP/" title="Home">OpenGL Course (JP)</a>
+          <small></small>
+        </h3>
+      </div>
+    </div>
+
+    <div class="container content">
+      <div class="page">
+  <h1 class="page-title">OpenGL 3.x/4.xのローダとGLMの設定</h1>
+  <p>(この内容は「<a href="/OpenGLCourseJP/hello_shader/">シェーダの利用</a>」以降に必要になります)</p>
+
+<p>第10回以降のプログラムを動かすためには、比較的新しいOpenGLの機能を使うためのライブラリが必要です。
+旧来はGLEW (OpenGL Extension Wrangler Library) というライブラリが有名でしたが、近年は開発が止まっていることもあり、本講義では <a href="https://gen.glad.sh/" target="_blank">GLAD</a> というライブラリを使います。</p>
+
+<p>GLADはソースコード (*.c ファイル) を含むものとヘッダだけで利用できるものがあり、本講義では利便性のためにヘッダだけからなるものを用います。このヘッダは、講義のソースコードを配布している <a href="https://github.com/tatsy/OpenGLCourseJP/blob/master/support/glad/gl.h" target="_blank">GitHub</a> からダウンロードできる他、 <a href="https://gen.glad.sh/" target="_blank">公式のWebページ</a> に設定内容を入力してダウンロードすることもできます。</p>
+
+<h2 id="gladのインストール-windowsmac共通">GLADのインストール (Windows/Mac共通)</h2>
+
+<p><a href="https://gen.glad.sh/" target="_blank">公式のWebページ</a> にアクセスします。GLADにはバージョン1とバージョン2がありますが、ヘッダだけで利用できるバージョン2を今回は使います。</p>
+
+<p>ページが開いたら下の画像のように設定項目を入力し、右下にある「GENERATE」ボタンをクリックします。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/pages/setup/images/glad_setup_01.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/pages/setup/images/glad_setup_01.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/pages/setup/images/glad_setup_02.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/pages/setup/images/glad_setup_02.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+<p>すると下記のような画面が開くので <code class="highlighter-rouge">glad.zip</code> をクリックして、ファイルをダウンロードします。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/pages/setup/images/glad_download.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/pages/setup/images/glad_download.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+<p>このファイルを展開すると <code class="highlighter-rouge">glad/gl.h</code> というファイルが見つかりますので、これを適当な場所におき、自分のソースコードからインクルードするようにします。</p>
+
+<h2 id="サンプルプログラムの実行">サンプルプログラムの実行</h2>
+
+<p>サンプルプログラムは「第12回シェーダの利用」のソースコードを使用します。</p>
+
+<p><a href="https://github.com/tatsy/OpenGLCourseJP/blob/master/src/hello_shader" target="_blank">https://github.com/tatsy/OpenGLCourseJP/blob/master/src/hello_shader</a></p>
+
+<p>コンパイルをするまではこれまで通りですが、今回のファイルにはシェーダのソースコードが含まれるので、
+そちらの置き場所を別途設定する必要があります。</p>
+
+<p>サンプルプログラムの中では<code class="highlighter-rouge">common.h</code>というシェーダの置き場所を記したヘッダファイルをCMakeを使用して自動生成しています。その元となるファイルが<code class="highlighter-rouge">common.h.in</code>です。</p>
+
+<p>CMakeを使わずに、このファイルを作る場合には<code class="highlighter-rouge">common.h.in</code>の内容を参考に
+以下のような内容を記述したファイルを作ってください。もしMacをお使いで上記の「Copy Files」の設定をした方は、こちらをスキップしても大丈夫です。</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="cp">#ifndef _COMMON_H_
+#define _COMMON_H_
+</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">SOURCE_DIRECTORY</span> <span class="o">=</span> <span class="s">"(ソースコード用のディレクトリ)"</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">SHADER_DIRECTORY</span> <span class="o">=</span> <span class="s">"(シェーダ用のディレクトリ)"</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">DATA_DIRECTORY</span> <span class="o">=</span> <span class="s">"(データ用のディレクトリ)"</span><span class="p">;</span>
+
+<span class="cp">#endif  // _COMMON_H_</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>サンプルプログラムでは、シェーダのファイルが見つからなければエラーを返すように
+していますので、もし実行が上手くいかない場合にはシェーダの置き場所を確認してみてください。</p>
+
+<h3 id="プログラムの変更点">プログラムの変更点①</h3>
+
+<p>一つ目は使用するOpenGLの種類の設定です。設定項目としては、</p>
+
+<ol>
+  <li>GLFWにOpenGLのバージョンを指定する</li>
+  <li>GLFWにOpenGLのプロファイルの種類を指定する</li>
+  <li>GLFWにOpenGLの互換性を指定する</li>
+</ol>
+
+<p>これらは以下のように設定できます。</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="c1">// OpenGLのバージョン設定 (4を指定すると4.xの中で使用可能なもののうち、最新のものが使われる)</span>
+<span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MAJOR</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+
+<span class="c1">// OpenGLのプロファイル (Core, Compatibility) を設定</span>
+<span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_OPENGL_PROFILE</span><span class="p">,</span> <span class="n">GLFW_OPENGL_CORE_PROFILE</span><span class="p">);</span>
+
+<span class="c1">// OpenGLの関数の新しい関数だけを使う場合は GL_TRUE を指定する (初期値は GL_FALSE)</span>
+<span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_OPENGL_FORWARD_COMPAT</span><span class="p">,</span> <span class="n">GL_TRUE</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>これらの項目はWindowsの場合には特に設定しなくても、最新バージョンのOpenGLでかつ、Compatibility profileを使い、古い関数もサポートする形で初期化されます。一方でMacの場合には、上記の設定をしない場合には、OpenGL 2.1の機能までしか使えないため、設定は必須になります。さらにMacではCore profileのみがサポートされているため、上記の三項目の設定が必要になります。</p>
+
+<h3 id="プログラムの変更点-1">プログラムの変更点②</h3>
+
+<p>上記の設定後、OpenGLのライブラリをロードするコードを追加します。具体的には <code class="highlighter-rouge">glfwMakeContextCurrent</code> を呼び出しの下に以下のコードを追加します。</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="c1">// OpenGL 3.x/4.xの関数をロードする (glfwMakeContextCurrentの後でないといけない)</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">version</span> <span class="o">=</span> <span class="n">gladLoadGL</span><span class="p">(</span><span class="n">glfwGetProcAddress</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">version</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"Failed to load OpenGL 3.x/4.x libraries!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// バージョンを出力する</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"Load OpenGL %d.%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">GLAD_VERSION_MAJOR</span><span class="p">(</span><span class="n">version</span><span class="p">),</span> <span class="n">GLAD_VERSION_MINOR</span><span class="p">(</span><span class="n">version</span><span class="p">));</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p><code class="highlighter-rouge">gladLoadGL</code> 関数はライブラリの読み込みに成功するとOpenGLのバージョンを表す5桁の整数を返してします (OpenGL 4.5なら40005)。もし読み込みに失敗した場合には <code class="highlighter-rouge">0</code> が返ってくるので、これを使って読み込みに成功したかどうかを確認しています。</p>
+
+<p>またその下の <code class="highlighter-rouge">printf</code> では、実際に期待するバージョンのライブラリが読み込めているかどうかを確認しています。特にMacの場合には設定が正しく行えていない場合にバージョン2.1が読み込まれるので注意してください。</p>
+
+<h3 id="プログラムの実行">プログラムの実行</h3>
+
+<p>実際にプログラムをビルドして実行結果を確認してください。上手く実行できると、色付きの立方体が描画されるはずです。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/pages/setup/images/shader_cube.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/pages/setup/images/shader_cube.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+</div>
+
+
+
+    </div>
+  </div>
+
+  <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+  <footer class="site-footer h-card">
+    <data class="u-url" href="//OpenGLCourseJP/"></data>
+
+    <div class="wrapper">
+      <div class="container content">
+        <div class="footer-col-wrapper">
+          <div class="footer-col footer-col-1">
+            <ul class="contact-list">
+              <li class="p-name">OpenGL Course (JP)</li>
+              <li><a class="u-email" href="mailto:tatsy.mail@gmail.com">tatsy.mail@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-2">
+            <ul class="social-media-list">
+              <li>
+                <a href="https://github.com/tatsy">
+                  <svg class="svg-icon">
+                    <use xlink:href="/OpenGLCourseJP/public/minima-social-icons.svg#github"></use>
+                  </svg>
+                  <span class="username">tatsy</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-3">
+            <p>Welcome to OpenGL programming course!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src='/OpenGLCourseJP/public/js/script.js'></script>
+
+</body>
+
+</html>

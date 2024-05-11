@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      GLEWとGLMの設定 &middot; OpenGL Course (JP)
+    
+  </title>
+
+  
+  <link rel="canonical" href="https://tatsy.github.io/OpenGLCourseJP/setup/glew/">
+  
+
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/poole.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/syntax.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://tatsy.github.io/OpenGLCourseJP/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https://tatsy.github.io/OpenGLCourseJP/public/favicon.ico">
+
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/lightbox.min.js"></script>
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://tatsy.github.io/OpenGLCourseJP/atom.xml">
+
+  
+</head>
+
+
+<body>
+
+  <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Welcome to OpenGL programming course!</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/depth_testing/">深度テスト</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/coordinate_transform/">座標変換</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_shader/">シェーダの利用</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_triangle/">三角形を描く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/setup/">環境設定</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/window_resize/">ウィンドウサイズの変更</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP/archive/v1.0.0.zip">Download</a>
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2024. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+  <!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. -->
+  <div class="wrap">
+    <div class="masthead">
+      <div class="container">
+        <h3 class="masthead-title">
+          <a href="/OpenGLCourseJP/" title="Home">OpenGL Course (JP)</a>
+          <small></small>
+        </h3>
+      </div>
+    </div>
+
+    <div class="container content">
+      <div class="page">
+  <h1 class="page-title">GLEWとGLMの設定</h1>
+  <p>(この内容は「 :doc:<code class="highlighter-rouge">../hello_shader/index</code> 」以降に必要になります)</p>
+
+<p>第10回以降のソースコードを動かすためには、最近のOpenGLの機能を扱うためのライブラリが必要です。
+以前はGLEW (OpenGL Extension Wrangler Library) というライブラリを使っていましたが、こちらのライブラリはあまり更新されていないこともあり、2019年度からGLADというライブラリを用いることにいたしました。
+新しい内容を確認したい方は、以下からGLADの準備方法をご確認ください。</p>
+
+<p>:doc:<code class="highlighter-rouge">glad</code></p>
+
+<p>.. raw:: html</p>
+
+<p><span style="color: #f00; font-weight: bold;">以下の内容は過去のものになりますので、ご注意ください</span></p>
+
+<p>このコースではGLEW (OpenGL Extension Wrangler Library) を使ってプログラムを作ります。
+合わせて、ベクトルや行列の計算を簡単に扱うためのライブラリとしてGLM (OpenGL Mathematics) も導入しておきます。</p>
+
+<hr />
+
+<h2 id="windowsの場合">Windowsの場合</h2>
+
+<p>GLEWのインストール
+^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p>GLEWの公式ページからコンパイル済みのライブラリをダウンロードします。</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>GLEWのダウンロードページ</strong></td>
+    </tr>
+    <tr>
+      <td>http://glew.sourceforge.net/</td>
+    </tr>
+    <tr>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>.. image:: ./figures/glew_download_page.jpg</p>
+
+<p>上記のウェブページを開いて、中央にある「Binaries」という文字の右側にある
+「Windows 32-bit and 64-bit」というリンクから、ZIPファイルをダウンロードします。
+ダウンロードしたファイルは「glew-2.0.0-win32.zip」という名前になっているはずです。</p>
+
+<p>ダウンロードが完了したら、ZIPファイルを解凍し、GLFWの時と同様に適当なディレクトリに配置します。
+この講義では、 <strong>C:\Libraries\opengl</strong> のようなディレクトリを作成して、
+その中に置くことを推奨しています。</p>
+
+<p>GLMのインストール
+^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p>GLMも公式のウェブページからライブラリをダウンロードします。</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>GLMのダウンロードページ</strong></td>
+    </tr>
+    <tr>
+      <td>http://glm.g-truc.net</td>
+    </tr>
+    <tr>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>.. image:: ./figures/glm_top_page.jpg</p>
+
+<p>上記のウェブページの左側にある「Downloads」というリンクをクリックします。
+するとダウンロードページに移動するので、その中から最新版である0.9.8.4をダウンロードします (2017年5月11日現在)。
+ダウンロードしたファイルは「glm-0.9.8.4.zip」という名前になっているはずです。</p>
+
+<p>.. image:: ./figures/glm_download_page.jpg</p>
+
+<p>ダウンロードが完了したら、上記と同様にZIPファイルを解凍して適当なディレクトリに配置します。</p>
+
+<p>プロパティシートの更新
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p>初回の準備の際に作成したプロパティシートを更新して、GLEWおよびGLMを使用できるようにします。</p>
+
+<p>設定方法に関しては、:doc:<code class="highlighter-rouge">glfw</code> を参照してください。設定項目は以下の通りです。</p>
+
+<p>VC++ ディレクトリ
+“”””””””””””””””””””””””””””””””””””</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>インクルードディレクトリ</strong></td>
+    </tr>
+    <tr>
+      <td>C:\Libraries\opengl\glew-2.0.0\include  (GLEW)</td>
+    </tr>
+    <tr>
+      <td>C:\Libraries\opengl\glm-0.9.8.4  (GLM)</td>
+    </tr>
+    <tr>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><strong>ライブラリディレクトリ</strong></td>
+    </tr>
+    <tr>
+      <td>C:\Libraries\opengl\glew-2.0.0\lib\Release\Win32 (GLEW, 32bitの場合)</td>
+    </tr>
+    <tr>
+      <td>C:\Libraries\opengl\glew-2.0.0\lib\Release\x64 (GLEW, 64bitの場合)</td>
+    </tr>
+    <tr>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>リンカー
+“”””””””””””””””””””””””””””””””””””</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>追加の依存ファイル</strong></td>
+    </tr>
+    <tr>
+      <td>glew32.lib (GLEW, 32bit, 64bitとも同じ名前)</td>
+    </tr>
+    <tr>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>バイナリファイルの移動
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p>GLEWを使用したサンプルプログラムを実行するためには、GLEWのDLLファイルが参照可能な場所に置いてある必要があります。
+自分のPCで作業をしている場合には、 <strong>C:\Windows\System32</strong> のフォルダに <strong>glew32.dll</strong> をコピーします。</p>
+
+<p>上記のフォルダは管理者権限がないと書き込みができないフォルダになりますので、
+もし大学のPCなど、上記のフォルダにDLLファイルを置くことが難しい場合には、
+DLLを出来上がったプログラムと同じディレクトリに移動して実行してください。</p>
+
+<p>サンプルプログラムの実行
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p>サンプルプログラムは「第12回シェーダの利用」のソースコードを使用してください。</p>
+
+<p>https://github.com/tatsy/OpenGLCourseJP/blob/master/src/010_hello_shader</p>
+
+<p>コンパイルをするまではこれまで通りですが、今回のファイルにはシェーダのソースコードが含まれるので、
+そちらの置き場所を別途設定する必要があります。</p>
+
+<p>サンプルプログラムの中では、 <strong>common.h</strong> というシェーダの置き場所を記したヘッダファイルを
+<strong>CMake</strong> を使用して自動生成しています。その元となるファイルが <strong>common.h.in</strong> です。</p>
+
+<p><strong>CMake</strong> を使わずに、このファイルを作る場合には、<strong>common.h.in</strong> の内容を参考に
+以下のような内容を記述したファイルを作ってください。</p>
+
+<p>.. code-block:: cpp
+  :linenos:</p>
+
+<p>#ifndef <em>COMMON_H</em>
+  #define <em>COMMON_H</em></p>
+
+<p>static const char *SOURCE_DIRECTORY = “(ソースコード用のディレクトリ)”;
+  static const char *SHADER_DIRECTORY = “(シェーダ用のディレクトリ)”;
+  static const char *DATA_DIRECTORY = “(データ用のディレクトリ)”;</p>
+
+<p>#endif  // <em>COMMON_H</em></p>
+
+<p>サンプルプログラムでは、シェーダのファイルが見つからなければエラーを返すように
+していますので、もし実行が上手くいかない場合にはシェーダの置き場所を確認してみてください。</p>
+
+<p>上手く実行できると、色付きの立方体が描画されるはずです。</p>
+
+<p>.. image:: ./figures/shader_cube.jpg
+  :width: 300px</p>
+
+<hr />
+
+<h2 id="macの場合">Macの場合</h2>
+
+<p>Macを使用する場合には、GLEW、GLMともにGitを経由してダウンロードし、GNU Makeあるいは
+CMakeを使用してビルド、インストールを行います。</p>
+
+<p>GLEWのインストール
+^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p><code class="highlighter-rouge">GLEWの公式Webページ &lt;http://glew.sourceforge.net/&gt;</code>_ からソースコードを
+ダウンロードして、ビルドとインストールを行います。ターミナルを開いて、次のコマンドを実行してください。</p>
+
+<p>.. code-block:: shell
+  :linenos:</p>
+
+<p>wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
+  tar xvf glew-2.0.0.tgz
+  cd glew-2.0.0/build
+  cmake ./cmake
+  make
+  sudo make install</p>
+
+<p>上記のコマンドではGLEWのソースコードが圧縮されたTGZファイルをwgetで落としていますが、
+<code class="highlighter-rouge">GLEWの公式ウェブページ &lt;http://glew.sourceforge.net/&gt;</code>_ からダウンロードすることも可能です。これでインストールは完了です。</p>
+
+<p>GLMのインストール
+^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p><code class="highlighter-rouge">GLMのGitHub &lt;https://github.com/g-truc/glm.git&gt;</code>_ からソースコードを
+ダウンロードして、ビルドとインストールを行います。GLEWの時と同様に、
+次のコマンドをターミナルで実行してください。</p>
+
+<p>.. code-block:: shell
+  :linenos:</p>
+
+<p>git clone https://github.com/g-truc/glm.git
+  cd glm
+  mkdir build &amp;&amp; cd build
+  cmake ..
+  make
+  sudo make install</p>
+
+<p>これだけでインストールは完了です。</p>
+
+<p>Xcodeの設定
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p>Xcodeで設定が必要な項目は1箇所で、GLEWのライブラリをリンカフラグに設定するだけです。</p>
+
+<p>Xcodeの画面左側にあるプロジェクト名 (今回の場合は「OpenGLCourse」) をクリックすると、
+設定画面が現れるので、その設定画面の「Build Settings」を開きます。</p>
+
+<p>.. image:: ./figures/project_setting_xcode.jpg</p>
+
+<p>この画面中段くらいにある「Linking」という項目の中から「Other Linker Flag」という項目を選び、
+そこに「-lglew」という文字列を追加します。</p>
+
+<p>これでXcode側の設定は完了です。</p>
+
+<p>サンプルプログラムの実行
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+
+<p>サンプルプログラムは「第12回シェーダの利用」のソースコードを使用してください。</p>
+
+<p>https://github.com/tatsy/OpenGLCourseJP/blob/master/src/012_hello_shader</p>
+
+<p>このサンプルプログラムはシェーダを実行しますので、シェーダの置き場所を別途設定する必要があります。</p>
+
+<p>Xcodeの場合には、ビルドされた実行可能ファイルが、プログラムが置いてあるフォルダとは
+全く別の場所に保存されるので、シェーダファイルのように、実行時に必要になるファイルは、
+実行可能ファイルと同じディレクトリにコピーしてあげる必要があります。</p>
+
+<p>Xcodeには、このコピーを自動化する機能がありますので、その設定を行います。</p>
+
+<p>まず、シェーダを管理するための「Group」を画面左のソースツリー上で作成します。
+ここでいうGroupはファイルを管理するためのフォルダのようなものです。
+追加したいフォルダ(図の中ではOpenGLTest)を右クリックし、メニューの中から
+「New Group」を選びます。そうすると、フォルダの名前を入力できるようになるので、
+その名前を <strong>shaders</strong> などの名前に変更します。</p>
+
+<p>.. image:: ./figures/create_new_group_before.jpg
+  :width: 300px</p>
+
+<p>Groupが作成出来たら、そのGroupを右クリックして、「Add files to “shaders”」を選びます。
+すると、ファイルを選択する画面になるので、シェーダのソースコード (今回の場合には
+render.vertとrender.frag)を選択します。追加が完了すると以下の図のようになるはずです。</p>
+
+<p>.. image:: ./figures/adding_shaders.jpg
+  :width: 300px</p>
+
+<p>Groupにシェーダのソースコードが登録出来たら、次に自動コピーの設定をします。</p>
+
+<p>画面左側のソースツリー上でプロジェクト名をクリックし、中央上部にある項目の中から、
+「Build Phases」を選びます。すると画面下部に「Copy Files」という項目があるので、
+その項目を以下の図のように設定します。</p>
+
+<p>.. image:: ./figures/after_adding_shaders.jpg</p>
+
+<p>ファイルを新規に追加するときには、下側にある「＋」ボタンを押すと現れるダイアログ上で、
+<strong>shaders</strong> に追加したシェーダのソースコードを選べばOKです。</p>
+
+<p>これで、サンプルプログラムを実行するための準備は完了ですので、
+実際にプログラムをビルドして実行結果を確認してください。</p>
+
+<p>上手く実行できると、色付きの立方体が描画されるはずです。</p>
+
+<p>.. image:: ./figures/shader_cube.jpg
+  :width: 300px</p>
+
+<p>サンプルプログラムでは、シェーダのソースコードが見つからない場合にエラーを出すように
+していますので、もしシェーダが見つからない場合には「Copy Files」の設定項目を確認してみてください。</p>
+
+</div>
+
+
+
+    </div>
+  </div>
+
+  <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+  <footer class="site-footer h-card">
+    <data class="u-url" href="//OpenGLCourseJP/"></data>
+
+    <div class="wrapper">
+      <div class="container content">
+        <div class="footer-col-wrapper">
+          <div class="footer-col footer-col-1">
+            <ul class="contact-list">
+              <li class="p-name">OpenGL Course (JP)</li>
+              <li><a class="u-email" href="mailto:tatsy.mail@gmail.com">tatsy.mail@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-2">
+            <ul class="social-media-list">
+              <li>
+                <a href="https://github.com/tatsy">
+                  <svg class="svg-icon">
+                    <use xlink:href="/OpenGLCourseJP/public/minima-social-icons.svg#github"></use>
+                  </svg>
+                  <span class="username">tatsy</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-3">
+            <p>Welcome to OpenGL programming course!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src='/OpenGLCourseJP/public/js/script.js'></script>
+
+</body>
+
+</html>

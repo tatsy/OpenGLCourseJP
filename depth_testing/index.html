@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      深度テスト &middot; OpenGL Course (JP)
+    
+  </title>
+
+  
+  <link rel="canonical" href="https://tatsy.github.io/OpenGLCourseJP/depth_testing/">
+  
+
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/poole.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/syntax.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://tatsy.github.io/OpenGLCourseJP/public/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://tatsy.github.io/OpenGLCourseJP/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https://tatsy.github.io/OpenGLCourseJP/public/favicon.ico">
+
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/OpenGLCourseJP/public/js/lightbox.min.js"></script>
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://tatsy.github.io/OpenGLCourseJP/atom.xml">
+
+  
+</head>
+
+
+<body>
+
+  <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Welcome to OpenGL programming course!</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item active" href="https://tatsy.github.io/OpenGLCourseJP/depth_testing/">深度テスト</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/coordinate_transform/">座標変換</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_shader/">シェーダの利用</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/hello_triangle/">三角形を描く</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/setup/">環境設定</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/window_resize/">ウィンドウサイズの変更</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="https://tatsy.github.io/OpenGLCourseJP/open_window/">ウィンドウを開く</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP/archive/v1.0.0.zip">Download</a>
+    <a class="sidebar-nav-item" href="https://github.com/tatsy/OpenGLCourseJP">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2024. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+  <!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. -->
+  <div class="wrap">
+    <div class="masthead">
+      <div class="container">
+        <h3 class="masthead-title">
+          <a href="/OpenGLCourseJP/" title="Home">OpenGL Course (JP)</a>
+          <small></small>
+        </h3>
+      </div>
+    </div>
+
+    <div class="container content">
+      <div class="page">
+  <h1 class="page-title">
+    深度テスト
+    
+
+
+  </h1>
+  <h2 id="深度テストとは">深度テストとは？</h2>
+
+<p>前回、第4回の最後で描画した結果は立方体の面の前後関係が間違ったものでした。
+これを正しい順番に直す処理が深度テストです。</p>
+
+<p>深度テストは後に示す通り、OpenGL上で行うのは非常に簡単です。ですが、
+ここでは、その深度テストの方法について簡単に触れておきます。</p>
+
+<hr />
+
+<h2 id="z-バッファ法">Z-バッファ法</h2>
+
+<p>深度テストのやり方は1通りではなく、複数のやり方が提案されています。OpenGLで採用されている
+深度テストの方法はこれから説明するZ-バッファ法ですが、それ以外にも有名なものにレイトレースや
+スキャンライン法などの方法があります。興味のある人はこちらについても調べてみてください。</p>
+
+<p>さて、肝心のZ-バッファ法のやり方ですが、これは非常にシンプルな方法です。
+これまでは三角形を描画するときに、三角形の色を画素に保存していました。
+この描画を行っていた画素情報の格納先をカラーバッファと呼びます。
+それとは対照的に、色ではなく深度の値を保存しておくバッファをZ-バッファあるいは深度バッファと呼びます。</p>
+
+<p>Z-バッファ法を使った深度テストではカラーバッファ以外に上記のZ-バッファを用意しておき、
+三角形を描画するたびに、その三角形の各画素に対応する場所がどのくらいの深度値を持つのかを保存しておきます。
+新しい三角形が描画されるときには、その時に画素に格納されている深度の値と、これから描画される三角形の
+深度とを比較して、より手前にあれば描画、そうでなければ描画しないということを行います。</p>
+
+<p>こうすることで、最終的には一番手前にある三角形だけが描画されることになります。
+なお、このように手前にある三角形により後ろにある三角形を隠して描画することを
+専門的には「隠面消去」と呼びます。</p>
+
+<hr />
+
+<h2 id="openglでの深度テスト">OpenGLでの深度テスト</h2>
+
+<p>OpenGLで深度テストをするための方法はいたって簡単です。
+コードの変更箇所は主に2つあります。</p>
+
+<p>まずは、深度テストの有効化です。これは<code class="highlighter-rouge">glEnable</code>関数に<code class="highlighter-rouge">GL_DEPTH_TEST</code>を渡すことで実現できます。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEPTH_TEST</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>上記の呼び出しをOpenGLの初期化コード(このコースでは<code class="highlighter-rouge">initializeGL</code>関数)の中で呼ぶだけです。</p>
+
+<p>続いて、描画をするときのZ-バッファの初期化が必要です。これまで<code class="highlighter-rouge">glClear</code>関数には
+<code class="highlighter-rouge">GL_COLOR_BUFFER_BIT</code> という定数が渡されていましたが、これがカラーバッファの初期化に対応しています。
+Z-バッファを初期化するためには、これに加えて<code class="highlighter-rouge">GL_DEPTH_BUFFER_BIT</code>という定数を渡す必要があるのですが、
+この場合には、<code class="highlighter-rouge">GL_COLOR_BUFFER_BIT</code>と<code class="highlighter-rouge">GL_DEPTH_BUFFER_BIT</code>のORを取って</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span> <span class="o">|</span> <span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>のように呼び出してあげます。</p>
+
+<p>前回のコードに上記の書き換えを加えることで、下のような正しい画像が表示されるようになるはずです。</p>
+
+<div class="lightbox-container">
+  <a class="lightbox-link" href="/OpenGLCourseJP/assets/images/depth_testing/cube.jpg" data-lightbox="images-1" data-title="">
+    <img src="/OpenGLCourseJP/assets/images/depth_testing/cube.jpg" alt="" style="" />
+  </a>
+  
+  <span class="lightbox-caption">
+    
+
+  </span>
+  
+</div>
+
+
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+  <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+  <footer class="site-footer h-card">
+    <data class="u-url" href="//OpenGLCourseJP/"></data>
+
+    <div class="wrapper">
+      <div class="container content">
+        <div class="footer-col-wrapper">
+          <div class="footer-col footer-col-1">
+            <ul class="contact-list">
+              <li class="p-name">OpenGL Course (JP)</li>
+              <li><a class="u-email" href="mailto:tatsy.mail@gmail.com">tatsy.mail@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-2">
+            <ul class="social-media-list">
+              <li>
+                <a href="https://github.com/tatsy">
+                  <svg class="svg-icon">
+                    <use xlink:href="/OpenGLCourseJP/public/minima-social-icons.svg#github"></use>
+                  </svg>
+                  <span class="username">tatsy</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-3">
+            <p>Welcome to OpenGL programming course!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src='/OpenGLCourseJP/public/js/script.js'></script>
+
+</body>
+
+</html>
