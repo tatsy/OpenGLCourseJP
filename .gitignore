@@ -8,6 +8,9 @@ docs/doctrees
 docs/source/materials/*
 
 *.o
+*.d
+main_exe
+main_exe.d
 
 .DS_Store
 common.h

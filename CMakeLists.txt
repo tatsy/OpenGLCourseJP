@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.18.0 FATAL_ERROR)
 project(OpenGLCourseJP)
 
 if (WIN32)
@@ -12,7 +12,7 @@ include(Macros)
 # ------------------------------------------------------------------------------
 # Set build options
 # ------------------------------------------------------------------------------
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (MSVC)
   add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
