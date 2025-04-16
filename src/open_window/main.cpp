@@ -1,9 +1,10 @@
-#include <cstdio>
+#include <iostream>
+#include <string>
 #include <GLFW/glfw3.h>
 
-static const int WIN_WIDTH = 500;                // ウィンドウの幅 / Window width
-static const int WIN_HEIGHT = 500;               // ウィンドウの高さ / Window height
-static const char *WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
+static const int WIN_WIDTH = 500;                      // ウィンドウの幅 / Window width
+static const int WIN_HEIGHT = 500;                     // ウィンドウの高さ / Window height
+static const std::string WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
 
 // ユーザ定義のOpenGLの初期化
 // User-define OpenGL initialization
@@ -25,17 +26,17 @@ int main(int argc, char **argv) {
     // OpenGLを初期化する
     // Initialize OpenGL
     if (glfwInit() == GLFW_FALSE) {
-        fprintf(stderr, "Initialization failed!\n");
-        return 1;
+        std::cerr << "Initialization failed!" << std::endl;
+        std::exit(1);
     }
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, NULL, NULL);
-    if (window == NULL) {
-        fprintf(stderr, "Window creation failed!\n");
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(), nullptr, nullptr);
+    if (!window) {
+        std::cerr << "Window creation failed!" << std::endl;
         glfwTerminate();
-        return 1;
+        std::exit(1);
     }
 
     // OpenGLの描画対象にwindowを指定

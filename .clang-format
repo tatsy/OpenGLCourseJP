@@ -1,6 +1,6 @@
 BasedOnStyle: Google
 
-ColumnLimit: 0
+ColumnLimit: -1
 IndentWidth: 4
 Standard: Cpp11
 AccessModifierOffset: -4

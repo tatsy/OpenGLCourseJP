@@ -1,15 +1,16 @@
-#include <cstdio>
-#include <cmath>
+#include <iostream>
+#include <string>
+#include <format>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 
 static int WIN_WIDTH = 500;                      // ウィンドウの幅
 static int WIN_HEIGHT = 500;                     // ウィンドウの高さ
-static const char *WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル
+static const std::string WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル
 
-static const double fps = 30.0;  // FPS
-static float theta = 0.0f;
+static const double FPS = 30.0;  // FPS
+static float ROT_ANGLE = 0.0f;
 
 // 立方体の頂点位置
 // Vertex positions of a cube
@@ -92,7 +93,7 @@ void paintGL() {
     // Coordinate transformation
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    gluPerspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 1.0f, 10.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -104,8 +105,8 @@ void paintGL() {
     // First cube
     glPushMatrix();
     glTranslatef(-1.0f, 0.0f, 0.0f);
-    glRotatef(theta, 0.0f, 1.0f, 0.0f);
-    glRotatef(theta * 0.5f, 1.0f, 0.0f, 0.0f);
+    glRotatef(ROT_ANGLE, 0.0f, 1.0f, 0.0f);
+    glRotatef(ROT_ANGLE * 0.5f, 1.0f, 0.0f, 0.0f);
     glScalef(0.5f, 0.5f, 0.5f);
 
     drawCube();
@@ -115,8 +116,8 @@ void paintGL() {
     // Second cube
     glPushMatrix();
     glTranslatef(1.0f, 0.0f, 0.0f);
-    glRotated(2.0f * theta, 0.0f, 1.0f, 0.0f);
-    glRotatef(theta, 1.0f, 0.0f, 0.0f);
+    glRotatef(2.0f * ROT_ANGLE, 0.0f, 1.0f, 0.0f);
+    glRotatef(ROT_ANGLE, 1.0f, 0.0f, 0.0f);
     glScalef(0.5f, 0.5f, 0.5f);
 
     drawCube();
@@ -148,25 +149,25 @@ void resizeGL(GLFWwindow *window, int width, int height) {
 // アニメーションのためのアップデート
 // Update for animating object
 void animate() {
-    theta += 1.0f;  // 1度だけ回転 / Rotate by 1 degree of angle
+    ROT_ANGLE += 1.0f;  // 1度だけ回転 / Rotate by 1 degree of angle
 }
 
 int main(int argc, char **argv) {
     // OpenGLを初期化する
     // OpenGL initialization
     if (glfwInit() == GL_FALSE) {
-        fprintf(stderr, "Initialization failed!\n");
-        return 1;
+        std::cerr << "Initialization failed!" << std::endl;
+        std::exit(1);
     }
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
-    if (window == NULL) {
-        fprintf(stderr, "Window creation failed!\n");
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(),
+                                          nullptr, nullptr);
+    if (!window) {
+        std::cerr << "Window creation failed!" << std::endl;
         glfwTerminate();
-        return 1;
+        std::exit(1);
     }
 
     // OpenGLの描画対象にwindowを指定
@@ -191,13 +192,12 @@ int main(int argc, char **argv) {
 
         // 経過時間が 1 / FPS 以上なら描画する
         // Perform drawing if elapsed time is more than one over FPS
-        if (currentTime - prevTime >= 1.0 / fps) {
+        if (currentTime - prevTime >= 1.0 / FPS) {
             // タイトルにFPSを表示
             // Show FPS in title
             double realFps = 1.0 / (currentTime - prevTime);
-            char winTitle[256];
-            sprintf(winTitle, "%s (%.3f)", WIN_TITLE, realFps);
-            glfwSetWindowTitle(window, winTitle);
+            const std::string winTitle = std::format("{} (FPS: {:.3f})", WIN_TITLE, realFps);
+            glfwSetWindowTitle(window, winTitle.c_str());
 
             // 描画
             // Draw

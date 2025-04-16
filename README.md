@@ -1,14 +1,8 @@
-<div align="center">
+![logo](logo.png | width=500)
 
-<img src="logo.png" width="500px" />
-
-<!-- [![Travis CI](https://travis-ci.org/tatsy/OpenGLCourseJP.svg?branch=master)](https://travis-ci.org/tatsy/OpenGLCourseJP) -->
 [![Windows CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml)
 [![MacOS CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml)
 [![Ubuntu CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/ubuntu.yaml)
-[![GitHub Pages](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/jekyll.yaml)
-
-</div>
 
 ## 1. 環境構築 (Environment setup)
 
@@ -127,6 +121,6 @@
 
 - **コード/Code:** アークボール操作 (Arcball control) [![](https://img.shields.io/badge/Code-C++/Python-green.svg)](https://github.com/tatsy/OpenGLCourseJP/tree/master/src/arcball_control)
 
-## Copyright
+## License
 
-2018-2023 (c) Tatsuya Yatagawa
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), 2018-2025 (c) Tatsuya Yatagawa
