@@ -1,0 +1,56 @@
+[tool.poetry]
+name = "opengl-jp"
+version = "0.1.0"
+description = ""
+authors = ["Tatsuya Yatagawa <tatsy.mail@gmail.com>"]
+license = "CC BY-NC-SA 4.0"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "~=3.11.0"
+numpy = "^2.2.4"
+pyrr = "^0.10.3"
+glfw = "==2.5.0"
+PyOpenGL = "==3.1.5"
+pillow = "^11.2.1"
+open3d = "^0.19.0"
+
+[tool.poetry.group.dev.dependencies]
+flake8-pyproject = "^1.2.3"
+yapf = "^0.43.0"
+mypy = "^1.15.0"
+isort = "^6.0.1"
+pytest = "^8.3.5"
+
+[tool.isort]
+py_version = 311
+length_sort = true
+line_length = 120
+no_sections = true
+
+[tool.mypy]
+python_version = "3.11"
+follow_imports = "silent"
+disallow_any_generics = true
+strict_optional = true
+check_untyped_defs = true
+allow_redefinition = true
+
+[tool.flake8]
+max-line-length = 120
+ignore = "Q000,E127,E203,F405,W503,W504"
+
+[tool.yapf]
+BASED_ON_STYLE = "pep8"
+COLUMN_LIMIT = 120
+INDENT_WIDTH = 4
+
+ALIGN_CLOSING_BRACKET_WITH_VISUAL_INDENT = true
+CONTINUATION_ALIGN_STYLE = "SPACE"
+COALESCE_BRACKETS = false
+DEDENT_CLOSING_BRACKETS = false
+DISABLE_ENDING_COMMA_HEURISTIC = false
+INDENT_DICTIONARY_VALUE = true
+ALLOW_SPLIT_BEFORE_DICT_VALUE = false
+SPLIT_ALL_COMMA_SEPARATED_VALUES = false
