@@ -1,4 +1,4 @@
-![logo](logo.png | width=500)
+<img src="logo.png" alt="logo" width="500" />
 
 [![Windows CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/windows.yaml)
 [![MacOS CI](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml/badge.svg)](https://github.com/tatsy/OpenGLCourseJP/actions/workflows/macos.yaml)
