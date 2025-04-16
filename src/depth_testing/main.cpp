@@ -1,12 +1,12 @@
-#include <cstdio>
-#include <cmath>
+#include <iostream>
+#include <string>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要 / Required to use GLU
 #include <GLFW/glfw3.h>
 
-static const int WIN_WIDTH = 500;                // ウィンドウの幅 / Window width
-static const int WIN_HEIGHT = 500;               // ウィンドウの高さ / Window height
-static const char *WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
+static const int WIN_WIDTH = 500;                      // ウィンドウの幅 / Window width
+static const int WIN_HEIGHT = 500;                     // ウィンドウの高さ / Window height
+static const std::string WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
 
 // 立方体の頂点位置
 // Vertex positions of a cube
@@ -114,18 +114,17 @@ int main(int argc, char **argv) {
     // OpenGLを初期化する
     // OpenGL initialization
     if (glfwInit() == GLFW_FALSE) {
-        fprintf(stderr, "Initialization failed!\n");
-        return 1;
+        std::cerr << "Initialization failed!" << std::endl;
+        std::exit(1);
     }
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
-    if (window == NULL) {
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(), nullptr, nullptr);
+    if (!window) {
+        std::cerr << "Window creation failed!" << std::endl;
         glfwTerminate();
-        fprintf(stderr, "Window creation failed!\n");
-        return 1;
+        std::exit(1);
     }
 
     // OpenGLの描画対象にwindowを指定
@@ -138,7 +137,7 @@ int main(int argc, char **argv) {
 
     // メインループ
     // Main loop
-    while (glfwWindowShouldClose(window) == GL_FALSE) {
+    while (glfwWindowShouldClose(window) == GLFW_FALSE) {
         // 描画 / Draw
         paintGL();
 
