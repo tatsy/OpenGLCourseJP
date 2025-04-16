@@ -1,9 +1,8 @@
-#include <cmath>
-#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+#include <format>
 
 #define GLAD_GL_IMPLEMENTATION
 #include <glad/gl.h>
@@ -23,9 +22,9 @@
 // Config file storing image locations etc.
 #include "common.h"
 
-static int WIN_WIDTH = 500;                      // ウィンドウの幅 / Window width
-static int WIN_HEIGHT = 500;                     // ウィンドウの高さ / Window height
-static const char *WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
+static int WIN_WIDTH = 500;                            // ウィンドウの幅 / Window width
+static int WIN_HEIGHT = 500;                           // ウィンドウの高さ / Window height
+static const std::string WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
 
 // シェーダ言語のソースファイル / Shader source files
 static std::string VERT_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.vert";
@@ -33,12 +32,15 @@ static std::string FRAG_SHADER_FILE = std::string(SHADER_DIRECTORY) + "render.fr
 
 // 頂点クラス
 // Vertex class
-struct Vertex {
-    Vertex(const glm::vec3 &position_, const glm::vec3 &color_)
-        : position(position_)
-        , color(color_) {
+class Vertex {
+public:
+    Vertex() = default;
+    Vertex(const glm::vec3 &position, const glm::vec3 &color)
+        : position(position)
+        , color(color) {
     }
 
+public:
     glm::vec3 position;
     glm::vec3 color;
 };
@@ -124,17 +126,17 @@ void initVAO() {
     // 頂点バッファに対する属性情報の設定
     // Setup attributes for vertex buffer object
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          reinterpret_cast<void *>(offsetof(Vertex, position)));
 
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, color));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, color)));
 
     // 頂点番号バッファオブジェクトの作成
     // Create index buffer object
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
-                 indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // VAOをOFFにしておく
     // Temporarily disable VAO
@@ -156,11 +158,11 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     // ファイルを開く
     // Open source file
     reader.open(filename.c_str(), std::ios::in);
-    if (!reader.is_open()) {
+    if (reader.fail()) {
         // ファイルを開けなかったらエラーを出して終了
         // Finish with error message if source file could not be opened
-        fprintf(stderr, "Failed to load a shader: %s\n", filename.c_str());
-        exit(1);
+        std::cerr << std::format("Failed to load a shader: {}", filename) << std::endl;
+        std::exit(1);
     }
 
     // ファイルをすべて読んで変数に格納
@@ -175,8 +177,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
 
         // 先頭からファイルサイズ分を読んでコードの変数に格納
         // Load entire file and copy to "code" variable
-        code.assign(std::istreambuf_iterator<char>(reader),
-                    std::istreambuf_iterator<char>());
+        code.assign(std::istreambuf_iterator<char>(reader), std::istreambuf_iterator<char>());
     }
 
     // ファイルを閉じる
@@ -186,7 +187,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     // コードのコンパイル
     // Compile a source code
     const char *codeChars = code.c_str();
-    glShaderSource(shaderId, 1, &codeChars, NULL);
+    glShaderSource(shaderId, 1, &codeChars, nullptr);
     glCompileShader(shaderId);
 
     // コンパイルの成否を判定する
@@ -196,7 +197,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     if (compileStatus == GL_FALSE) {
         // コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
         // Terminate with error message if compilation failed
-        fprintf(stderr, "Failed to compile a shader!\n");
+        std::cerr << "Failed to compile a shader!" << std::endl;
 
         // エラーメッセージの長さを取得する
         // Get length of error message
@@ -212,10 +213,10 @@ GLuint compileShader(const std::string &filename, GLuint type) {
 
             // エラーメッセージとソースコードの出力
             // Print error message and corresponding source code
-            fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
-            fprintf(stderr, "%s\n", code.c_str());
+            std::cerr << std::format("[ ERROR ] {}", errMsg) << std::endl;
+            std::cerr << code << std::endl;
         }
-        exit(1);
+        std::exit(1);
     }
 
     return shaderId;
@@ -243,7 +244,7 @@ GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fSh
     if (linkState == GL_FALSE) {
         // リンクに失敗したらエラーメッセージを表示して終了
         // Terminate with error message if link is failed
-        fprintf(stderr, "Failed to link shaders!\n");
+        std::cerr << "Failed to link shaders!" << std::endl;
 
         // エラーメッセージの長さを取得する
         // Get length of error message
@@ -259,9 +260,9 @@ GLuint buildShaderProgram(const std::string &vShaderFile, const std::string &fSh
 
             // エラーメッセージを出力する
             // Print error message
-            fprintf(stderr, "[ ERROR ] %s\n", errMsg.c_str());
+            std::cerr << std::format("[ ERROR ] {}", errMsg) << std::endl;
         }
-        exit(1);
+        std::exit(1);
     }
 
     // シェーダを無効化した後にIDを返す
@@ -305,8 +306,7 @@ void paintGL() {
 
     // 座標の変換
     // Coordinate transformation
-    glm::mat4 projMat = glm::perspective(glm::radians(45.0f),
-                                         (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    glm::mat4 projMat = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 1.0f, 100.0f);
 
     glm::mat4 viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // 視点の位置
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
@@ -386,12 +386,11 @@ int main(int argc, char **argv) {
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
-    if (window == NULL) {
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(), nullptr, nullptr);
+    if (!window) {
+        std::cerr << "Window creation failed!" << std::endl;
         glfwTerminate();
-        fprintf(stderr, "Window creation failed!\n");
-        return 1;
+        std::exit(1);
     }
 
     // OpenGLの描画対象にwindowを指定
@@ -402,12 +401,14 @@ int main(int argc, char **argv) {
     // Load OpenGL 3.x/4.x methods (must be loaded after "glfwMakeContextCurrent")
     const int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0) {
-        fprintf(stderr, "Failed to load OpenGL 3.x/4.x libraries!\n");
-        return 1;
+        std::cerr << "Failed to load OpenGL 3.x/4.x libraries!" << std::endl;
+        std::exit(1);
     }
 
     // バージョンを出力する / Check OpenGL version
-    printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+    const int majorVer = GLAD_VERSION_MAJOR(version);
+    const int minorVer = GLAD_VERSION_MINOR(version);
+    std::cout << std::format("Load OpenGL {:d}.{:d}", majorVer, minorVer) << std::endl;
 
     // ウィンドウのリサイズを扱う関数の登録
     // Register a callback function for window resizing

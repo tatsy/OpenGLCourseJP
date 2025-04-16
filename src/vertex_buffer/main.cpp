@@ -1,5 +1,7 @@
-#include <cstdio>
+#include <iostream>
+#include <string>
 #include <vector>
+#include <format>
 
 #define GLAD_GL_IMPLEMENTATION
 #include <glad/gl.h>
@@ -8,9 +10,9 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-static int WIN_WIDTH = 500;                      // ウィンドウの幅 / Window width
-static int WIN_HEIGHT = 500;                     // ウィンドウの高さ / Window height
-static const char *WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
+static int WIN_WIDTH = 500;                            // ウィンドウの幅 / Window width
+static int WIN_HEIGHT = 500;                           // ウィンドウの高さ / Window height
+static const std::string WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
 
 // 頂点クラス
 // Vertex class
@@ -96,15 +98,13 @@ void initializeGL() {
     // Create vertex buffer object
     glGenBuffers(1, &vertexBufferId);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(),
-                 vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
     // 頂点番号バッファオブジェクトの作成
     // Create index buffer object
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
-                 indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 }
 
 // ユーザ定義のOpenGL描画
@@ -138,10 +138,10 @@ void paintGL() {
     // 頂点情報の詳細を設定
     // Setup details for vertex array
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, sizeof(Vertex), (void *)offsetof(Vertex, position));
+    glVertexPointer(3, GL_FLOAT, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, position)));
 
     glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(3, GL_FLOAT, sizeof(Vertex), (void *)offsetof(Vertex, color));
+    glColorPointer(3, GL_FLOAT, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, color)));
 
     // 三角形の描画
     // Draw triangles
@@ -192,18 +192,17 @@ int main(int argc, char **argv) {
     // OpenGLを初期化する
     // OpenGL initialization
     if (glfwInit() == GLFW_FALSE) {
-        fprintf(stderr, "Initialization failed!\n");
-        return 1;
+        std::cerr << "Initialization failed!" << std::endl;
+        std::exit(1);
     }
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
-    if (window == NULL) {
-        fprintf(stderr, "Window creation failed!\n");
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(), nullptr, nullptr);
+    if (!window) {
+        std::cerr << "Window creation failed!" << std::endl;
         glfwTerminate();
-        return 1;
+        std::exit(1);
     }
 
     // OpenGLの描画対象にwindowを指定
@@ -213,12 +212,14 @@ int main(int argc, char **argv) {
     // OpenGL 3.x/4.xの関数をロードする (glfwMakeContextCurrentの後でないといけない)
     const int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0) {
-        fprintf(stderr, "Failed to load OpenGL 3.x/4.x libraries!\n");
-        return 1;
+        std::cerr << "Failed to load OpenGL 3.x/4.x libraries!" << std::endl;
+        std::exit(1);
     }
 
     // バージョンを出力する / Check OpenGL version
-    printf("Load OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+    const int majorVer = GLAD_VERSION_MAJOR(version);
+    const int minorVer = GLAD_VERSION_MINOR(version);
+    std::cout << std::format("Load OpenGL {:d}.{:d}", majorVer, minorVer) << std::endl;
 
     // ウィンドウのリサイズを扱う関数の登録
     // Register a callback function for window resizing
