@@ -1,6 +1,7 @@
-#include <cstdio>
 #include <cmath>
+#include <iostream>
 #include <string>
+#include <format>
 
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要 / Required to use GLU
 #include <GLFW/glfw3.h>
@@ -12,11 +13,11 @@
 // Config file storing image locations etc.
 #include "common.h"
 
-static int WIN_WIDTH = 500;                      // ウィンドウの幅 / Window width
-static int WIN_HEIGHT = 500;                     // ウィンドウの高さ / Window height
-static const char *WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
+static int WIN_WIDTH = 500;                            // ウィンドウの幅 / Window width
+static int WIN_HEIGHT = 500;                           // ウィンドウの高さ / Window height
+static const std::string WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル / Window title
 
-static const double PI = 4.0 * atan(1.0);  // 円周率の定義 / Circular constant
+static const double PI = 4.0 * std::atan(1.0);  // 円周率の定義 / Circular constant
 static float theta = 0.0f;
 
 static const std::string TEX_FILE = std::string(DATA_DIRECTORY) + "checker.png";
@@ -59,10 +60,10 @@ void initializeGL() {
     // テクスチャの設定
     // Setup texture
     int texWidth, texHeight, channels;
-    unsigned char *bytes = stbi_load(TEX_FILE.c_str(), &texWidth, &texHeight, &channels, STBI_rgb_alpha);
+    uint8_t *bytes = stbi_load(TEX_FILE.c_str(), &texWidth, &texHeight, &channels, STBI_rgb_alpha);
     if (!bytes) {
-        fprintf(stderr, "Failed to load image file: %s\n", TEX_FILE.c_str());
-        exit(1);
+        std::cerr << std::format("Failed to load image file: {}", TEX_FILE) << std::endl;
+        std::exit(1);
     }
 
     // テクスチャの生成と有効化
@@ -77,8 +78,7 @@ void initializeGL() {
 
     // MIP mapを用いたテクスチャの転送
     // Texture transfer with MIP mapping
-    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA8, texWidth, texHeight,
-                      GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA8, texWidth, texHeight, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
     // テクスチャの画素値参照方法の設定 (MIP mapなし)
     // Texture filtering operations (w/o MIP map)
@@ -179,18 +179,17 @@ int main(int argc, char **argv) {
     // OpenGLを初期化する
     // OpenGL initialization
     if (glfwInit() == GLFW_FALSE) {
-        fprintf(stderr, "Initialization failed!\n");
-        return 1;
+        std::cerr << "Initialization failed!" << std::endl;
+        std::exit(1);
     }
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
-    if (window == NULL) {
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(), nullptr, nullptr);
+    if (!window) {
+        std::cerr << "Window creation failed!" << std::endl;
         glfwTerminate();
-        fprintf(stderr, "Window creation failed!\n");
-        return 1;
+        std::exit(1);
     }
 
     // OpenGLの描画対象にWindowを追加
