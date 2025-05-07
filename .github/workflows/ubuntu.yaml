@@ -8,10 +8,10 @@ on:
 
 env:
   BUILD_TYPE: Release
-  GNU_CC: gcc-10
-  GNU_CXX: g++-10
-  LLVM_CC: clang-11
-  LLVM_CXX: clang++-11
+  GNU_CC: gcc
+  GNU_CXX: g++
+  LLVM_CC: clang
+  LLVM_CXX: clang++
 
 jobs:
   ubuntu:
@@ -22,7 +22,7 @@ jobs:
         compiler: [gcc, clang]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.MY_PAT }}
@@ -48,7 +48,7 @@ jobs:
       - name: Install GLFW3
         run: |
           git clone https://github.com/glfw/glfw.git
-          cd glfw && git checkout 3.3.4
+          cd glfw && git checkout 3.4
           mkdir build && cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           make -j2 && sudo make install

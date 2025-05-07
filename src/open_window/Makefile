@@ -18,7 +18,7 @@ DEPS_DBG    := $(patsubst %.cpp, %.debug.d, $(SRC))
 
 # コンパイラ引数の設定 (インクルード・ディレクトリ等)
 CFLAGS      := -Wall -MP -MMD -I/usr/include -I/usr/local/include -I/opt/homebrew/include -I../../support -DGL_SILENCE_DEPRECATION
-CXXFLAGS    := -std=c++11 $(CFLAGS)
+CXXFLAGS    := -std=c++20 $(CFLAGS)
 CFLAGS_DBG  := -g -O0
 
 # フレームワークの設定 (Mac特有のもの)
