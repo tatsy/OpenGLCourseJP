@@ -5,8 +5,8 @@
 #define GLFW_INCLUDE_GLU  // GLUライブラリを使用するのに必要
 #include <GLFW/glfw3.h>
 
-static int WIN_WIDTH = 500;                      // ウィンドウの幅
-static int WIN_HEIGHT = 500;                     // ウィンドウの高さ
+static int WIN_WIDTH = 500;                            // ウィンドウの幅
+static int WIN_HEIGHT = 500;                           // ウィンドウの高さ
 static const std::string WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル
 
 static const double FPS = 30.0;  // FPS
@@ -162,8 +162,7 @@ int main(int argc, char **argv) {
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(),
-                                          nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE.c_str(), nullptr, nullptr);
     if (!window) {
         std::cerr << "Window creation failed!" << std::endl;
         glfwTerminate();
