@@ -27,17 +27,17 @@ jobs:
           submodules: true
           token: ${{ secrets.MY_PAT }}
 
-      - name: Install GNU C/C++ Compiler
-        if: ${{ matrix.compiler == 'gcc' }}
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y $GNU_CC $GNU_CXX
+      # - name: Install GNU C/C++ Compiler
+      #   if: ${{ matrix.compiler == 'gcc' }}
+      #   run: |
+      #     sudo apt-get update -y
+      #     sudo apt-get install -y $GNU_CC $GNU_CXX
 
-      - name: Install LLVM Clang
-        if: ${{ matrix.compiler == 'clang' }}
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y $LLVM_CC $LLVM_CXX
+      # - name: Install LLVM Clang
+      #   if: ${{ matrix.compiler == 'clang' }}
+      #   run: |
+      #     sudo apt-get update -y
+      #     sudo apt-get install -y $LLVM_CC $LLVM_CXX
 
       - name: Install OpenGL envs
         run: |
