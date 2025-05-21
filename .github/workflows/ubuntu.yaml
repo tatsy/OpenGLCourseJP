@@ -44,7 +44,7 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y libglu1-mesa-dev mesa-common-dev
           sudo apt-get install -y libxmu-dev libxi-dev libxrandr-dev libxinerama-dev libxcursor-dev
-          sudo apt-get install -y libwayland-dev libwayland-dev wayland-protocols
+          sudo apt-get install -y libwayland-dev libwayland-dev wayland-protocols xkbcommon-dev
 
       - name: Install GLFW3
         run: |
@@ -57,7 +57,7 @@ jobs:
       - name: Install GLM
         run: |
           git clone https://github.com/g-truc/glm.git
-          cd glm && git switch -c 0.9.9.8
+          cd glm && git switch -c 1.0.1
           sudo cp -R glm /usr/local/include
 
       - name: CMake Build
