@@ -32,7 +32,7 @@ jobs:
       - name: Install GLM
         run: |
           git clone https://github.com/g-truc/glm.git
-          cd glm && git switch -c 0.9.9.8
+          cd glm && git switch -c 1.0.1
           cd .. && Copy-Item glm "C:/Program Files/glm/" -Recurse
 
       - name: CMake Build
