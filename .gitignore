@@ -1,11 +1,11 @@
-.idea/*
-cmake-build-debug/*
-cmake-build-release/*
-.vscode/*
+.idea
+cmake-build-debug
+cmake-build-release
+.vscode
 
-build/*
+build
 docs/doctrees
-docs/source/materials/*
+docs/source/materials
 
 *.o
 *.d
