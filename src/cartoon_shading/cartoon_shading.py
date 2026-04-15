@@ -1,43 +1,45 @@
 # MacOS Big Sur以降で動かすための設定
 # Special settings for working on MacOS Big Sur or later
-import platform
 import ctypes.util
+import platform
 
 uname = platform.uname()
-if uname.system == "Darwin" and uname.release >= "20.":
+if uname.system == 'Darwin' and uname.release >= '20.':
     _find_library = ctypes.util.find_library
 
     def find_library(name):
-        if name in ["OpenGL"]:
-            return "/System/Library/Frameworks/{0}.framework/{0}".format(name)
+        if name in ['OpenGL']:
+            return '/System/Library/Frameworks/{0}.framework/{0}'.format(name)
         return _find_library(name)
 
     ctypes.util.find_library = find_library
+
+import ctypes
 
 # 必要なパッケージのインポート
 # Import required packages
 import os
 import sys
+
 import glfw
-import pyrr
 import numpy as np
-import ctypes
 import open3d as o3d
-from PIL import Image
+import pyrr
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from PIL import Image
 
 WIN_WIDTH = 500  # ウィンドウの幅 / Window width
 WIN_HEIGHT = 500  # ウィンドウの高さ / Window height
-WIN_TITLE = "OpenGL Course"  # ウィンドウのタイトル / Window title
+WIN_TITLE = 'OpenGL Course'  # ウィンドウのタイトル / Window title
 
 # シェーダ言語のソースファイル / Shader source files
-VERT_SHADER_FILE = os.path.join(os.path.dirname(__file__), "shaders", "render.vert")
-FRAG_SHADER_FILE = os.path.join(os.path.dirname(__file__), "shaders", "render.frag")
+VERT_SHADER_FILE = os.path.join(os.path.dirname(__file__), 'shaders', 'render.vert')
+FRAG_SHADER_FILE = os.path.join(os.path.dirname(__file__), 'shaders', 'render.frag')
 
 # メッシュモデルのファイル
 # Mesh model file
-MESH_FILE = os.path.join(os.path.dirname(__file__), "data", "bunny.obj")
+MESH_FILE = os.path.join(os.path.dirname(__file__), 'data', 'bunny.obj')
 
 # 頂点番号配列の大きさ
 # Length of index array buffer
@@ -60,7 +62,7 @@ theta = 0
 # シェーディングのためのマテリアル情報
 # Material parameters for shading
 lightPos = [5.0, 5.0, 5.0]
-TEX_FILE = os.path.join(os.path.dirname(__file__), "data", "cartoon_shading.png")
+TEX_FILE = os.path.join(os.path.dirname(__file__), 'data', 'cartoon_shading.png')
 textureId = 0
 
 
@@ -149,12 +151,12 @@ def compileShader(filename, type):
 
         # エラーメッセージとソースコードの出力
         # Print error message and corresponding source code
-        sys.stderr.write("[ ERROR ] %s\n" % errMsg)
-        sys.stderr.write("%s\n" % code)
+        sys.stderr.write('[ ERROR ] %s\n' % errMsg)
+        sys.stderr.write('%s\n' % code)
 
         # コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
         # Terminate with error message if compilation failed
-        raise Exception("Failed to compile a shader!")
+        raise Exception('Failed to compile a shader!')
 
     return shaderId
 
@@ -184,11 +186,11 @@ def buildShaderProgram(vShaderFile, fShaderFile):
 
         # エラーメッセージを出力する
         # Print error message
-        sys.stderr.write("[ ERROR ] %s\n" % errMsg)
+        sys.stderr.write('[ ERROR ] %s\n' % errMsg)
 
         # リンクに失敗したらエラーメッセージを表示して終了
         # Terminate with error message if link is failed
-        raise Exception("Failed to link shaders!")
+        raise Exception('Failed to link shaders!')
 
     # シェーダを無効化した後にIDを返す
     # Disable shader program and return its ID
@@ -260,7 +262,8 @@ def paintGL():
     viewMat = pyrr.matrix44.create_look_at(
         [3.0, 4.0, 5.0],  # 視点の位置
         [0.0, 0.0, 0.0],  # 見ている先
-        [0.0, 1.0, 0.0])  # 視界の上方向
+        [0.0, 1.0, 0.0],
+    )  # 視界の上方向
     modelMat = pyrr.matrix44.create_from_axis_rotation([0.0, 1.0, 0.0], np.radians(theta))
 
     # pyrrの行列はglmと要素の格納順序が逆なので注意
@@ -275,22 +278,22 @@ def paintGL():
 
     # Uniform変数の転送
     # Transfer uniform variables
-    uid = glGetUniformLocation(programId, "u_mvMat")
+    uid = glGetUniformLocation(programId, 'u_mvMat')
     glUniformMatrix4fv(uid, 1, GL_FALSE, mvMat)
-    uid = glGetUniformLocation(programId, "u_mvpMat")
+    uid = glGetUniformLocation(programId, 'u_mvpMat')
     glUniformMatrix4fv(uid, 1, GL_FALSE, mvpMat)
-    uid = glGetUniformLocation(programId, "u_normMat")
+    uid = glGetUniformLocation(programId, 'u_normMat')
     glUniformMatrix4fv(uid, 1, GL_FALSE, normMat)
-    uid = glGetUniformLocation(programId, "u_lightMat")
+    uid = glGetUniformLocation(programId, 'u_lightMat')
     glUniformMatrix4fv(uid, 1, GL_FALSE, lightMat)
-    uid = glGetUniformLocation(programId, "u_lightPos")
+    uid = glGetUniformLocation(programId, 'u_lightPos')
     glUniform3fv(uid, 1, lightPos)
 
     # テクスチャの有効化とシェーダへの転送
     # Enable a texture unit and transfer data to it
     glActiveTexture(GL_TEXTURE0)
     glBindTexture(GL_TEXTURE_2D, textureId)
-    uid = glGetUniformLocation(programId, "u_texture")
+    uid = glGetUniformLocation(programId, 'u_texture')
     glUniform1i(uid, 0)
 
     # VAOの有効化
@@ -344,7 +347,7 @@ def main():
     # OpenGLを初期化する
     # OpenGL initialization
     if glfw.init() == glfw.FALSE:
-        raise Exception("Initialization failed!")
+        raise Exception('Initialization failed!')
 
     # OpenGLのバージョン設定 (Macの場合には必ず必要)
     # Specify OpenGL version (mandatory for Mac)
@@ -357,7 +360,7 @@ def main():
     window = glfw.create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, None, None)
     if window is None:
         glfw.terminate()
-        raise Exception("Window creation failed!")
+        raise Exception('Window creation failed!')
 
     # OpenGLの描画対象にwindowを指定
     # Specify window as an OpenGL context
@@ -394,5 +397,6 @@ def main():
     glfw.terminate()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    main()
     main()

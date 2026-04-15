@@ -1,37 +1,38 @@
 # MacOS Big Sur以降で動かすための設定
 # Special settings for working on MacOS Big Sur or later
-import platform
 import ctypes.util
+import platform
 
 uname = platform.uname()
-if uname.system == "Darwin" and uname.release >= "20.":
+if uname.system == 'Darwin' and uname.release >= '20.':
     _find_library = ctypes.util.find_library
 
     def find_library(name):
-        if name in ["OpenGL"]:
-            return "/System/Library/Frameworks/{0}.framework/{0}".format(name)
+        if name in ['OpenGL']:
+            return '/System/Library/Frameworks/{0}.framework/{0}'.format(name)
         return _find_library(name)
 
     ctypes.util.find_library = find_library
+
 
 # 必要なパッケージのインポート
 # Import required packages
 import os
 import sys
+
 import glfw
-import pyrr
 import numpy as np
-import ctypes
+import pyrr
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
 WIN_WIDTH = 500  # ウィンドウの幅 / Window width
 WIN_HEIGHT = 500  # ウィンドウの高さ / Window height
-WIN_TITLE = "OpenGL Course"  # ウィンドウのタイトル / Window title
+WIN_TITLE = 'OpenGL Course'  # ウィンドウのタイトル / Window title
 
 # シェーダ言語のソースファイル / Shader source files
-VERT_SHADER_FILE = os.path.join(os.path.dirname(__file__), "shaders", "render.vert")
-FRAG_SHADER_FILE = os.path.join(os.path.dirname(__file__), "shaders", "render.frag")
+VERT_SHADER_FILE = os.path.join(os.path.dirname(__file__), 'shaders', 'render.vert')
+FRAG_SHADER_FILE = os.path.join(os.path.dirname(__file__), 'shaders', 'render.frag')
 
 # 立方体のパラメータ
 # Cube parameters
@@ -168,12 +169,12 @@ def compileShader(filename, type):
 
         # エラーメッセージとソースコードの出力
         # Print error message and corresponding source code
-        sys.stderr.write("[ ERROR ] %s\n" % errMsg)
-        sys.stderr.write("%s\n" % code)
+        sys.stderr.write('[ ERROR ] %s\n' % errMsg)
+        sys.stderr.write('%s\n' % code)
 
         # コンパイルが失敗したらエラーメッセージとソースコードを表示して終了
         # Terminate with error message if compilation failed
-        raise Exception("Failed to compile a shader!")
+        raise Exception('Failed to compile a shader!')
 
     return shaderId
 
@@ -203,11 +204,11 @@ def buildShaderProgram(vShaderFile, fShaderFile):
 
         # エラーメッセージを出力する
         # Print error message
-        sys.stderr.write("[ ERROR ] %s\n" % errMsg)
+        sys.stderr.write('[ ERROR ] %s\n' % errMsg)
 
         # リンクに失敗したらエラーメッセージを表示して終了
         # Terminate with error message if link is failed
-        raise Exception("Failed to link shaders!")
+        raise Exception('Failed to link shaders!')
 
     # シェーダを無効化した後にIDを返す
     # Disable shader program and return its ID
@@ -253,7 +254,8 @@ def paintGL():
     viewMat = pyrr.matrix44.create_look_at(
         [3.0, 4.0, 5.0],  # 視点の位置
         [0.0, 0.0, 0.0],  # 見ている先
-        [0.0, 1.0, 0.0])  # 視界の上方向
+        [0.0, 1.0, 0.0],
+    )  # 視界の上方向
 
     # シェーダの有効化
     # Enable shader program
@@ -277,12 +279,12 @@ def paintGL():
 
         # Uniform変数の設定
         # Setup uniform variables
-        uid = glGetUniformLocation(programId, "u_mvpMat")
+        uid = glGetUniformLocation(programId, 'u_mvpMat')
         glUniformMatrix4fv(uid, 1, GL_FALSE, mvpMat)
 
         # 1つ目の立方体なので番号を1にして描画 (セレクトモードなら-1)
         # Draw 1st cube with index=1 (-1 for selection mode)
-        uid = glGetUniformLocation(programId, "u_selectID")
+        uid = glGetUniformLocation(programId, 'u_selectID')
         glUniform1i(uid, 1 if selectMode else -1)
 
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, ctypes.c_void_p(0))
@@ -301,12 +303,12 @@ def paintGL():
 
         # Uniform変数の設定
         # Setup uniform variables
-        uid = glGetUniformLocation(programId, "u_mvpMat")
+        uid = glGetUniformLocation(programId, 'u_mvpMat')
         glUniformMatrix4fv(uid, 1, GL_FALSE, mvpMat)
 
         # 1つ目の立方体なので番号を1にして描画 (セレクトモードなら-1)
         # Draw 1st cube with index=1 (-1 for selection mode)
-        uid = glGetUniformLocation(programId, "u_selectID")
+        uid = glGetUniformLocation(programId, 'u_selectID')
         glUniform1i(uid, 2 if selectMode else -1)
 
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, ctypes.c_void_p(0))
@@ -369,8 +371,8 @@ def mouseEvent(window, button, action, mods):
         # Appropriate buffer access (read only a single pixel)
         byte = glReadPixels(cx * pixelSize, (WIN_HEIGHT - cy - 1) * pixelSize, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE)
         byte = np.frombuffer(byte, dtype='uint8')
-        print("Mouse position: %d %d" % (cx, cy))
-        print("Select object %d" % (byte[0]))
+        print('Mouse position: %d %d' % (cx, cy))
+        print('Select object %d' % (byte[0]))
 
 
 # アニメーションのためのアップデート
@@ -384,7 +386,7 @@ def main():
     # OpenGLを初期化する
     # OpenGL initialization
     if glfw.init() == glfw.FALSE:
-        raise Exception("Initialization failed!")
+        raise Exception('Initialization failed!')
 
     # OpenGLのバージョン設定 (Macの場合には必ず必要)
     # Specify OpenGL version (mandatory for Mac)
@@ -397,7 +399,7 @@ def main():
     window = glfw.create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, None, None)
     if window is None:
         glfw.terminate()
-        raise Exception("Window creation failed!")
+        raise Exception('Window creation failed!')
 
     # OpenGLの描画対象にwindowを指定
     # Specify window as an OpenGL context
@@ -438,5 +440,6 @@ def main():
     glfw.terminate()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    main()
     main()

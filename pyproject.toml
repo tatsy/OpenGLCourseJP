@@ -3,33 +3,38 @@ name = "opengl-jp"
 version = "0.1.0"
 description = ""
 authors = [{ name = "Tatsuya Yatagawa", email = "tatsy.mail@gmail.com" }]
-license = "CC BY-NC-SA 4.0"
+license = "CC-BY-SA-4.0"
+license-files = ["LICENSE"]
 readme = "README.md"
-requires-python = ">=3.11.0,<3.12.0"
+requires-python = ">=3.11.0,<3.13.0"
 dependencies = [
-  "numpy (>=2.2.4)",
-  "pyrr (>=0.10.3)",
-  "glfw (==2.5.0)",
-  "PyOpenGL (==3.1.5)",
-  "pillow (>=11.2.1)",
-  "open3d (>=0.19.0)",
+  "numpy>=2.2.4",
+  "pyrr>=0.10.3",
+  "glfw==2.5.0",
+  "PyOpenGL==3.1.5",
+  "pillow>=11.2.1",
+  "open3d>=0.19.0",
 ]
 
-[tool.poetry]
-package-mode = false
+[dependency-groups]
+dev = ["mypy>=1.18.2", "ruff>=0.12.9"]
 
-[tool.poetry.group.dev.dependencies]
-flake8-pyproject = "^1.2.3"
-yapf = "^0.43.0"
-mypy = "^1.15.0"
-isort = "^6.0.1"
-pytest = "^8.3.5"
+[tool.ruff]
+line-length = 120
+target-version = "py311"
 
-[tool.isort]
-py_version = 311
-length_sort = true
-line_length = 120
-no_sections = true
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint]
+select = ["E", "W", "F"]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.isort]
+length-sort = true
+length-sort-straight = true
 
 [tool.mypy]
 python_version = "3.11"
@@ -38,21 +43,3 @@ disallow_any_generics = true
 strict_optional = true
 check_untyped_defs = true
 allow_redefinition = true
-
-[tool.flake8]
-max-line-length = 120
-ignore = "Q000,E127,E203,F405,W503,W504"
-
-[tool.yapf]
-BASED_ON_STYLE = "pep8"
-COLUMN_LIMIT = 120
-INDENT_WIDTH = 4
-
-ALIGN_CLOSING_BRACKET_WITH_VISUAL_INDENT = true
-CONTINUATION_ALIGN_STYLE = "SPACE"
-COALESCE_BRACKETS = false
-DEDENT_CLOSING_BRACKETS = false
-DISABLE_ENDING_COMMA_HEURISTIC = false
-INDENT_DICTIONARY_VALUE = true
-ALLOW_SPLIT_BEFORE_DICT_VALUE = false
-SPLIT_ALL_COMMA_SEPARATED_VALUES = false

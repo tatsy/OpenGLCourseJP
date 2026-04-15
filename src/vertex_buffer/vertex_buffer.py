@@ -1,33 +1,30 @@
 # MacOS Big Sur以降で動かすための設定
 # Special settings for working on MacOS Big Sur or later
-import os
 import ctypes.util
+import platform
 
-try:
-    uname = os.uname()
-    if uname.sysname == "Darwin" and uname.release >= "20.":
-        _find_library = ctypes.util.find_library
+uname = platform.uname()
+if uname.system == 'Darwin' and uname.release >= '20.':
+    _find_library = ctypes.util.find_library
 
-        def find_library(name):
-            if name in ["OpenGL"]:
-                return "/System/Library/Frameworks/{0}.framework/{0}".format(name)
-            return _find_library(name)
+    def find_library(name):
+        if name in ['OpenGL']:
+            return '/System/Library/Frameworks/{0}.framework/{0}'.format(name)
+        return _find_library(name)
 
-        ctypes.util.find_library = find_library
-except:
-    pass
+    ctypes.util.find_library = find_library
+
 
 # 必要なパッケージのインポート
 # Import required packages
 import glfw
 import numpy as np
-import ctypes
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
 WIN_WIDTH = 500  # ウィンドウの幅 / Window width
 WIN_HEIGHT = 500  # ウィンドウの高さ / Window height
-WIN_TITLE = "OpenGL Course"  # ウィンドウのタイトル / Window title
+WIN_TITLE = 'OpenGL Course'  # ウィンドウのタイトル / Window title
 
 # 立方体のパラメータ
 # Cube parameters
@@ -204,14 +201,14 @@ def main():
     # OpenGLを初期化する
     # OpenGL initialization
     if glfw.init() == glfw.FALSE:
-        raise Exception("Initialization failed!")
+        raise Exception('Initialization failed!')
 
     # Windowの作成
     # Create a window
     window = glfw.create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, None, None)
     if window is None:
         glfw.terminate()
-        raise Exception("Window creation failed!")
+        raise Exception('Window creation failed!')
 
     # OpenGLの描画対象にwindowを指定
     # Specify window as an OpenGL context
@@ -248,5 +245,6 @@ def main():
     glfw.terminate()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    main()
     main()

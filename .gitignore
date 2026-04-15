@@ -15,6 +15,7 @@ main_exe.d
 .DS_Store
 common.h
 
+.venv
 .mypy_cache
 .pytest_cache
 __pycache__
