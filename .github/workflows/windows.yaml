@@ -20,12 +20,15 @@ jobs:
 
       - name: Install GLFW3
         run: |
-          git clone https://github.com/glfw/glfw.git
-          cd glfw && git switch -c 3.4
+          git clone https://github.com/glfw/glfw.git -b 3.4 --depth 1
+          cd glfw
           cmake -S . -B build `
             -G "Visual Studio 17 2022" -A x64 `
-            -DCMAKE_INSTALL_PREFIX="C:/Program Files/glfw3/"
-          cmake --build build --config "$env:BUILD_TYPE"
+            -D CMAKE_INSTALL_PREFIX="C:/Program Files/glfw3/"
+            -D CMAKE_BUILD_TYPE=${BUILD_TYPE} `
+            -D GLFW_BUILD_EXAMPLES=OFF `
+            -D GLFW_BUILD_TESTS=OFF `
+            -D GLFW_BUILD_DOCS=OFF
           cmake --build build --config "$env:BUILD_TYPE" --target INSTALL
 
       - name: Install GLM
@@ -38,7 +41,8 @@ jobs:
         run: |
           cmake -S "$env:GITHUB_WORKSPACE" `
             -B ${{ runner.workspace }}/build `
-            -G "Visual Studio 17 2022" -A x64 `
-            -DGLFW3_DIR="C:/Program Files/glfw3" `
-            -DGLM_DIR="C:/Program Files/glm"
+            -G "Visual Studio 17 2022" `
+            -A x64 `
+            -D GLM_DIR="C:/Program Files/glm" `
+            -D GLFW3_DIR="C:/Program Files/glfw3"
           cmake --build ${{ runner.workspace }}/build --config "$env:BUILD_TYPE"
