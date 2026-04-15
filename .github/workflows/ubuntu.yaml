@@ -46,8 +46,13 @@ jobs:
         run: |
           git clone https://github.com/glfw/glfw.git -b 3.4 --depth 1
           cd glfw
-          cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=${BUILD_TYPE}
-          cmake --build build --config ${BUILD_TYPE} --target install
+          cmake -S . -B build -G Ninja \
+            -D CMAKE_BUILD_TYPE=${BUILD_TYPE} \
+            -D GLFW_BUILD_EXAMPLES=OFF \
+            -D GLFW_BUILD_TESTS=OFF \
+            -D GLFW_BUILD_DOCS=OFF 
+          cmake --build build --config ${BUILD_TYPE}
+          sudo cmake --build build --config ${BUILD_TYPE} --target install
 
       - name: Install GLM
         run: |
