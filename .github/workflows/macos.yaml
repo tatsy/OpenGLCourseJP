@@ -3,7 +3,7 @@ name: MacOS CI
 on:
   push:
     branches:
-      - master
+      - main
       - dev
 
 env:
@@ -24,7 +24,7 @@ jobs:
           - clang
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
           token: ${{ secrets.MY_PAT }}
