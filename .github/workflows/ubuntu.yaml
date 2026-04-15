@@ -32,23 +32,22 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y \
             libglu1-mesa-dev \
-            mesa-common-dev \
             libxmu-dev \
             libxi-dev \
             libxrandr-dev \
             libxinerama-dev \
             libxcursor-dev \
             libwayland-dev \
-            wayland-protocols \
-            libxkbcommon-dev
+            libxkbcommon-dev \
+            mesa-common-dev \
+            wayland-protocols
 
       - name: Install GLFW3
         run: |
-          git clone https://github.com/glfw/glfw.git          
-          cd glfw && git switch -c 3.4
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --config Release
-          cmake --build build --config Release --target install
+          git clone https://github.com/glfw/glfw.git -b 3.4 --depth 1
+          cd glfw
+          cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=${BUILD_TYPE}
+          cmake --build build --config ${BUILD_TYPE} --target install
 
       - name: Install GLM
         run: |
