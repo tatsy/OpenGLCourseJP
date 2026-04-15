@@ -24,8 +24,8 @@ jobs:
           cd glfw
           cmake -S . -B build `
             -G "Visual Studio 17 2022" -A x64 `
-            -D CMAKE_INSTALL_PREFIX="C:/Program Files/glfw3/"
             -D CMAKE_BUILD_TYPE=${BUILD_TYPE} `
+            -D CMAKE_INSTALL_PREFIX="C:/Program Files/glfw3/" `
             -D GLFW_BUILD_EXAMPLES=OFF `
             -D GLFW_BUILD_TESTS=OFF `
             -D GLFW_BUILD_DOCS=OFF
