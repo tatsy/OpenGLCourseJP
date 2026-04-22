@@ -23,7 +23,7 @@ void paintGL() {
 
     // 座標変換の指定
     // Specify coordinate transformation
-    glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     // glScalef(0.5f, 0.5f, 1.0f);  // 拡大・縮小 / Scaling
     // glTranslatef(0.25f, 0.25f, 0.0f);  // 平行移動 / Translation

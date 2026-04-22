@@ -41,7 +41,7 @@ def paintGL():
 
     # 座標変換の指定
     # Specify coordinate transformation
-    glMatrixMode(GL_MODELVIEW)
+    glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     # glScalef(0.5, 0.5, 1.0);  # 拡大・縮小 / Scaling
     # glTranslatef(0.25, 0.25, 0.0);  # 平行移動 / Translation
