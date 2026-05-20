@@ -1,7 +1,7 @@
 # MacOS Big Sur以降で動かすための設定
 # Special settings for working on MacOS Big Sur or later
-import ctypes.util
 import platform
+import ctypes.util
 
 uname = platform.uname()
 if uname.system == 'Darwin' and uname.release >= '20.':
@@ -136,7 +136,7 @@ def paintGL():
     # Second cube
     glPushMatrix()
     glTranslatef(1.0, 0.0, 0.0)
-    glRotated(2.0 * theta, 0.0, 1.0, 0.0)
+    glRotatef(2.0 * theta, 0.0, 1.0, 0.0)
     glRotatef(theta, 1.0, 0.0, 0.0)
     glScalef(0.5, 0.5, 0.5)
 
