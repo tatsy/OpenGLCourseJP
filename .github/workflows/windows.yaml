@@ -23,7 +23,7 @@ jobs:
           git clone https://github.com/glfw/glfw.git -b 3.4 --depth 1
           cd glfw
           cmake -S . -B build `
-            -G "Visual Studio 17 2022" `
+            -G "Visual Studio 19 2022" `
             -A x64 `
             -D CMAKE_BUILD_TYPE=${BUILD_TYPE} `
             -D CMAKE_INSTALL_PREFIX="C:/Program Files/glfw3/" `
@@ -42,7 +42,7 @@ jobs:
         run: |
           cmake -S "$env:GITHUB_WORKSPACE" `
             -B ${{ runner.workspace }}/build `
-            -G "Visual Studio 17 2022" `
+            -G "Visual Studio 19 2022" `
             -A x64 `
             -D GLM_DIR="C:/Program Files/glm" `
             -D GLFW3_DIR="C:/Program Files/glfw3"
