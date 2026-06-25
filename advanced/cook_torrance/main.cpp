@@ -17,6 +17,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #define TINYOBJLOADER_IMPLEMENTATION
+#define TINYOBJLOADER_DISABLE_FAST_FLOAT
 #include "tiny_obj_loader.h"
 
 // ディレクトリの設定ファイル

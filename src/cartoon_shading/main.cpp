@@ -27,6 +27,7 @@
 // OBJメッシュ読み込み用のライブラリ
 // Library for loading OBJ file
 #define TINYOBJLOADER_IMPLEMENTATION
+#define TINYOBJLOADER_DISABLE_FAST_FLOAT
 #include "tiny_obj_loader.h"
 
 // 画像のパスなどが書かれた設定ファイル
