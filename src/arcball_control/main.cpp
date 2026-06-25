@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <format>
 
 #define GLAD_GL_IMPLEMENTATION
 #include <glad/gl.h>
@@ -155,8 +156,7 @@ void initVAO() {
     // Create index buffer object
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
-                 indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // VAOをOFFにしておく
     // Temporarily disable VAO
@@ -197,8 +197,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
 
         // 先頭からファイルサイズ分を読んでコードの変数に格納
         // Load entire file and copy to "code" variable
-        code.assign(std::istreambuf_iterator<char>(reader),
-                    std::istreambuf_iterator<char>());
+        code.assign(std::istreambuf_iterator<char>(reader), std::istreambuf_iterator<char>());
     }
 
     // ファイルを閉じる
@@ -497,8 +496,10 @@ void updateTranslate() {
 
     // スクリーン座標系におけるマウス移動の視点と終点の計算. これらの位置はスクリーン座標系のZ座標に依存することに注意する
     // Calculate the start and end points of mouse motion, which depend Z coordinate in screen space
-    glm::vec4 newPosScreenSpace(2.0f * newPos.x / WIN_WIDTH - 1.0f, -2.0f * newPos.y / WIN_HEIGHT + 1.0f, originScreenSpace.z, 1.0f);
-    glm::vec4 oldPosScreenSpace(2.0f * oldPos.x / WIN_WIDTH - 1.0f, -2.0f * oldPos.y / WIN_HEIGHT + 1.0f, originScreenSpace.z, 1.0f);
+    glm::vec4 newPosScreenSpace(2.0f * newPos.x / WIN_WIDTH - 1.0f, -2.0f * newPos.y / WIN_HEIGHT + 1.0f,
+                                originScreenSpace.z, 1.0f);
+    glm::vec4 oldPosScreenSpace(2.0f * oldPos.x / WIN_WIDTH - 1.0f, -2.0f * oldPos.y / WIN_HEIGHT + 1.0f,
+                                originScreenSpace.z, 1.0f);
 
     // スクリーン座標の情報を世界座標座標に変換する行列 (= MVP行列の逆行列)
     // Transformation from screen space to world space (= inverse of MVP matrix)
@@ -590,8 +591,7 @@ int main(int argc, char **argv) {
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, NULL, NULL);
     if (window == NULL) {
         glfwTerminate();
         fprintf(stderr, "Window creation failed!\n");

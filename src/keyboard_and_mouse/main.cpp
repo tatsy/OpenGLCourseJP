@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <format>
 
 #define GLAD_GL_IMPLEMENTATION
 #include <glad/gl.h>
@@ -133,8 +134,7 @@ void initVAO() {
     // Create index buffer object
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
-                 indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // VAOをOFFにしておく
     // Temporarily disable VAO
@@ -175,8 +175,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
 
         // 先頭からファイルサイズ分を読んでコードの変数に格納
         // Load entire file and copy to "code" variable
-        code.assign(std::istreambuf_iterator<char>(reader),
-                    std::istreambuf_iterator<char>());
+        code.assign(std::istreambuf_iterator<char>(reader), std::istreambuf_iterator<char>());
     }
 
     // ファイルを閉じる
@@ -305,8 +304,7 @@ void paintGL() {
 
     // 座標の変換
     // Coordinate transformation
-    glm::mat4 projMat = glm::perspective(glm::radians(45.0f),
-                                         (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    glm::mat4 projMat = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
     glm::mat4 viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // 視点の位置
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
@@ -469,8 +467,7 @@ int main(int argc, char **argv) {
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, NULL, NULL);
     if (window == NULL) {
         glfwTerminate();
         fprintf(stderr, "Window creation failed!\n");
