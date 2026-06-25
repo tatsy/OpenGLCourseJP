@@ -87,10 +87,14 @@ void initVAO() {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
-    std::string err;
-    bool success = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, MESH_FILE.c_str());
+    std::string err, warn;
+    bool success = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, MESH_FILE.c_str());
+    if (!warn.empty()) {
+        std::cerr << std::format("[WARNING] {}", warn) << std::endl;
+    }
+
     if (!err.empty()) {
-        std::cerr << "[WARNING] " << err << std::endl;
+        std::cerr << std::format("[ERROR] {}", err) << std::endl;
     }
 
     if (!success) {
@@ -110,15 +114,15 @@ void initVAO() {
             glm::vec3 position, normal;
 
             if (index.vertex_index >= 0) {
-                position = glm::vec3(attrib.vertices[index.vertex_index * 3 + 0],
-                                     attrib.vertices[index.vertex_index * 3 + 1],
-                                     attrib.vertices[index.vertex_index * 3 + 2]);
+                position =
+                    glm::vec3(attrib.vertices[index.vertex_index * 3 + 0], attrib.vertices[index.vertex_index * 3 + 1],
+                              attrib.vertices[index.vertex_index * 3 + 2]);
             }
 
             if (index.normal_index >= 0) {
-                normal = glm::vec3(attrib.normals[index.normal_index * 3 + 0],
-                                   attrib.normals[index.normal_index * 3 + 1],
-                                   attrib.normals[index.normal_index * 3 + 2]);
+                normal =
+                    glm::vec3(attrib.normals[index.normal_index * 3 + 0], attrib.normals[index.normal_index * 3 + 1],
+                              attrib.normals[index.normal_index * 3 + 2]);
             }
 
             const Vertex vertex(position, normal);
@@ -151,8 +155,7 @@ void initVAO() {
     // Create index buffer object
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
-                 indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // 頂点バッファのサイズを変数に入れておく
     // Store size of index array buffer
@@ -197,8 +200,7 @@ GLuint compileShader(const std::string &filename, GLuint type) {
 
         // 先頭からファイルサイズ分を読んでコードの変数に格納
         // Load entire file and copy to "code" variable
-        code.assign(std::istreambuf_iterator<char>(reader),
-                    std::istreambuf_iterator<char>());
+        code.assign(std::istreambuf_iterator<char>(reader), std::istreambuf_iterator<char>());
     }
 
     // ファイルを閉じる
@@ -310,8 +312,7 @@ void initTexture() {
 
     glGenTextures(1, &textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texWidth, texHeight,
-                 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -358,8 +359,7 @@ void paintGL() {
 
     // 座標の変換
     // Coordinate transformation
-    glm::mat4 projMat = glm::perspective(glm::radians(45.0f),
-                                         (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    glm::mat4 projMat = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
     glm::mat4 viewMat = glm::lookAt(glm::vec3(3.0f, 4.0f, 5.0f),   // 視点の位置
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
@@ -458,8 +458,7 @@ int main(int argc, char **argv) {
 
     // Windowの作成
     // Create a window
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, NULL, NULL);
     if (window == NULL) {
         glfwTerminate();
         fprintf(stderr, "Window creation failed!\n");

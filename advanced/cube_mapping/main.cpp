@@ -25,9 +25,9 @@
 // ディレクトリの設定ファイル
 #include "common.h"
 
-static int WIN_WIDTH   = 500;                       // ウィンドウの幅
-static int WIN_HEIGHT  = 500;                       // ウィンドウの高さ
-static const char *WIN_TITLE = "OpenGL Course";     // ウィンドウのタイトル
+static int WIN_WIDTH = 500;                      // ウィンドウの幅
+static int WIN_HEIGHT = 500;                     // ウィンドウの高さ
+static const char *WIN_TITLE = "OpenGL Course";  // ウィンドウのタイトル
 
 static const double PI = 4.0 * std::atan(1.0);
 
@@ -82,10 +82,14 @@ GLuint prepareVAO(const std::string &objFile, size_t *iboSize) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
-    std::string err;
-    bool success = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, objFile.c_str());
+    std::string err, warn;
+    bool success = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, objFile.c_str());
+    if (!warn.empty()) {
+        std::cerr << "[WARNING] " << warn << std::endl;
+    }
+
     if (!err.empty()) {
-        std::cerr << "[WARNING] " << err << std::endl;
+        std::cerr << "[ERROR] " << err << std::endl;
     }
 
     if (!success) {
@@ -100,21 +104,21 @@ GLuint prepareVAO(const std::string &objFile, size_t *iboSize) {
         const tinyobj::mesh_t &mesh = shapes[s].mesh;
         for (int i = 0; i < mesh.indices.size(); i++) {
             const tinyobj::index_t &index = mesh.indices[i];
-            
+
             glm::vec3 position, normal;
 
             if (index.vertex_index >= 0) {
-                position = glm::vec3(attrib.vertices[index.vertex_index * 3 + 0],
-                                     attrib.vertices[index.vertex_index * 3 + 1],
-                                     attrib.vertices[index.vertex_index * 3 + 2]);
+                position =
+                    glm::vec3(attrib.vertices[index.vertex_index * 3 + 0], attrib.vertices[index.vertex_index * 3 + 1],
+                              attrib.vertices[index.vertex_index * 3 + 2]);
             }
 
             if (index.normal_index >= 0) {
-                normal = glm::vec3(attrib.normals[index.normal_index * 3 + 0],
-                                   attrib.normals[index.normal_index * 3 + 1],
-                                   attrib.normals[index.normal_index * 3 + 2]);
+                normal =
+                    glm::vec3(attrib.normals[index.normal_index * 3 + 0], attrib.normals[index.normal_index * 3 + 1],
+                              attrib.normals[index.normal_index * 3 + 2]);
             }
-            
+
             const unsigned int vertexIndex = vertices.size();
             vertices.push_back(Vertex(position, normal));
             indices.push_back(vertexIndex);
@@ -135,17 +139,16 @@ GLuint prepareVAO(const std::string &objFile, size_t *iboSize) {
     // 頂点バッファの有効化
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
 
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, normal));
 
     // 頂点番号バッファの作成
     glGenBuffers(1, &indexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(),
-                 indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
     // VAOをOFFにしておく
     glBindVertexArray(0);
@@ -162,7 +165,7 @@ void initVAO() {
 GLuint compileShader(const std::string &filename, GLuint type) {
     // シェーダの作成
     GLuint shaderId = glCreateShader(type);
-    
+
     // ファイルの読み込み
     std::ifstream reader;
     size_t codeSize;
@@ -177,11 +180,11 @@ GLuint compileShader(const std::string &filename, GLuint type) {
     }
 
     // ファイルをすべて読んで変数に格納 (やや難)
-    reader.seekg(0, std::ios::end);             // ファイル読み取り位置を終端に移動 
-    codeSize = reader.tellg();                  // 現在の箇所(=終端)の位置がファイルサイズ
-    code.resize(codeSize);                      // コードを格納する変数の大きさを設定
-    reader.seekg(0);                            // ファイルの読み取り位置を戦闘に移動
-    reader.read(&code[0], codeSize);            // 先頭からファイルサイズ分を読んでコードの変数に格納
+    reader.seekg(0, std::ios::end);   // ファイル読み取り位置を終端に移動
+    codeSize = reader.tellg();        // 現在の箇所(=終端)の位置がファイルサイズ
+    code.resize(codeSize);            // コードを格納する変数の大きさを設定
+    reader.seekg(0);                  // ファイルの読み取り位置を戦闘に移動
+    reader.read(&code[0], codeSize);  // 先頭からファイルサイズ分を読んでコードの変数に格納
 
     // ファイルを閉じる
     reader.close();
@@ -289,7 +292,7 @@ void initTexture() {
                     faceBytes[(y * faceWidth + x) * 4 + c] = bytes[(py * texWidth + px) * 4 + c];
                 }
             }
-        }        
+        }
         glTexImage2D(targetFace[i], 0, GL_RGBA, faceWidth, faceHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, faceBytes);
     }
 
@@ -301,7 +304,7 @@ void initTexture() {
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
-    stbi_image_free(bytes);    
+    stbi_image_free(bytes);
     delete[] faceBytes;
 }
 
@@ -329,15 +332,14 @@ void paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // 座標の変換
-    glm::mat4 projMat = glm::perspective(45.0f,
-        (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+    glm::mat4 projMat = glm::perspective(45.0f, (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
 
     glm::vec3 cameraPos = glm::vec3(5.0f, 2.0f, 5.0f);
     glm::mat4 viewMat = glm::lookAt(cameraPos,                     // 視点の位置
                                     glm::vec3(0.0f, 0.0f, 0.0f),   // 見ている先
                                     glm::vec3(0.0f, 1.0f, 0.0f));  // 視界の上方向
 
-    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f)); 
+    glm::mat4 modelMat = glm::rotate(theta, glm::vec3(0.0f, 1.0f, 0.0f));
 
     glm::mat4 mvMat = viewMat * modelMat;
     glm::mat4 mvpMat = projMat * viewMat * modelMat;
@@ -348,7 +350,7 @@ void paintGL() {
     {
         glBindVertexArray(bkgVaoId);
         glUseProgram(bkgProgId);
-        
+
         GLuint uid;
         uid = glGetUniformLocation(bkgProgId, "u_lightMat");
         glUniformMatrix4fv(uid, 1, GL_FALSE, glm::value_ptr(lightMat));
@@ -409,14 +411,14 @@ void resizeGL(GLFWwindow *window, int width, int height) {
     // ユーザ管理のウィンドウサイズを変更
     WIN_WIDTH = width;
     WIN_HEIGHT = height;
-    
+
     // GLFW管理のウィンドウサイズを変更
     glfwSetWindowSize(window, WIN_WIDTH, WIN_HEIGHT);
-    
+
     // 実際のウィンドウサイズ (ピクセル数) を取得
     int renderBufferWidth, renderBufferHeight;
     glfwGetFramebufferSize(window, &renderBufferWidth, &renderBufferHeight);
-    
+
     // ビューポート変換の更新
     glViewport(0, 0, renderBufferWidth, renderBufferHeight);
 }
@@ -438,15 +440,14 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Initialization failed!\n");
         return 1;
     }
-    
+
     // OpenGLのバージョン設定 (Macの場合には必ず必要)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    
+
     // Windowの作成
-    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE,
-                                          NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, NULL, NULL);
     if (window == NULL) {
         fprintf(stderr, "Window creation failed!");
         glfwTerminate();

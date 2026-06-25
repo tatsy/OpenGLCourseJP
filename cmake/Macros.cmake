@@ -27,9 +27,9 @@ function(BUILD_EXAMPLE EXPNAME)
                          "${EXPNAME}/shaders/*.geom"
                          "${EXPNAME}/shaders/*.frag")
 
-  include_directories(${ALL_INCLUDE_DIRS})
   add_executable(${EXPNAME} ${SOURCE_FILES} ${SHADER_FILES} ${GLAD_FILES})
-  target_link_libraries(${EXPNAME} ${ALL_LIBRARIES})
+  target_include_directories(${EXPNAME} PRIVATE ${ALL_INCLUDE_DIRS})
+  target_link_libraries(${EXPNAME} PRIVATE ${ALL_LIBRARIES})
 
   set_target_properties(${EXPNAME} PROPERTIES FOLDER ${BUILD_EXAMPLE_FOLDER})
 

@@ -61,7 +61,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(ALL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIRS}
                      ${GLFW3_INCLUDE_DIR}
                      ${GLM_INCLUDE_DIR}
-                     ${CMAKE_CURRENT_LIST_DIR}/support)
+                     ${CMAKE_CURRENT_SOURCE_DIR}/support)
 
 set(ALL_LIBRARIES ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY})
 if (UNIX AND NOT APPLE)
@@ -80,6 +80,6 @@ endif()
 # ------------------------------------------------------------------------------
 add_subdirectory(src)
 add_subdirectory(advanced)
-if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/practice/CMakeLists.txt")
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/practice/CMakeLists.txt")
   add_subdirectory(practice)
 endif()

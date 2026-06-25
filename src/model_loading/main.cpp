@@ -79,10 +79,14 @@ void initVAO() {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
-    std::string err;
-    bool success = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, MESH_FILE.c_str());
+    std::string err, warn;
+    bool success = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, MESH_FILE.c_str());
+    if (!warn.empty()) {
+        std::cerr << std::format("[WARNING] {}", warn) << std::endl;
+    }
+
     if (!err.empty()) {
-        std::cerr << std::format("[WARNING] {}", err) << std::endl;
+        std::cerr << std::format("[ERROR] {}", err) << std::endl;
     }
 
     if (!success) {
