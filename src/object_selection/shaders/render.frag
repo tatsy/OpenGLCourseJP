@@ -9,7 +9,7 @@ in vec3 f_fragColor;
 out vec4 out_color;
 
 // 選択を判定するためのID
-// Index for indentifying cubes
+// Index for identifying cubes
 uniform int u_selectID;
 
 void main() {
